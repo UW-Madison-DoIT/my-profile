@@ -7,5 +7,20 @@
   <name>My Profile Parent</name>
   <modules>
       <module>my-profile-webapp</module>
+      <module>my-profile-api</module>
   </modules>
+  
+  <scm>
+    <connection>scm:git:git@github.com:UW-Madison-DoIT/my-profile.git</connection>
+    <developerConnection>scm:git:git@github.com:UW-Madison-DoIT/my-profile.git</developerConnection>
+    <url>https://github.com/UW-Madison-DoIT/my-profile</url>
+    <tag>HEAD</tag>
+  </scm>
+  
+  <repositories>
+        <repository>
+            <id>code.doit-uw-releases</id>
+            <url>https://code.doit.wisc.edu/maven/content/repositories/uw-releases/</url>
+        </repository>
+    </repositories>
 </project>

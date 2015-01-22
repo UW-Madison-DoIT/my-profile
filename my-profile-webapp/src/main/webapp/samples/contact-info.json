@@ -1,0 +1,15 @@
+{
+    "contactInfo" : {
+        "legalName" : "BUCKINGHAM BADGER",
+        "preferredName" : "Bucky Badger",
+        "emailAddresses" : ["bbadger@example.com","bucky.badger@example.com","test@example.com"],
+        "physicalAddresses" : [{"lineOne":"123 Way Street",
+                                "lineTwo":"APT 111",
+                                "city":"Madison",
+                                "stateCode":"WI",
+                                "country":"USA",
+                                "postalCode":"53703"}],
+        "phoneNumbers" : [{"type" : "Cell", "number" : "608-555-1212"},
+                          {"type" : "Home", "number" : "608-555-7897"}]
+    }
+}

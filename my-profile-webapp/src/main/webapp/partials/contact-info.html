@@ -1,0 +1,48 @@
+<div ng-controller="ContactInformationController as contactInfoCtrl" style='padding: 1em;border:1px solid black; border-radius: 4px; box-shadow: 1px 1px 10px gray;'>
+    <h2>Contact Information <button class='btn btn-primary pull-right'><i class='fa fa-edit'></i> Edit</button></h2>
+    <div style='padding-top: 1em;'>
+    <table class='table table-hover'>
+        <tr>
+            <td>Name</td> <td>{{contactInfo.legalName}}</td>
+        </tr>
+        <tr>
+            <td>Preferred Name</td> <td>{{contactInfo.preferredName}}</td>
+        </tr>
+        <tr>
+            <td>Email Addresses</td> 
+            <td>
+                <ul style='padding: 0;'>
+                  <li ng-repeat='email in contactInfo.emailAddresses'>{{email}}</li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Physical Addresses</td> 
+            <td>
+                <ul style='padding: 0;'>
+                  <li ng-repeat='addr in contactInfo.physicalAddresses | limitTo: 1'>
+                  <span>
+                      {{addr.lineOne}} {{addr.lineTwo}}<br/>
+                      {{addr.city}}, {{addr.stateCode}} {{addr.postalCode}}
+                  </span>
+                  </li>
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>Phone Numbers</td> 
+            <td>
+                <ul style='padding: 0;'>
+                  <li ng-repeat='phone in contactInfo.phoneNumbers'>{{phone.number}}</li>
+                </ul>
+            </td>
+        </tr>
+    </table>
+    </div>
+    <!--  
+        <hr/>
+        <div>Addresses</div>
+        <hr/>
+        <div>Phone Numbers</div>
+    </div> -->
+</div>
