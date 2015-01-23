@@ -1,4 +1,4 @@
-<div ng-controller="ContactInformationController as contactInfoCtrl" style='padding: 1em;border:1px solid black; border-radius: 4px; box-shadow: 1px 1px 10px gray;'>
+<div ng-controller="BasicInformationController as basicInfoCtrl" style='padding: 1em;border:1px solid black; border-radius: 4px; box-shadow: 1px 1px 10px gray;'>
     <h2>Basic Information <button class='btn btn-primary pull-right'><i class='fa fa-edit'></i> Edit</button></h2>
     <div style='padding-top: 1em;'>
     <table class='table table-hover'>
@@ -6,7 +6,7 @@
             <td>Roles</td> 
             <td>
                 <ul style='padding: 0;'>
-                  <li ng-repeat='email in contactInfo.emailAddresses'>{{email}}</li>
+                  <li ng-repeat='role in basicInfo.roles'>{{role}}</li>
                 </ul>
             </td>
         </tr>
@@ -14,7 +14,7 @@
             <td>Departments</td> 
             <td>
                 <ul style='padding: 0;'>
-                  <li ng-repeat='email in contactInfo.emailAddresses'>{{email}}</li>
+                  <li ng-repeat='department in basicInfo.departments'>{{department}}</li>
                 </ul>
             </td>
         </tr>
@@ -22,7 +22,7 @@
             <td>Titles</td> 
             <td>
                 <ul style='padding: 0;'>
-                  <li ng-repeat='email in contactInfo.emailAddresses'>{{email}}</li>
+                  <li ng-repeat='title in basicInfo.titles'>{{title}}</li>
                 </ul>
             </td>
         </tr>

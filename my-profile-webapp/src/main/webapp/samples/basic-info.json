@@ -1,7 +1,7 @@
 {
-    "basic-info" : {
+    "basicInfo" : {
         "roles" : ["Student","Staff","Faculty"],
-        "Department" : ["DOIT/COMMUNICATIONS/COMMUN"],
-        "Titles" : ["SOFTWARE ENGINEER"]
+        "departments" : ["DOIT/COMMUNICATIONS/COMMUN"],
+        "titles" : ["SOFTWARE ENGINEER"]
     }
 }
