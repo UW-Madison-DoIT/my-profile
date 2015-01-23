@@ -6,6 +6,7 @@
     app.factory('profileService', function($http, miscService) {
       var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
       var basicInfoPromise = $http.get('/profile/samples/basic-info.json');
+      var emergencyInfoPromise = $http.get('/profile/samples/emergency-info.json');
     
       var getContactInfo = function() {
           return contactInfoPromise.success(
@@ -24,10 +25,20 @@
              miscService.redirectUser(status, "Get basic info");
           });
       }
+      
+      var getEmergencyInfo = function() {
+          return emergencyInfoPromise.success(
+             function(data, status) { //success function
+                 return data.emergencyContacts;
+             }).error(function(data, status) { // failure function
+             miscService.redirectUser(status, "Get emergency info");
+          });
+      }
     
       return {
         getContactInfo : getContactInfo,
-        getBasicInfo   : getBasicInfo
+        getBasicInfo   : getBasicInfo,
+        getEmergencyInfo : getEmergencyInfo
       }
     });
 })();

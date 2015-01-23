@@ -17,6 +17,14 @@
           $scope.basicInfo = result.data.basicInfo;
       });
       
-    } ]);
+  } ]);
+  
+  app.controller('EmergencyInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
+      $scope.emergencyContacts = [];
+      profileService.getEmergencyInfo().then(function(result){
+          $scope.emergencyContacts = result.data.emergencyContacts;
+      });
+      
+  }]);
 
 })();
