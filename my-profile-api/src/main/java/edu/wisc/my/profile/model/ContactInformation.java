@@ -1,14 +1,15 @@
 package edu.wisc.my.profile.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactInformation {
   private String id;
   private String legalName;
   private String preferredName;
-  private List<TypeValue> phoneNumbers;
-  private List<TypeValue> emails;
-  private List<ContactAddress> addresses;
+  private List<TypeValue> phoneNumbers = new ArrayList<TypeValue>();
+  private List<TypeValue> emails = new ArrayList<TypeValue>();
+  private List<ContactAddress> addresses = new ArrayList<ContactAddress>();
   
   public String getId() {
     return id;
