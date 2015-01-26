@@ -34,6 +34,9 @@
     <context:component-scan base-package="edu.wisc.portlet.hrs.service"/>
     <context:component-scan base-package="edu.wisc.my.profile"/>
     
+    <context:property-override location="classpath:/override.properties" />
+    <context:property-placeholder location="classpath:/placeholder.properties" />
+    
 
     <bean id="jsonViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
         <property name="location" value="/WEB-INF/views.xml"/>
