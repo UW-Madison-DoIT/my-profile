@@ -15,7 +15,7 @@ import edu.wisc.my.profile.service.ContactInformationService;
 import edu.wisc.my.profile.util.SessionUtils;
 
 @Controller
-@RequestMapping("/contactInfo")
+@RequestMapping("/contactInfo.json")
 public class ContactInformationController {
   
   @Autowired
@@ -28,10 +28,10 @@ public class ContactInformationController {
     emplIdAttributes = emplIdCSV.split(",");
   }
   
-  @RequestMapping(value = "/get", method = RequestMethod.GET) 
+  @RequestMapping(method = RequestMethod.GET) 
   public @ResponseBody ContactInformation getContactInfo(HttpServletRequest request) {
     
-    String username = request.getHeader("remote_user");
+    String username = request.getRemoteUser();
     
     if(StringUtils.isBlank(username)) 
       return null;

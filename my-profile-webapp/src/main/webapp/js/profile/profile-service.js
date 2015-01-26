@@ -4,14 +4,15 @@
     var app = angular.module('portal.profile.service', []);
     
     app.factory('profileService', function($http, miscService) {
-      var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
+      //var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
+      var contactInfoPromise = $http.get('/profile/api/contactInfo.json');
       var basicInfoPromise = $http.get('/profile/samples/basic-info.json');
       var emergencyInfoPromise = $http.get('/profile/samples/emergency-info.json');
     
       var getContactInfo = function() {
           return contactInfoPromise.success(
              function(data, status) { //success function
-                 return data.contactInfo;
+                 return data;
              }).error(function(data, status) { // failure function
              miscService.redirectUser(status, "Get contact info");
           });

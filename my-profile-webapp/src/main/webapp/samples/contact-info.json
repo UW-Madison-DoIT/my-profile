@@ -1,15 +1,40 @@
 {
-    "contactInfo" : {
-        "legalName" : "BUCKINGHAM BADGER",
-        "preferredName" : "Bucky Badger",
-        "emailAddresses" : ["bbadger@example.com","bucky.badger@example.com","test@example.com"],
-        "physicalAddresses" : [{"lineOne":"123 Way Street",
-                                "lineTwo":"APT 111",
-                                "city":"Madison",
-                                "stateCode":"WI",
-                                "country":"USA",
-                                "postalCode":"53703"}],
-        "phoneNumbers" : [{"type" : "Cell", "number" : "608-555-1212"},
-                          {"type" : "Home", "number" : "608-555-7897"}]
+  "id": "789456789",
+  "legalName": "TIM LEVETT",
+  "preferredName": null,
+  "phoneNumbers": [
+    {
+     "type": null,
+     "value": "608/262-2153"
+    },
+    {
+     "type": null,
+     "value": "616/648-5769"
     }
+   ],
+   "emails": [],
+   "addresses": [
+     {
+      "type": "Work",
+      "addressLines": [
+        "Room 3233",
+        "1210 W DAYTON ST"
+       ],
+      "city": "MADISON",
+      "country": null,
+      "state": "WI",
+      "postalCode": "53706-1613"
+     },
+     {
+      "type": "Home",
+      "addressLines": [
+        "Room ",
+        "132 WAY ST APT 789"
+      ],
+      "city": "MADISON",
+      "country": USA,
+      "state": "WI",
+      "postalCode": "53703-3891"
+     }
+   ]
 }
