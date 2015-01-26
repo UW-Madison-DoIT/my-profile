@@ -39,12 +39,6 @@
     </repositories>
     <dependencyManagement>
         <dependencies>
-            
-            <dependency>
-                <groupId>org.jasig.service.persondir</groupId>
-                <artifactId>person-directory-api</artifactId>
-                <version>${person-directory.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
                 <artifactId>jackson-databind</artifactId>
