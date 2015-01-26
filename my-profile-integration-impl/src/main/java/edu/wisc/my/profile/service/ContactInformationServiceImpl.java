@@ -7,12 +7,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import edu.wisc.hr.dao.bnsemail.BusinessEmailUpdateDao;
 import edu.wisc.hr.dao.person.ContactInfoDao;
 import edu.wisc.hr.dm.person.Address;
-import edu.wisc.hr.dm.person.HomeAddress;
 import edu.wisc.hr.dm.person.PersonInformation;
-import edu.wisc.hr.service.PreferredNameService;
 import edu.wisc.my.profile.model.ContactAddress;
 import edu.wisc.my.profile.model.ContactInformation;
 import edu.wisc.my.profile.model.TypeValue;
@@ -22,14 +19,14 @@ public class ContactInformationServiceImpl implements ContactInformationService 
   
   private String businessEmailRolesPreferences = "businessEmailRoles";
   private ContactInfoDao contactInfoDao;
-  private BusinessEmailUpdateDao businessEmailUpdateDao;
-  private PreferredNameService preferredNameService;
+  //private BusinessEmailUpdateDao businessEmailUpdateDao;
+  //private PreferredNameService preferredNameService;
   
   public void setBusinessEmailRolesPreferences(String businessEmailRolesPreferences) {
       this.businessEmailRolesPreferences = businessEmailRolesPreferences;
   }
 
-  @Autowired
+  /*@Autowired
   public void setBusinessEmailUpdateDao(BusinessEmailUpdateDao businessEmailUpdateDao) {
       this.businessEmailUpdateDao = businessEmailUpdateDao;
   }
@@ -37,7 +34,7 @@ public class ContactInformationServiceImpl implements ContactInformationService 
   @Autowired
   public void setPreferredNameService(PreferredNameService service) {
       this.preferredNameService = service;
-  }
+  }*/
 
   @Autowired
   public void setContactInfoDao(ContactInfoDao contactInfoDao) {

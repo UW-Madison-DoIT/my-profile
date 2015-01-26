@@ -11,13 +11,18 @@
     </context-param>
     
     <context-param>
-      <param-name>contextConfigLocation</param-name>
-      <param-value>classpath*:/app-context/*.xml,/WEB-INF/context/*.xml</param-value>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:/app-context/*.xml,/WEB-INF/context/*.xml</param-value>
     </context-param>
     
     <listener>
         <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
     </listener>
+    
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    
     <listener>
         <listener-class>ch.qos.logback.classic.selector.servlet.ContextDetachingSCL</listener-class>
     </listener>
@@ -26,7 +31,7 @@
         <servlet-name>profile</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-    </servlet>        
+    </servlet>
  
     <servlet-mapping>
         <servlet-name>profile</servlet-name>
