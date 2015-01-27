@@ -7,7 +7,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.wisc.hr.dao.bnsemail.BusinessEmailUpdateDao;
 import edu.wisc.hr.dao.person.ContactInfoDao;
+import edu.wisc.hr.dm.bnsemail.PreferredEmail;
 import edu.wisc.hr.dm.person.Address;
 import edu.wisc.hr.dm.person.PersonInformation;
 import edu.wisc.my.profile.model.ContactAddress;
@@ -20,17 +22,18 @@ public class ContactInformationServiceImpl implements ContactInformationService 
   private String businessEmailRolesPreferences = "businessEmailRoles";
   private static enum AddrTypes {Home, Office};
   private ContactInfoDao contactInfoDao;
-  //private BusinessEmailUpdateDao businessEmailUpdateDao;
+  private BusinessEmailUpdateDao businessEmailUpdateDao;
   //private PreferredNameService preferredNameService;
   
   public void setBusinessEmailRolesPreferences(String businessEmailRolesPreferences) {
       this.businessEmailRolesPreferences = businessEmailRolesPreferences;
   }
 
-  /*@Autowired
+  @Autowired
   public void setBusinessEmailUpdateDao(BusinessEmailUpdateDao businessEmailUpdateDao) {
       this.businessEmailUpdateDao = businessEmailUpdateDao;
   }
+  /*
   
   @Autowired
   public void setPreferredNameService(PreferredNameService service) {
@@ -58,6 +61,11 @@ public class ContactInformationServiceImpl implements ContactInformationService 
 
     if(personalData.getHomeAddress() != null) {
       mapAddressToContactAddress(contactInformation, personalData.getHomeAddress(), AddrTypes.Home);
+    }
+    
+    PreferredEmail preferedEmail = businessEmailUpdateDao.getPreferedEmail(emplId);
+    if(preferedEmail != null) {
+      contactInformation.getEmails().add(new TypeValue(null,preferedEmail.getEmail()));
     }
     
     
