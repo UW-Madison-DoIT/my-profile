@@ -18,6 +18,7 @@ import edu.wisc.my.profile.model.TypeValue;
 public class ContactInformationServiceImpl implements ContactInformationService {
   
   private String businessEmailRolesPreferences = "businessEmailRoles";
+  private static enum AddrTypes {Home, Office};
   private ContactInfoDao contactInfoDao;
   //private BusinessEmailUpdateDao businessEmailUpdateDao;
   //private PreferredNameService preferredNameService;
@@ -52,21 +53,21 @@ public class ContactInformationServiceImpl implements ContactInformationService 
     
     //get address info and phone info
     if(personalData.getOfficeAddress() != null) {
-      mapAddressToContactAddress(contactInformation, personalData.getOfficeAddress());
+      mapAddressToContactAddress(contactInformation, personalData.getOfficeAddress(), AddrTypes.Office);
     }
 
     if(personalData.getHomeAddress() != null) {
-      mapAddressToContactAddress(contactInformation, personalData.getHomeAddress());
+      mapAddressToContactAddress(contactInformation, personalData.getHomeAddress(), AddrTypes.Home);
     }
     
     
     return contactInformation;
   }
   
-  private void mapAddressToContactAddress(ContactInformation info, Address address) {
+  private void mapAddressToContactAddress(ContactInformation info, Address address, AddrTypes type) {
     ContactAddress newAddr = new ContactAddress();
     List<String> lines = new ArrayList<String>();
-    if(address.getRoomNumber() != null) {
+    if(!StringUtils.isBlank(address.getRoomNumber())) {
       lines.add("Room " + address.getRoomNumber());
     }
     
@@ -84,11 +85,12 @@ public class ContactInformationServiceImpl implements ContactInformationService 
     newAddr.setCity(address.getCity());
     newAddr.setPostalCode(address.getZip());
     newAddr.setState(address.getState());
+    newAddr.setType(type.toString());
     
     info.getAddresses().add(newAddr);
     
-    if(address.getPrimaryPhone() != null) {
-      info.getPhoneNumbers().add(new TypeValue(null,address.getPrimaryPhone()));
+    if(!StringUtils.isBlank(address.getPrimaryPhone())) {
+      info.getPhoneNumbers().add(new TypeValue(type.toString(),address.getPrimaryPhone()));
       
     }
   }

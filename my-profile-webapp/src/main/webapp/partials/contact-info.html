@@ -20,7 +20,7 @@
             <td>Physical Addresses</td> 
             <td>
                 <ul style='padding: 0;'>
-                  <li ng-repeat='addr in contactInfo.addresses'>
+                  <li ng-repeat='addr in contactInfo.addresses' style='padding-top: 1em;'>
                   <span>
                       <span ng-repeat="line in addr.addressLines">{{line}}<br/></span>
                       {{addr.city}}, {{addr.stateCode}} {{addr.postalCode}}
