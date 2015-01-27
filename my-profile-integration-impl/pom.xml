@@ -6,6 +6,9 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>my-profile-integration-impl</artifactId>
+  <properties>
+    <hrs.version>1.0.0.19</hrs.version>
+  </properties>
   
   <dependencies>
     <dependency>
@@ -23,22 +26,22 @@
     <dependency>
         <groupId>edu.wisc.my.portlet.hrs</groupId>
         <artifactId>hrs-portlets-api</artifactId>
-        <version>1.0.0.20-SNAPSHOT</version>
+        <version>${hrs.version}</version>
     </dependency>
     <dependency>
         <groupId>edu.wisc.my.portlet.hrs</groupId>
         <artifactId>hrs-portlets-ps-impl</artifactId>
-        <version>1.0.0.20-SNAPSHOT</version>
+        <version>${hrs.version}</version>
     </dependency>
     <dependency>
         <groupId>edu.wisc.my.portlet.hrs</groupId>
         <artifactId>hrs-portlets-cypress-impl</artifactId>
-        <version>1.0.0.20-SNAPSHOT</version>
+        <version>${hrs.version}</version>
     </dependency>
     <dependency>
         <groupId>edu.wisc.my.portlet.hrs</groupId>
         <artifactId>hrs-portlets-bnsemail-impl</artifactId>
-        <version>1.0.0.20-SNAPSHOT</version>
+        <version>${hrs.version}</version>
     </dependency>
   </dependencies>
 </project>
