@@ -2,4 +2,5 @@ bnsemail-placeholder.properties
 cypress-placeholder.properties
 ps-placeholder.properties
 smime-keystore.jks
+datasource.properties
 

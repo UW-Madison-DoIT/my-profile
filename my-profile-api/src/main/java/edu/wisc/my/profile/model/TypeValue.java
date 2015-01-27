@@ -2,6 +2,10 @@ package edu.wisc.my.profile.model;
 
 public class TypeValue {
   
+  public TypeValue() {
+    
+  }
+  
   public TypeValue(String type, String value) {
     this.type = type;
     this.value = value;

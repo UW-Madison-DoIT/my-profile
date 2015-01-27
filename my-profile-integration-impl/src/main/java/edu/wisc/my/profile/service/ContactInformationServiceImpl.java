@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,7 @@ import edu.wisc.hr.dao.person.ContactInfoDao;
 import edu.wisc.hr.dm.bnsemail.PreferredEmail;
 import edu.wisc.hr.dm.person.Address;
 import edu.wisc.hr.dm.person.PersonInformation;
+import edu.wisc.my.profile.isis.dao.IsisDao;
 import edu.wisc.my.profile.model.ContactAddress;
 import edu.wisc.my.profile.model.ContactInformation;
 import edu.wisc.my.profile.model.TypeValue;
@@ -19,10 +22,13 @@ import edu.wisc.my.profile.model.TypeValue;
 @Service
 public class ContactInformationServiceImpl implements ContactInformationService {
   
+  protected static final Logger logger = LoggerFactory.getLogger(ContactInformationServiceImpl.class);
+  
   private String businessEmailRolesPreferences = "businessEmailRoles";
   private static enum AddrTypes {Home, Office};
   private ContactInfoDao contactInfoDao;
   private BusinessEmailUpdateDao businessEmailUpdateDao;
+  private IsisDao isisDao;
   //private PreferredNameService preferredNameService;
   
   public void setBusinessEmailRolesPreferences(String businessEmailRolesPreferences) {
@@ -33,6 +39,12 @@ public class ContactInformationServiceImpl implements ContactInformationService 
   public void setBusinessEmailUpdateDao(BusinessEmailUpdateDao businessEmailUpdateDao) {
       this.businessEmailUpdateDao = businessEmailUpdateDao;
   }
+  
+  @Autowired
+  public void setIsisDao(IsisDao dao) {
+    isisDao = dao;
+  }
+  
   /*
   
   @Autowired
@@ -49,47 +61,55 @@ public class ContactInformationServiceImpl implements ContactInformationService 
   public ContactInformation getContactInfo(String emplId) {
     ContactInformation contactInformation = new ContactInformation();
     
-    //get basic information
-    PersonInformation personalData = contactInfoDao.getPersonalData(emplId);
-    contactInformation.setLegalName(personalData.getName());
-    contactInformation.setId(emplId);
-    
-    //get address info and phone info
-    if(personalData.getOfficeAddress() != null) {
-      mapAddressToContactAddress(contactInformation, personalData.getOfficeAddress(), AddrTypes.Office);
-    }
-
-    if(personalData.getHomeAddress() != null) {
-      mapAddressToContactAddress(contactInformation, personalData.getHomeAddress(), AddrTypes.Home);
+    try {
+      //get basic information
+      PersonInformation personalData = contactInfoDao.getPersonalData(emplId);
+      contactInformation.setLegalName(personalData.getName());
+      contactInformation.setId(emplId);
+      
+      //get address info and phone info
+      if(personalData.getOfficeAddress() != null) {
+        mapAddressToContactAddress(contactInformation, personalData.getOfficeAddress(), AddrTypes.Office);
+      }
+  
+      if(personalData.getHomeAddress() != null) {
+        mapAddressToContactAddress(contactInformation, personalData.getHomeAddress(), AddrTypes.Home);
+      }
+    } catch (Exception e) {
+      logger.warn("Had issue gathering HRS data for " + emplId, e);
     }
     
     PreferredEmail preferedEmail = businessEmailUpdateDao.getPreferedEmail(emplId);
-    if(preferedEmail != null) {
+    if(preferedEmail != null && !StringUtils.isBlank(preferedEmail.getEmail())) {
       contactInformation.getEmails().add(new TypeValue(null,preferedEmail.getEmail()));
     }
     
+    ContactAddress address = isisDao.getAddress(emplId);
+    if(address != null && address.getAddressLines().size() > 0) {
+      contactInformation.getAddresses().add(address);
+    }
+    
+    contactInformation.getPhoneNumbers().addAll(isisDao.getPhone(emplId));
     
     return contactInformation;
   }
   
   private void mapAddressToContactAddress(ContactInformation info, Address address, AddrTypes type) {
     ContactAddress newAddr = new ContactAddress();
-    List<String> lines = new ArrayList<String>();
     if(!StringUtils.isBlank(address.getRoomNumber())) {
-      lines.add("Room " + address.getRoomNumber());
+      newAddr.getAddressLines().add("Room " + address.getRoomNumber());
     }
     
     if(!StringUtils.isBlank(address.getAddress1())) {
-      lines.add(address.getAddress1());
+      newAddr.getAddressLines().add(address.getAddress1());
     }
     if(!StringUtils.isBlank(address.getAddress2())) {
-      lines.add(address.getAddress2());
+      newAddr.getAddressLines().add(address.getAddress2());
     }
     if(!StringUtils.isBlank(address.getAddress3())) {
-      lines.add(address.getAddress3());
+      newAddr.getAddressLines().add(address.getAddress3());
     }
     
-    newAddr.setAddressLines(lines);
     newAddr.setCity(address.getCity());
     newAddr.setPostalCode(address.getZip());
     newAddr.setState(address.getState());

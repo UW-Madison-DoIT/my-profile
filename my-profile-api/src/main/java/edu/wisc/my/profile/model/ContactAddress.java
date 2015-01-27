@@ -1,10 +1,11 @@
 package edu.wisc.my.profile.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ContactAddress {
   private String type;
-  private List<String> addressLines;
+  private List<String> addressLines = new ArrayList<String>();
   private String city;
   private String country;
   private String state;

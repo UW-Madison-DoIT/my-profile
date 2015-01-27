@@ -22,6 +22,11 @@
       <artifactId>spring-core</artifactId>
     </dependency>
     
+    <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+    </dependency>
+    
     <!-- HRS Portlets -->
     <dependency>
         <groupId>edu.wisc.my.portlet.hrs</groupId>
