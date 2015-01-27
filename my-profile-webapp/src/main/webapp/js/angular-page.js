@@ -19,6 +19,7 @@
  app.config(['$routeProvider',function($routeProvider, $locationProvider) {
 	 $routeProvider.
       when('/settings', {templateUrl: 'partials/settings.html'}).
+      when('/contact-info', {templateUrl: 'partials/contact-info.html'}).
       otherwise({templateUrl: 'partials/main.html'});
       }
  	]);
