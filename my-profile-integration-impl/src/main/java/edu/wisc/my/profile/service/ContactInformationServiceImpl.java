@@ -14,6 +14,8 @@ import edu.wisc.hr.dao.person.ContactInfoDao;
 import edu.wisc.hr.dm.bnsemail.PreferredEmail;
 import edu.wisc.hr.dm.person.Address;
 import edu.wisc.hr.dm.person.PersonInformation;
+import edu.wisc.hr.dm.prefname.PreferredName;
+import edu.wisc.hr.service.PreferredNameService;
 import edu.wisc.my.profile.isis.dao.IsisDao;
 import edu.wisc.my.profile.model.ContactAddress;
 import edu.wisc.my.profile.model.ContactInformation;
@@ -29,7 +31,7 @@ public class ContactInformationServiceImpl implements ContactInformationService 
   private ContactInfoDao contactInfoDao;
   private BusinessEmailUpdateDao businessEmailUpdateDao;
   private IsisDao isisDao;
-  //private PreferredNameService preferredNameService;
+  private PreferredNameService preferredNameService;
   
   public void setBusinessEmailRolesPreferences(String businessEmailRolesPreferences) {
       this.businessEmailRolesPreferences = businessEmailRolesPreferences;
@@ -45,12 +47,10 @@ public class ContactInformationServiceImpl implements ContactInformationService 
     isisDao = dao;
   }
   
-  /*
-  
   @Autowired
   public void setPreferredNameService(PreferredNameService service) {
       this.preferredNameService = service;
-  }*/
+  }
 
   @Autowired
   public void setContactInfoDao(ContactInfoDao contactInfoDao) {
@@ -58,16 +58,16 @@ public class ContactInformationServiceImpl implements ContactInformationService 
   }
 
   @Override
-  public ContactInformation getContactInfo(String emplId) {
+  public ContactInformation getContactInfo(String username, String emplId, String pvi) {
     ContactInformation contactInformation = new ContactInformation();
     
     try {
-      //get basic information
+      //get basic information from HRS
       PersonInformation personalData = contactInfoDao.getPersonalData(emplId);
       contactInformation.setLegalName(personalData.getName());
       contactInformation.setId(emplId);
       
-      //get address info and phone info
+      //get address info and phone info from HRS
       if(personalData.getOfficeAddress() != null) {
         mapAddressToContactAddress(contactInformation, personalData.getOfficeAddress(), AddrTypes.Office);
       }
@@ -79,11 +79,21 @@ public class ContactInformationServiceImpl implements ContactInformationService 
       logger.warn("Had issue gathering HRS data for " + emplId, e);
     }
     
+    //preferred name
+    if(!StringUtils.isBlank(pvi)) {
+      PreferredName preferredName = preferredNameService.getPreferredName(pvi);
+      if(preferredName != null) {
+        contactInformation.setPreferredName(preferredName.getFirstName() + " " + preferredName.getMiddleName());
+      }
+    }
+    
+    //preferred email
     PreferredEmail preferedEmail = businessEmailUpdateDao.getPreferedEmail(emplId);
     if(preferedEmail != null && !StringUtils.isBlank(preferedEmail.getEmail())) {
       contactInformation.getEmails().add(new TypeValue(null,preferedEmail.getEmail()));
     }
     
+    //student isis information
     ContactAddress address = isisDao.getAddress(emplId);
     if(address != null && address.getAddressLines().size() > 0) {
       contactInformation.getAddresses().add(address);

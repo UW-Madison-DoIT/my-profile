@@ -3,4 +3,5 @@ cypress-placeholder.properties
 ps-placeholder.properties
 smime-keystore.jks
 datasource.properties
+jdbc-config.properties
 

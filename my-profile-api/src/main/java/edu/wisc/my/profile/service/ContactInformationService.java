@@ -4,6 +4,6 @@ import edu.wisc.my.profile.model.ContactInformation;
 
 public interface ContactInformationService {
   
-  public ContactInformation getContactInfo(String id);
+  public ContactInformation getContactInfo(String username, String emplid, String pvi);
 
 }

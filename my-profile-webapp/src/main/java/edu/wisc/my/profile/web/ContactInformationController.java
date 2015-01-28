@@ -43,10 +43,13 @@ public class ContactInformationController {
     } else {
       String emplId = SessionUtils.getAttribute(request, emplIdAttributes);
       logger.debug("Received emplId : " + emplId);
-      if(!StringUtils.isBlank(emplId))
-        return ciService.getContactInfo(emplId);
-      else 
+      if(!StringUtils.isBlank(emplId)) {
+        String pvi = SessionUtils.getAttribute(request, "wiscedupvi");
+        logger.debug("Received pvi : " + pvi);
+        return ciService.getContactInfo(username, emplId, pvi);
+      } else { 
         return null;
+      }
     }
   }
 }

@@ -48,5 +48,6 @@
         <artifactId>hrs-portlets-bnsemail-impl</artifactId>
         <version>${hrs.version}</version>
     </dependency>
+    
   </dependencies>
 </project>
