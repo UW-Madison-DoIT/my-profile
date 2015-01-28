@@ -265,9 +265,6 @@ public class JdbcIsisDao implements InitializingBean, IsisDao {
           phones.add(new TypeValue("Student Cell", cellPhoneValue));
         }
         
-        final TypeValue cellPhone = new TypeValue("Student Cell", StringUtils.trim((String)results.get("cell")));
-        phones.add(cellPhone);
-        
         if (this.logger.isDebugEnabled()) {
             this.logger.debug("Retrieved " + phones + " for: " + args);
         }

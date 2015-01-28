@@ -83,7 +83,7 @@ public class ContactInformationServiceImpl implements ContactInformationService 
     if(!StringUtils.isBlank(pvi)) {
       PreferredName preferredName = preferredNameService.getPreferredName(pvi);
       if(preferredName != null) {
-        contactInformation.setPreferredName(preferredName.getFirstName() + " " + preferredName.getMiddleName());
+        contactInformation.setPreferredName(preferredName.getFirstName() + (StringUtils.isBlank(preferredName.getMiddleName()) ? "" : " " + preferredName.getMiddleName()));
       }
     }
     
