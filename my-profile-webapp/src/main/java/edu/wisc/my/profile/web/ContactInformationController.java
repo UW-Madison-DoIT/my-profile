@@ -47,6 +47,13 @@ public class ContactInformationController {
         String headerName = headerNames.nextElement();
         logger.debug(" - " + headerName);
       }
+      @SuppressWarnings("unchecked")
+      Enumeration<String> attributes = request.getAttributeNames();
+      logger.debug("Attributes avaiable :");
+      while(attributes.hasMoreElements()) {
+        String attribute = attributes.nextElement();
+        logger.debug(" - " + attribute);
+      }
     }
     
     
