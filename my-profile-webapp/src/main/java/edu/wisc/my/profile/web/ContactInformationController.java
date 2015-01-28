@@ -1,5 +1,7 @@
 package edu.wisc.my.profile.web;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -37,6 +39,16 @@ public class ContactInformationController {
     
     String username = request.getRemoteUser();
     logger.debug("Received username " + username);
+    if(logger.isDebugEnabled()) {
+      logger.debug("Headers avaiable :");
+      @SuppressWarnings("unchecked")
+      Enumeration<String> headerNames = request.getHeaderNames();
+      while(headerNames.hasMoreElements()) {
+        String headerName = headerNames.nextElement();
+        logger.debug(" - " + headerName);
+      }
+    }
+    
     
     if(StringUtils.isBlank(username)) {
       return null;
