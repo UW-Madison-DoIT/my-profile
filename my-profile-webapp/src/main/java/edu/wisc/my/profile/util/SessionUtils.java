@@ -9,11 +9,11 @@ public class SessionUtils {
   
   protected static final Logger logger = LoggerFactory.getLogger(SessionUtils.class);
   
-  public static String getAttribute(HttpServletRequest request, String ... attributes) {
+  public static String getHeader(HttpServletRequest request, String ... attributes) {
     Object valObject = null;
     
     for (String attribute : attributes) {
-      valObject = request.getAttribute(attribute);
+      valObject = request.getHeader(attribute);
       if(valObject != null) {
         logger.debug("Found valid value using attribute : " + attribute);
         break;

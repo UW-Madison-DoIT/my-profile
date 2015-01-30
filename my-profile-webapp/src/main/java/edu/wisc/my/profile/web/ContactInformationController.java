@@ -60,12 +60,16 @@ public class ContactInformationController {
     if(StringUtils.isBlank(username)) {
       return null;
     } else {
-      String emplId = SessionUtils.getAttribute(request, emplIdAttributes);
+      String emplId = SessionUtils.getHeader(request, emplIdAttributes);
+      String pvi = SessionUtils.getHeader(request, "wiscEduPVI");
       logger.debug("Received emplId : " + emplId);
-      if(!StringUtils.isBlank(emplId)) {
-        String pvi = SessionUtils.getAttribute(request, "wiscedupvi");
-        logger.debug("Received pvi : " + pvi);
-        return ciService.getContactInfo(username, emplId, pvi);
+      logger.debug("Received pvi : " + pvi);
+      if(!StringUtils.isBlank(emplId) || !StringUtils.isBlank(pvi)) {
+        ContactInformation contactInfo = ciService.getContactInfo(username, emplId, pvi);
+        if(StringUtils.isBlank(contactInfo.getLegalName())) {
+          contactInfo.setLegalName(request.getHeader("cn"));
+        }
+        return contactInfo;
       } else { 
         return null;
       }
