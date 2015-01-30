@@ -1,5 +1,7 @@
 package edu.wisc.my.profile.web;
 
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
@@ -35,8 +37,25 @@ public class ContactInformationController {
   @RequestMapping(method = RequestMethod.GET) 
   public @ResponseBody ContactInformation getContactInfo(HttpServletRequest request) {
     
-    String username = request.getHeader("uid");
+    String username = request.getRemoteUser();
     logger.debug("Received username " + username);
+    if(logger.isDebugEnabled()) {
+      logger.debug("Headers avaiable :");
+      @SuppressWarnings("unchecked")
+      Enumeration<String> headerNames = request.getHeaderNames();
+      while(headerNames.hasMoreElements()) {
+        String headerName = headerNames.nextElement();
+        logger.debug(" - " + headerName);
+      }
+      @SuppressWarnings("unchecked")
+      Enumeration<String> attributes = request.getAttributeNames();
+      logger.debug("Attributes avaiable :");
+      while(attributes.hasMoreElements()) {
+        String attribute = attributes.nextElement();
+        logger.debug(" - " + attribute);
+      }
+    }
+    
     
     if(StringUtils.isBlank(username)) {
       return null;
@@ -46,11 +65,7 @@ public class ContactInformationController {
       if(!StringUtils.isBlank(emplId)) {
         String pvi = SessionUtils.getAttribute(request, "wiscedupvi");
         logger.debug("Received pvi : " + pvi);
-        ContactInformation contactInfo = ciService.getContactInfo(username, emplId, pvi);
-        if(StringUtils.isBlank(contactInfo.getLegalName())) {
-          contactInfo.setLegalName(request.getHeader("cn"));
-        }
-        return contactInfo;
+        return ciService.getContactInfo(username, emplId, pvi);
       } else { 
         return null;
       }
