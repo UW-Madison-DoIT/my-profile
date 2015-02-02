@@ -28,11 +28,10 @@
      {
       "type": "Home",
       "addressLines": [
-        "Room ",
         "132 WAY ST APT 789"
       ],
       "city": "MADISON",
-      "country": USA,
+      "country": "USA",
       "state": "WI",
       "postalCode": "53703-3891"
      }
