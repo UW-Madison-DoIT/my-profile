@@ -13,6 +13,7 @@ public class SessionUtils {
     Object valObject = null;
     
     for (String attribute : attributes) {
+      logger.debug("Checking for attribute: " + attribute);
       valObject = request.getHeader(attribute);
       if(valObject != null) {
         logger.debug("Found valid value using attribute : " + attribute);
