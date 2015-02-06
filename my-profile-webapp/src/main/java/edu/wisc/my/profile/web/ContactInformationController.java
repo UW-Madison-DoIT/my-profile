@@ -28,10 +28,16 @@ public class ContactInformationController {
   private ContactInformationService ciService;
   
   private String[] emplIdAttributes;
+  private String pviAttribute;
   
   @Value("${emplIdAttributes:wisceduhrpersonid}")
   public void setEmplIdAttributeCSV(String emplIdCSV) {
     emplIdAttributes = emplIdCSV.split(",");
+  }
+  
+  @Value("${attribute.pvi:wiscEduPVI}")
+  public void setPviAttribute(String pvi) {
+    this.pviAttribute = pvi;
   }
   
   @RequestMapping(method = RequestMethod.GET) 
