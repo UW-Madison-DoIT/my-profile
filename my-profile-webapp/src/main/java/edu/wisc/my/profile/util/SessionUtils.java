@@ -2,6 +2,7 @@ package edu.wisc.my.profile.util;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -15,7 +16,7 @@ public class SessionUtils {
     for (String attribute : attributes) {
       logger.debug("Checking for attribute: " + attribute);
       valObject = request.getHeader(attribute);
-      if(valObject != null) {
+      if(StringUtils.isNotBlank((String) valObject)) {
         logger.debug("Found valid value using attribute : " + attribute);
         break;
       }
