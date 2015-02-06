@@ -28,7 +28,7 @@ public class ContactInformationController {
   private ContactInformationService ciService;
   
   private String[] emplIdAttributes;
-  private String pviAttribute;
+  private String[] pviAttributes;
   
   @Value("${emplIdAttributes:wisceduhrpersonid}")
   public void setEmplIdAttributeCSV(String emplIdCSV) {
@@ -37,7 +37,7 @@ public class ContactInformationController {
   
   @Value("${attribute.pvi:wiscEduPVI}")
   public void setPviAttribute(String pvi) {
-    this.pviAttribute = pvi;
+    this.pviAttributes = pvi.split(",");
   }
   
   @RequestMapping(method = RequestMethod.GET) 
@@ -67,7 +67,7 @@ public class ContactInformationController {
       return null;
     } else {
       String emplId = SessionUtils.getHeader(request, emplIdAttributes);
-      String pvi = SessionUtils.getHeader(request, "wiscEduPVI");
+      String pvi = SessionUtils.getHeader(request, pviAttributes);
       logger.debug("Received emplId : " + emplId);
       logger.debug("Received pvi : " + pvi);
       if(!StringUtils.isBlank(emplId) || !StringUtils.isBlank(pvi)) {
