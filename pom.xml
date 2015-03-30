@@ -17,6 +17,7 @@
         <module>my-profile-webapp</module>
         <module>my-profile-api</module>
         <module>my-profile-integration-impl</module>
+        <module>my-profile-local-contact-impl</module>
     </modules>
 
     <scm>
@@ -39,6 +40,12 @@
     </repositories>
     <dependencyManagement>
         <dependencies>
+        
+            <dependency>
+                <groupId>joda-time</groupId>
+                <artifactId>joda-time</artifactId>
+                <version>2.7</version>
+            </dependency>
         
             <dependency>
                 <groupId>commons-dbcp</groupId>
@@ -100,6 +107,12 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-webmvc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
                 <version>${spring.version}</version>
             </dependency>
         </dependencies>

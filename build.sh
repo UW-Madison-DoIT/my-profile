@@ -1,18 +1,18 @@
 #!/bin/bash
-
 if [ "$#" = "0" ]; then
  mvn -Djava.awt.headless=true clean install
 else 
  mvn -Djava.awt.headless=true $@
 fi
 
-if [ `echo $TC_HOME` != "" ]; then
+pushd my-profile-webapp
+mvn -Djava.awt.headless=true tomcat7:run-war
+popd
 
-rm -rf $TC_HOME/webapps/profile.war $TC_HOME/webapps/profile
-cp ./my-profile-webapp/target/profile.war $TC_HOME/webapps
-
-echo "WAR delivered to TC"
-
+unamestr=`uname`
+if [[ "$unamestr" == 'Linux' ]]; then
+ notify-send "build complete for angular" 
+elif [[ "$unamestr" == 'Darwin' ]]; then
+ osascript -e 'display notification "angularJSportal build.sh finished" with title "Angular portal deployed" sound name "Hero"'
 fi
 
-exit 0;

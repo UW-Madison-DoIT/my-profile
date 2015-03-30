@@ -3,7 +3,10 @@ package edu.wisc.my.profile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 public class ContactInformation {
+  private DateTime lastModified;
   private String id;
   private String legalName;
   private String preferredName;
@@ -46,5 +49,11 @@ public class ContactInformation {
   }
   public void setAddresses(List<ContactAddress> addresses) {
     this.addresses = addresses;
+  }
+  public DateTime getLastModified() {
+    return lastModified;
+  }
+  public void setLastModified(DateTime lastModified) {
+    this.lastModified = lastModified;
   }
 }

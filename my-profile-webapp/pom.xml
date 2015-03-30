@@ -26,7 +26,11 @@
         <artifactId>my-profile-integration-impl</artifactId>
         <version>${project.version}</version>
     </dependency>
-    
+    <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>my-profile-local-contact-impl</artifactId>
+        <version>${project.version}</version>
+    </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-databind</artifactId>
@@ -60,6 +64,7 @@
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
+      <scope>provided</scope>
     </dependency>
     
     <!-- Spring dependencies -->
@@ -76,6 +81,13 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.hsqldb</groupId>
+        <artifactId>hsqldb</artifactId>
+        <version>2.3.2</version>
+        <scope>compile</scope>
     </dependency>
   </dependencies>
 
