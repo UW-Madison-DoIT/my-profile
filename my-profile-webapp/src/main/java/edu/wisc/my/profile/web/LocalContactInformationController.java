@@ -25,7 +25,7 @@ public class LocalContactInformationController {
   
   @RequestMapping(method = RequestMethod.GET, value="/get.json")
   public @ResponseBody ContactInformation getContactInfo(HttpServletRequest request) {
-    String username = request.getRemoteUser();
+    String username = request.getHeader("uid");
     if(StringUtils.isBlank(username)) {
       logger.warn("User hit service w/o username set");
       return null;
@@ -33,11 +33,12 @@ public class LocalContactInformationController {
     return service.getContactInfo(username);
   }
   
-  @RequestMapping(method = RequestMethod.POST, value="/set")
+  @RequestMapping(method = RequestMethod.GET, value="/set")
   public @ResponseBody boolean setContactInformation(HttpServletRequest request, ContactInformation ci) {
+    String username = request.getHeader("uid");
     //TODO validate
-    if(StringUtils.isNotBlank(request.getRemoteUser())) {
-      service.setContactInfo(request.getRemoteUser(), ci);
+    if(StringUtils.isNotBlank(username)) {
+      service.setContactInfo(username, ci);
       return true;
     } else {
       return false;

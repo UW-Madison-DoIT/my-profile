@@ -11,18 +11,22 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.joda.JodaModule;
 
 import edu.wisc.my.profile.model.ContactInformation;
 
 public class LocalContactInformationDaoImpl implements LocalContactInformationDao {
   
   private JdbcTemplate jdbcTemplate;
-  private final static String INSERT_SQL = "INSERT INTO key_val (key, val) values (?,?)";
+  private ObjectMapper om;
+  private final static String INSERT_SQL = "INSERT INTO key_val (key, value) values (?,?)";
   private final static String SELECT_SQL = "SELECT * FROM key_val WHERE key = ?";
   private final static String DELETE_SQL = "DELETE FROM key_val WHERE key = ?";
   
   public LocalContactInformationDaoImpl(DataSource ds) {
     jdbcTemplate = new JdbcTemplate(ds);
+    om = new ObjectMapper();
+    om.registerModule(new JodaModule());
   }
 
   @Override
@@ -35,7 +39,6 @@ public class LocalContactInformationDaoImpl implements LocalContactInformationDa
   @Override
   public ContactInformation setContactInfo(String netId, ContactInformation contactInformation) {
     
-    ObjectMapper om = new ObjectMapper();
     try {
       final String json = om.writeValueAsString(contactInformation);
       jdbcTemplate.update(DELETE_SQL, netId);
@@ -53,8 +56,7 @@ public class LocalContactInformationDaoImpl implements LocalContactInformationDa
     @Override
     public ContactInformation extractData(ResultSet rs) throws SQLException, DataAccessException {
       if(rs.next()) {
-        String val = rs.getString(1);
-        ObjectMapper om = new ObjectMapper();
+        String val = rs.getString(2);
         ContactInformation value = null;
         try {
           value = om.readValue(val, ContactInformation.class);

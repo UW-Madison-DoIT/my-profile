@@ -6,7 +6,7 @@ else
 fi
 
 pushd my-profile-webapp
-mvn -Djava.awt.headless=true tomcat7:run-war
+mvn -Djava.awt.headless=true tomcat7:redeploy
 popd
 
 unamestr=`uname`
