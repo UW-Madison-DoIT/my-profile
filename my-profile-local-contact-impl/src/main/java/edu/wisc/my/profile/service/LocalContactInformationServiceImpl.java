@@ -20,13 +20,13 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
 
   @Override
   public ContactInformation getContactInfo(String netId) {
-    return dao.getContactInfo(netId);
+    return dao.getData(netId);
   }
 
   @Override
-  public ContactInformation setContactInfo(String netId, ContactInformation contactInformation) {
+  public ContactInformation setContactInfo(String netId, ContactInformation contactInformation) throws Exception {
     contactInformation.setLastModified(DateTime.now());
-    return dao.setContactInfo(netId, contactInformation);
+    return dao.setData(netId, contactInformation);
   }
 
 }

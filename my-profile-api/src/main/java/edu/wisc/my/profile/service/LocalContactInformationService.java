@@ -6,6 +6,6 @@ public interface LocalContactInformationService {
   
   public ContactInformation getContactInfo(String netId);
   
-  public ContactInformation setContactInfo(String netId, ContactInformation contactInformation);
+  public ContactInformation setContactInfo(String netId, ContactInformation contactInformation) throws Exception;
 
 }

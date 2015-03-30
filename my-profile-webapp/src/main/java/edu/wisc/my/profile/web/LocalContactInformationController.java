@@ -38,7 +38,12 @@ public class LocalContactInformationController {
     String username = request.getHeader("uid");
     //TODO validate
     if(StringUtils.isNotBlank(username)) {
-      service.setContactInfo(username, ci);
+      try {
+        service.setContactInfo(username, ci);
+      } catch (Exception e) {
+        logger.error("Issue setting data", e);
+        return false;
+      }
       return true;
     } else {
       return false;
