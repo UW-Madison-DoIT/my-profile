@@ -20,7 +20,7 @@ import edu.wisc.my.profile.service.LocalContactInformationService;
 @RequestMapping("/localContactInfo")
 public class LocalContactInformationController {
   
-  protected static final Logger logger = LoggerFactory.getLogger(LocalContactInformationController.class);
+  protected final Logger logger = LoggerFactory.getLogger(getClass());
   
   @Autowired
   private LocalContactInformationService service;

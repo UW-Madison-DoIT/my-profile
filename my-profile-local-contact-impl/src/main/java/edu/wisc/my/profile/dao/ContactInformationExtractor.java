@@ -15,7 +15,7 @@ import edu.wisc.my.profile.model.ContactInformation;
 
 public class ContactInformationExtractor implements ResultSetExtractor<ContactInformation> {
   
-  protected static final Logger logger = LoggerFactory.getLogger(ContactInformationExtractor.class);
+  protected final Logger logger = LoggerFactory.getLogger(getClass());
   private ObjectMapper om;
   
   public ContactInformationExtractor() {

@@ -29,7 +29,7 @@ public abstract class KeyValueDataStoreDao<T> {
   private final static String SELECT_SQL = "SELECT * FROM key_val WHERE key = ?";
   private final static String DELETE_SQL = "DELETE FROM key_val WHERE key = ?";
   
-  protected static final Logger logger = LoggerFactory.getLogger(KeyValueDataStoreDao.class);
+  protected final Logger logger = LoggerFactory.getLogger(getClass());
   
   public void setPostFix(String postFix) {
     this.postFix = postFix;
