@@ -5,3 +5,4 @@ smime-keystore.jks
 datasource.properties
 jdbc-config.properties
 
+/rdbm.properties

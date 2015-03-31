@@ -1,0 +1,33 @@
+<link href="css/app.css" rel="stylesheet" type="text/css"/>
+<div class="portlet-frame" style='display: inline-block; width: 100%;'>
+    <portlet-header app-title="My Profile - Local Address" app-image="img/square.jpg"></portlet-header>
+    <div class="portlet-body">
+        <!-- App Navigation if Needed -->
+        <div class="inner-nav-container">
+            <ul class="inner-nav">
+                <li ><a href="#/main">My Profile</a></li>
+                <li class="active"><a href="#/local">Local Address</a></li>
+                <li><a href="#/emergencyContact">Emergency Contacts</a></li>
+            </ul>
+        </div>
+        <div ng-controller="LocalContactInformationController as localContactInfoCtrl">
+            <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
+            <loading-gif data-object='contactInfo'></loading-gif>
+            <div class="col-xs-12">
+                <div class='fluid-container'>
+                    <div class='row'>
+                        <div class='col-sm-6' ng-repeat="address in contactInfo.addresses">
+                            <div class=' info-card'>
+                                <address></address>
+                            </div>
+                        </div>
+                        <div ng-if="contactInfo.addresses.length === 0" class='col-sm-6 info-card'>
+                            <p>You have no local address information stored.</p>
+                            <button class='btn btn-primary' ng-click='addEdit()'>Add local address</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

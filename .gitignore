@@ -2,3 +2,4 @@
 .settings
 target
 .classpath
+my-profile-webapp/logs/
