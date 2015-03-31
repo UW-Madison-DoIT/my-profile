@@ -24,6 +24,34 @@
         });
         
       } ]);
+    
+    app.controller('LocalContactInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
+        //scope functions
+        $scope.addEdit = function() {
+          $scope.contactInfo.addresses.push({ addressLines : [""], edit : true})
+        }
+        
+        $scope.save = function() {
+            var len = $scope.contactInfo.addresses.length;
+            $scope.contactInfo.addresses[len -1].edit = false;
+            $scope.saving = true;
+            profileService.saveLocalContactInfo($scope.contactInfo).then(function(result){
+                $scope.contactInfo = result.data;
+                $scope.saving = false;
+            });
+        }
+        
+        //local functions
+        var init = function() {
+            $scope.contactInfo = [];
+            profileService.getLocalContactInfo().then(function(result){
+                $scope.contactInfo = result.data;
+            });
+        }
+        
+        //run init
+        init();
+      } ]);
       
       app.controller('BasicInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
           $scope.basicInfo = [];
@@ -57,6 +85,13 @@
           }
         });
       
+      app.directive('address', function() {
+          return {
+            restrict : 'E',
+            templateUrl : 'partials/address.html'
+          }
+        });
+      
       app.directive('emergencyInfo', function() {
           return {
             restrict : 'E',
@@ -69,6 +104,7 @@
       app.factory('profileService', function($http, miscService) {
           //var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
           var contactInfoPromise = $http.get('/profile/api/contactInfo.json');
+          var localContactInfoPromise = $http.get('/profile/api/localContactInfo/get.json');
           var basicInfoPromise = $http.get('/profile/samples/basic-info.json');
           var emergencyInfoPromise = $http.get('/profile/samples/emergency-info.json');
         
@@ -80,6 +116,25 @@
                  miscService.redirectUser(status, "Get contact info");
               });
           }
+          
+          var getLocalContactInfo = function() {
+              return localContactInfoPromise.success(
+                 function(data, status) { //success function
+                     return data;
+                 }).error(function(data, status) { // failure function
+                 miscService.redirectUser(status, "Get local contact info");
+              });
+          }
+          
+          var saveLocalContactInfo = function (contactInfo) {
+              contactInfo.lastModified = null;
+              return $http.post('/profile/api/localContactInfo/set',contactInfo).success(
+                  function(data, status) { //success function
+                      return data;
+                  }).error(function(data, status) { // failure function
+                  miscService.redirectUser(status, "Get local contact info");
+               });
+          };
           
           var getBasicInfo = function() {
               return basicInfoPromise.success(
@@ -101,6 +156,8 @@
         
           return {
             getContactInfo : getContactInfo,
+            getLocalContactInfo : getLocalContactInfo,
+            saveLocalContactInfo : saveLocalContactInfo,
             getBasicInfo   : getBasicInfo,
             getEmergencyInfo : getEmergencyInfo
           }

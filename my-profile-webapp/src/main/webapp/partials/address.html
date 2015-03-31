@@ -1,0 +1,46 @@
+<div ng-if='!address.edit || address.edit == false'>
+    <div ng-repeat="line in address.addressLines">
+        {{line}}
+    </div>
+    <div>
+        {{address.city}}, {{address.state}} {{address.postalCode}}
+    </div>
+    <div>
+        {{address.country}}
+    </div>
+    
+    <p>{{address.comment}}</p>
+    <button class='btn btn-default' ng-click='addEdit()'>Add another</button>
+    <button class='btn btn-default'>Edit</button>
+    <button class='btn btn-default'>Delete</button>
+</div>
+<div ng-if='address.edit'>
+    <form>
+        <div ng-repeat="line in address.addressLines | limitTo:5 track by $index" class="form-group">
+            <label for="addressLine{{$index}}">Address Line {{$index + 1}}</label>
+            <input id='addressLine{{$index}}' class="form-control" ng-model='address.addressLines[$index]'>
+        </div>
+        <button class='btn btn-outline' ng-click='address.addressLines.push("")' ng-if='address.addressLines.length <= 4'>Add line</button>
+        <div class='form-group'>
+            <label for="city">City</label>
+            <input class="form-control" id='city'  ng-model='address.city'>
+        </div>
+        <div class='form-group'>
+            <label for="state">State</label>
+            <input class="form-control" id='state' ng-model='address.state'>
+        </div>
+        <div class='form-group'>
+            <label for="postalCode">Postal Code</label>
+            <input class="form-control" id="postalCode" ng-model='address.postalCode'>
+        </div>
+        <div class='form-group'>
+            <label for="country">Country</label>
+            <input class="form-control" id='country' ng-model='address.country'>
+        </div>
+        <div class='form-group'>
+            <label for="comment">Comments</label>
+            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment'></textarea>
+        </div>
+        <button class='btn btn-primary btn-flat' style='margin-right: 10px;' ng-click="save()">Save</button><button class='btn btn-outline' ng-click='contactInfo.addresses.pop()'>Cancel</button>
+    </form>
+</div>

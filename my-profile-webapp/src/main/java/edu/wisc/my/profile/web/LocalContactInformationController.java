@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,20 +34,20 @@ public class LocalContactInformationController {
     return service.getContactInfo(username);
   }
   
-  @RequestMapping(method = RequestMethod.GET, value="/set")
-  public @ResponseBody boolean setContactInformation(HttpServletRequest request, ContactInformation ci) {
-    String username = request.getHeader("uid");
+  @RequestMapping(method = RequestMethod.POST, value="/set")
+  public @ResponseBody ContactInformation setContactInformation(HttpServletRequest request, @RequestBody ContactInformation ci) {
+    final String uid = request.getHeader("uid");
     //TODO validate
-    if(StringUtils.isNotBlank(username)) {
+    if(StringUtils.isNotBlank(uid)) {
       try {
-        service.setContactInfo(username, ci);
+        ci = service.setContactInfo(uid, ci);
       } catch (Exception e) {
         logger.error("Issue setting data", e);
-        return false;
+        return ci;
       }
-      return true;
+      return ci;
     } else {
-      return false;
+      return ci;
     }
   }
 
