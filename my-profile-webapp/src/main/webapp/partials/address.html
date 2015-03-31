@@ -18,29 +18,29 @@
     <form novalidate>
         <div ng-repeat="line in address.addressLines | limitTo:5 track by $index" class="form-group">
             <label for="addressLine{{$index}}">Address Line {{$index + 1}}</label>
-            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index == 0' required>
-            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index != 0' >
+            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index == 0' required  maxlength='100'>
+            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index != 0' maxlength='100'>
         </div>
         <button class='btn btn-outline' type='text' ng-click='address.addressLines.push("")' ng-if='address.addressLines.length <= 4'>Add line</button>
         <div class='form-group'>
             <label for="city">City</label>
-            <input class="form-control" type='text' ng-model='address.city' required>
+            <input class="form-control" type='text' ng-model='address.city' required maxlength='100'>
         </div>
         <div class='form-group'>
-            <label for="state">State</label>
-            <input class="form-control" id='state' type='text' ng-model='address.state' required>
+            <label for="state">State/Province/Region</label>
+            <input class="form-control" id='state' type='text' ng-model='address.state' required maxlength='100'>
         </div>
         <div class='form-group'>
-            <label for="postalCode">Postal Code</label>
-            <input class="form-control" id="postalCode" type='text' ng-model='address.postalCode' required>
+            <label for="postalCode">Zip</label>
+            <input class="form-control" id="postalCode" type='text' ng-model='address.postalCode' required maxlength='100'>
         </div>
         <div class='form-group'>
             <label for="country">Country</label>
-            <input class="form-control" id='country' type='text' ng-model='address.country' required>
+            <input class="form-control" id='country' type='text' ng-model='address.country' required maxlength='200'>
         </div>
         <div class='form-group'>
-            <label for="comment">Comments</label>
-            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment'></textarea>
+            <label for="comment">More Information <small>({{100 - address.comment.length}} characters left)</small></label>
+            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment' maxlength='100'></textarea>
         </div>
         <button class='btn btn-primary btn-flat' style='margin-right: 10px;' ng-click="save()">Save</button>
         <button class='btn btn-outline' ng-click='cancel()'>Cancel</button>

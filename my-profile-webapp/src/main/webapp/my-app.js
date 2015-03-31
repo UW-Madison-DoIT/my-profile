@@ -32,7 +32,7 @@
         }
         
         $scope.save = function() {
-            $scope.saving = true;
+            $scope.notSaving = false;
             $scope.error = "";
             profileService.saveLocalContactInfo($scope.contactInfo)
                 .then(function(result){//success
@@ -40,9 +40,9 @@
                     angular.forEach($scope.contactInfo.addresses, function(value, key, obj){
                         value.edit = false;
                     });
-                    $scope.saving = false;
+                    $scope.notSaving = true;
                 },function(data, status){//error
-                    $scope.saving = false;
+                    $scope.notSaving = true;
                     $scope.error = "There was an issue saving your address, please try again later."
                 });
         }
@@ -60,6 +60,7 @@
         var init = function() {
             $scope.contactInfo = [];
             $scope.error = "";
+            $scope.notSaving = true;
             profileService.getLocalContactInfo()
                 .then(
                   function(result){//success
