@@ -12,6 +12,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.joda.JodaModule;
 
+/**
+ * A class that fetches and places a Java object into a key value store as a json object
+ * The table name is key_val with a key and a value column
+ * @author levett
+ *
+ * @param <T> This is the object type to be stored
+ */
 public abstract class KeyValueDataStoreDao<T> {
   
   private String postFix = null;
