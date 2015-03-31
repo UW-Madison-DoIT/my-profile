@@ -11,6 +11,7 @@
             </ul>
         </div>
         <div ng-controller="LocalContactInformationController as localContactInfoCtrl">
+            <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
             <loading-gif data-object='contactInfo'></loading-gif>
             <div class="col-xs-12">
                 <div class='fluid-container'>

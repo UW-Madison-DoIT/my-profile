@@ -32,21 +32,46 @@
         }
         
         $scope.save = function() {
-            var len = $scope.contactInfo.addresses.length;
-            $scope.contactInfo.addresses[len -1].edit = false;
             $scope.saving = true;
-            profileService.saveLocalContactInfo($scope.contactInfo).then(function(result){
-                $scope.contactInfo = result.data;
-                $scope.saving = false;
-            });
+            $scope.error = "";
+            profileService.saveLocalContactInfo($scope.contactInfo)
+                .then(function(result){//success
+                    $scope.contactInfo = result.data;
+                    angular.forEach($scope.contactInfo.addresses, function(value, key, obj){
+                        value.edit = false;
+                    });
+                    $scope.saving = false;
+                },function(data, status){//error
+                    $scope.saving = false;
+                    $scope.error = "There was an issue saving your address, please try again later."
+                });
+        }
+        
+        $scope.deleteAddress = function(index) {
+            $scope.contactInfo.addresses.splice(index,1);
+            $scope.save();
+        };
+        
+        $scope.cancel = function() {
+            init();
         }
         
         //local functions
         var init = function() {
             $scope.contactInfo = [];
-            profileService.getLocalContactInfo().then(function(result){
-                $scope.contactInfo = result.data;
-            });
+            $scope.error = "";
+            profileService.getLocalContactInfo()
+                .then(
+                  function(result){//success
+                    $scope.contactInfo = result.data;
+                    //clear out any editing that may have been saved
+                    angular.forEach($scope.contactInfo.addresses, function(value, key, obj){
+                        value.edit = false;
+                    })
+                }, function(result, status){//error
+                  $scope.contactInfo = {};
+                  $scope.error = "There was an issue getting your local address information. Please try again later.";
+              });
         }
         
         //run init
@@ -104,7 +129,6 @@
       app.factory('profileService', function($http, miscService) {
           //var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
           var contactInfoPromise = $http.get('/profile/api/contactInfo.json');
-          var localContactInfoPromise = $http.get('/profile/api/localContactInfo/get.json');
           var basicInfoPromise = $http.get('/profile/samples/basic-info.json');
           var emergencyInfoPromise = $http.get('/profile/samples/emergency-info.json');
         
@@ -118,7 +142,7 @@
           }
           
           var getLocalContactInfo = function() {
-              return localContactInfoPromise.success(
+              return $http.get('/profile/api/localContactInfo/get.json').success(
                  function(data, status) { //success function
                      return data;
                  }).error(function(data, status) { // failure function
