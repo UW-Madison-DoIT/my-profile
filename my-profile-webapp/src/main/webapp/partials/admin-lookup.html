@@ -29,7 +29,10 @@
                 </div>
                 <div class='fluid-container'>
                     <div class='row'>
-                        <div class='col-md-4' ng-repeat="address in result.addresses">
+                        <div ng-class="{'col-sm-offset-2' : (result.addresses.length === 1),
+                                        'col-sm-8' : (result.addresses.length  === 1),
+                                        'col-sm-6' : (result.addresses.length % 2 === 0),
+                                        'col-sm-4' : (result.addresses.length % 3 === 0)}" ng-repeat="address in result.addresses">
                             <div class=' info-card'>
                                 <address></address>
                             </div>
