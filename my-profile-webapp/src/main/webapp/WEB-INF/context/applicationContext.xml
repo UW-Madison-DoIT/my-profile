@@ -33,7 +33,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="edu.wisc.my.profile.isis.dao,edu.wisc.my.profile.service,edu.wisc.my.profile.dao"/>
+    <context:component-scan base-package="edu.wisc.my.profile.isis.dao"/>
     
     <!--
      | Reads in properties files to provide setting of bean properties in the application context
@@ -57,14 +57,14 @@
     <bean id="isis" parent="abstractDataSource">
     </bean>
     
-    <bean id="uportal" parent="abstractDataSource">
-    </bean>
-    
     <bean id="isisDao" class="edu.wisc.my.profile.isis.dao.JdbcIsisDao">
         <property name="dataSource" ref="isis"/>
     </bean>
     
-    <bean id="LocalContactInformationDao" class="edu.wisc.my.profile.dao.LocalContactInformationDaoImpl">
+    <bean id="uportal" parent="abstractDataSource">
+    </bean>
+    
+    <bean id="LocalContactInformationDao" class="edu.wisc.my.profile.local.dao.LocalContactInformationDaoImpl">
         <constructor-arg ref="uportal" />
     </bean>
 </beans>
