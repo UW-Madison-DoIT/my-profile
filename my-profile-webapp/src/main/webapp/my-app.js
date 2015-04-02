@@ -8,6 +8,7 @@
          when('/contact-info', {templateUrl: 'partials/contact-info.html'}).
          when('/main', {templateUrl: 'partials/main.html'}).
          when('/local', {templateUrl: 'partials/local-address.html'}).
+         when('/local/adminLookup', {templateUrl: 'partials/admin-lookup.html'}).
          when('/emergencyContact', {templateUrl: 'partials/emergency-contact.html'}).
          otherwise({
              redirectTo: '/main'
@@ -24,6 +25,39 @@
         });
         
       } ]);
+    
+    app.controller('LocalContactAdminController', ['$scope', 'profileService', function($scope, profileService){
+        //init function
+        var init = function() {
+            $scope.error = "";
+            $scope.empty = false;
+            $scope.result = [];
+            $scope.netIdToLookup = "";
+        }
+        
+        //scope functions
+        $scope.search = function() {
+            profileService.searchLocalContactInfo($scope.netIdToLookup).then(function(result){
+                $scope.result = result.data;
+                angular.forEach($scope.result.addresses, function(value, key, obj){
+                    value.edit = false;
+                    value.readOnly=true;
+                })
+                $scope.empty = result.data && result.data.addresses.length === 0;
+            }, function(data){
+                console.warn("Error looking up netId");
+                if(data.status === 403) {
+                    $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
+                } else {
+                    $scope.error = "Issue looking up contact information, please try again later.";
+                }
+            });
+        }
+        
+        $scope.reset = function(){init()};
+        init();
+        
+    }]);
     
     app.controller('LocalContactInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
         //scope functions
@@ -151,6 +185,15 @@
               });
           }
           
+          var searchLocalContactInfo = function(netIdToLookup) {
+              return $http.get('/profile/api/localContactInfo/adminLookup?netId=' + netIdToLookup).success(
+                  function(data, status) { //success function
+                      return data;
+                  }).error(function(data, status) { // failure function
+                  miscService.redirectUser(status, "Search admin local contact info");
+              });
+          };
+          
           var saveLocalContactInfo = function (contactInfo) {
               contactInfo.lastModified = null;
               return $http.post('/profile/api/localContactInfo/set',contactInfo).success(
@@ -183,6 +226,7 @@
             getContactInfo : getContactInfo,
             getLocalContactInfo : getLocalContactInfo,
             saveLocalContactInfo : saveLocalContactInfo,
+            searchLocalContactInfo : searchLocalContactInfo,
             getBasicInfo   : getBasicInfo,
             getEmergencyInfo : getEmergencyInfo
           }

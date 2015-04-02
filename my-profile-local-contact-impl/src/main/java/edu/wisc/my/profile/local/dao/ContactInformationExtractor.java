@@ -1,4 +1,4 @@
-package edu.wisc.my.profile.dao;
+package edu.wisc.my.profile.local.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

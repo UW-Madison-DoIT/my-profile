@@ -21,4 +21,13 @@ public interface LocalContactInformationService {
    */
   public ContactInformation setContactInfo(String netId, ContactInformation contactInformation) throws Exception;
 
+  /**
+   * Gets the contact information for another user. For admins only. blocked by spring security
+   * @param username the username of the requestee (for the logging)
+   * @param manifestGroups A list of manifest groups this entity is part of
+   * @param netId the net id they searched for
+   * @return the contact information of that individual
+   */
+  public ContactInformation getContactInfo(String username, String manifestGroups, String netId);
+
 }
