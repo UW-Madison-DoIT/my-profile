@@ -32,29 +32,50 @@
             $scope.error = "";
             $scope.empty = false;
             $scope.result = [];
-            $scope.netIdToLookup = "";
-        }
+            $scope.searchTerm = "";
+            $scope.searchResultLimitIncrementor=10;
+            $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
+        };
+        
+        $scope.lookupUser = function(netIdToLookup, index) {
+          profileService.searchLocalContactInfo(netIdToLookup).then(function(result){
+            $scope.result.people[index].contactInformation = result.data;
+            angular.forEach($scope.result.people[index].contactInformation.addresses, function(value, key, obj){
+              value.edit = false;
+              value.readOnly=true;
+            });
+            $scope.empty = result.data && result.data.addresses.length === 0;
+          }, function(data){
+            console.warn("Error looking up netId");
+            if(data.status === 403) {
+              $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
+            } else {
+              $scope.error = "Issue looking up contact information, please try again later.";
+            }
+          });
+        };
         
         //scope functions
         $scope.search = function() {
-            profileService.searchLocalContactInfo($scope.netIdToLookup).then(function(result){
-                $scope.result = result.data;
-                angular.forEach($scope.result.addresses, function(value, key, obj){
-                    value.edit = false;
-                    value.readOnly=true;
-                })
-                $scope.empty = result.data && result.data.addresses.length === 0;
-            }, function(data){
-                console.warn("Error looking up netId");
-                if(data.status === 403) {
-                    $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
-                } else {
-                    $scope.error = "Issue looking up contact information, please try again later.";
-                }
+          $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
+          profileService.searchUsers($scope.searchTerm).then(function(result){
+            $scope.result = result.data;
+            angular.forEach($scope.result.addresses, function(value, key, obj){
+              value.edit = false;
+              value.readOnly=true;
             });
-        }
+            $scope.empty = result.data && result.data.people.length === 0;
+          }, function(data){
+            console.warn("Error looking up search term");
+            if(data.status === 403) {
+              $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
+            } else {
+              $scope.error = "Issue looking up contact information, please try again later.";
+            }
+          });
+        };
         
-        $scope.reset = function(){init()};
+        $scope.reset = function(){init();};
         init();
         
     }]);
@@ -152,6 +173,13 @@
           }
         });
       
+      app.directive('user', function() {
+          return {
+            restrict : 'E',
+            templateUrl : 'partials/user.html'
+          }
+        });
+      
       app.directive('emergencyInfo', function() {
           return {
             restrict : 'E',
@@ -184,6 +212,63 @@
                  miscService.redirectUser(status, "Get local contact info");
               });
           }
+          
+        //merge json feed function from 
+        //http://samonstuff.blogspot.com/2012/02/merging-json-objects.html
+        var mergeJson = function(o1, o2) {
+          var tempNewObj = o1;
+          //if o1 is an object - {}
+          if (o1.length === undefined && typeof o1 !== "number") {
+            $.each(o2, function(key, value) {
+              if (o1[key] === undefined) {
+                tempNewObj[key] = value;
+              } else {
+                tempNewObj[key] = mergeJson(o1[key], o2[key]);
+              }
+            });
+          } 
+          //else if o1 is an array - []
+          else if (o1.length > 0 && typeof o1 !== "string") {
+            $.each(o2, function(index) {
+              if (JSON.stringify(o1).indexOf(JSON.stringify(o2[index])) === -1) {
+                tempNewObj.push(o2[index]);
+              }
+            });
+          }
+          //handling other types like string or number
+          else {
+            //taking value from the second object o2
+            //could be modified to keep o1 value with tempNewObj = o1;
+            tempNewObj = o2;
+          }
+          return tempNewObj;
+        };
+          
+        var searchUsers = function(searchTerm){
+          var lastNameResults = searchUsersLastName(searchTerm);
+          var netIdResults = searchUsersNetId(searchTerm);
+          var combinedResults = mergeJson(lastNameResults, netIdResults);
+          return combinedResults;
+        };
+          
+          
+        var searchUsersLastName = function(searchTerm){
+          return $http.get('/portal/api/people.json?searchTerms%5B%5D=sn&sn=' + searchTerm).success(
+            function(data, status) { //success function
+              return data;
+            }).error(function(data, status) { // failure function
+              miscService.redirectUser(status, "Search admin local contact info");
+            });
+          };
+          
+        var searchUsersNetId = function(searchTerm){
+          return $http.get('/portal/api/people.json?searchTerms%5B%5D=username&username=' + searchTerm).success(
+            function(data, status) { //success function
+              return data;
+            }).error(function(data, status) { // failure function
+              miscService.redirectUser(status, "Search admin local contact info");
+            });
+        };
           
           var searchLocalContactInfo = function(netIdToLookup) {
               return $http.get('/profile/api/localContactInfo/adminLookup?netId=' + netIdToLookup).success(
@@ -226,6 +311,7 @@
             getContactInfo : getContactInfo,
             getLocalContactInfo : getLocalContactInfo,
             saveLocalContactInfo : saveLocalContactInfo,
+            searchUsers : searchUsers,
             searchLocalContactInfo : searchLocalContactInfo,
             getBasicInfo   : getBasicInfo,
             getEmergencyInfo : getEmergencyInfo
