@@ -26,7 +26,7 @@
         
       } ]);
     
-    app.controller('LocalContactAdminController', ['$scope', 'profileService', function($scope, profileService){
+    app.controller('LocalContactAdminController', ['$scope', '$q', 'profileService', function($scope, $q, profileService){
         //init function
         var init = function() {
             $scope.error = "";
@@ -36,6 +36,58 @@
             $scope.searchResultLimitIncrementor=10;
             $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
         };
+        
+        //merge json feed function from 
+        //http://samonstuff.blogspot.com/2012/02/merging-json-objects.html
+        var mergeJson = function(o1, o2) {
+          var tempNewObj = o1;
+          //if o1 is an object - {}
+          if (o1.length === undefined && typeof o1 !== "number") {
+            $.each(o2, function(key, value) {
+              if (o1[key] === undefined) {
+                tempNewObj[key] = value;
+              } else {
+                tempNewObj[key] = mergeJson(o1[key], o2[key]);
+              }
+            });
+          } 
+          //else if o1 is an array - []
+          else if (o1.length > 0 && typeof o1 !== "string") {
+            $.each(o2, function(index) {
+              if (JSON.stringify(o1).indexOf(JSON.stringify(o2[index])) === -1) {
+                tempNewObj.push(o2[index]);
+              }
+            });
+          }
+          //handling other types like string or number
+          else {
+            //taking value from the second object o2
+            //could be modified to keep o1 value with tempNewObj = o1;
+            tempNewObj = o2;
+          }
+          return tempNewObj;
+        };
+        
+          
+          //scope functions
+          $scope.search = function() {
+            $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
+            $q.all([profileService.searchUsersLastName($scope.searchTerm), profileService.searchUsersNetId($scope.searchTerm)]).then(function(result){
+              $scope.result = mergeJson(result[0].data, result[1].data);
+              angular.forEach($scope.result.addresses, function(value, key, obj){
+                value.edit = false;
+                value.readOnly=true;
+              });
+              $scope.empty = result.data && result.data.people.length === 0;
+            }, function(data){
+              console.warn("Error looking up search term");
+              if(data.status === 403) {
+                $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
+              } else {
+                $scope.error = "Issue looking up contact information, please try again later.";
+              }
+            });
+          };
         
         $scope.lookupUser = function(netIdToLookup, index) {
           profileService.searchLocalContactInfo(netIdToLookup).then(function(result){
@@ -55,25 +107,7 @@
           });
         };
         
-        //scope functions
-        $scope.search = function() {
-          $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
-          profileService.searchUsers($scope.searchTerm).then(function(result){
-            $scope.result = result.data;
-            angular.forEach($scope.result.addresses, function(value, key, obj){
-              value.edit = false;
-              value.readOnly=true;
-            });
-            $scope.empty = result.data && result.data.people.length === 0;
-          }, function(data){
-            console.warn("Error looking up search term");
-            if(data.status === 403) {
-              $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
-            } else {
-              $scope.error = "Issue looking up contact information, please try again later.";
-            }
-          });
-        };
+
         
         $scope.reset = function(){init();};
         init();
@@ -189,7 +223,7 @@
 
       //service
       
-      app.factory('profileService', function($http, miscService) {
+      app.factory('profileService', function($http, $q, miscService) {
           //var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
           var contactInfoPromise = $http.get('/profile/api/contactInfo.json');
           var basicInfoPromise = $http.get('/profile/samples/basic-info.json');
@@ -213,62 +247,29 @@
               });
           }
           
-        //merge json feed function from 
-        //http://samonstuff.blogspot.com/2012/02/merging-json-objects.html
-        var mergeJson = function(o1, o2) {
-          var tempNewObj = o1;
-          //if o1 is an object - {}
-          if (o1.length === undefined && typeof o1 !== "number") {
-            $.each(o2, function(key, value) {
-              if (o1[key] === undefined) {
-                tempNewObj[key] = value;
-              } else {
-                tempNewObj[key] = mergeJson(o1[key], o2[key]);
-              }
-            });
-          } 
-          //else if o1 is an array - []
-          else if (o1.length > 0 && typeof o1 !== "string") {
-            $.each(o2, function(index) {
-              if (JSON.stringify(o1).indexOf(JSON.stringify(o2[index])) === -1) {
-                tempNewObj.push(o2[index]);
-              }
-            });
-          }
-          //handling other types like string or number
-          else {
-            //taking value from the second object o2
-            //could be modified to keep o1 value with tempNewObj = o1;
-            tempNewObj = o2;
-          }
-          return tempNewObj;
-        };
+
           
-        var searchUsers = function(searchTerm){
-          var lastNameResults = searchUsersLastName(searchTerm);
-          var netIdResults = searchUsersNetId(searchTerm);
-          var combinedResults = mergeJson(lastNameResults, netIdResults);
-          return combinedResults;
-        };
-          
-          
-        var searchUsersLastName = function(searchTerm){
-          return $http.get('/portal/api/people.json?searchTerms%5B%5D=sn&sn=' + searchTerm).success(
-            function(data, status) { //success function
-              return data;
-            }).error(function(data, status) { // failure function
-              miscService.redirectUser(status, "Search admin local contact info");
-            });
+        
+
+            
+            
+          var searchUsersLastName = function(searchTerm){          
+            return $http.get('/portal/api/people.json?searchTerms%5B%5D=sn&sn=' + searchTerm).success(
+              function(data, status) { //success function
+                return data.data;
+              }).error(function(data, status) { // failure function
+                miscService.redirectUser(status, "Search admin local contact info");
+              });
+            };
+            
+          var searchUsersNetId = function(searchTerm){
+            return $http.get('/portal/api/people.json?searchTerms%5B%5D=username&username=' + searchTerm).success(
+              function(data, status) { //success function
+                return data.data;
+              }).error(function(data, status) { // failure function
+                miscService.redirectUser(status, "Search admin local contact info");
+              });
           };
-          
-        var searchUsersNetId = function(searchTerm){
-          return $http.get('/portal/api/people.json?searchTerms%5B%5D=username&username=' + searchTerm).success(
-            function(data, status) { //success function
-              return data;
-            }).error(function(data, status) { // failure function
-              miscService.redirectUser(status, "Search admin local contact info");
-            });
-        };
           
           var searchLocalContactInfo = function(netIdToLookup) {
               return $http.get('/profile/api/localContactInfo/adminLookup?netId=' + netIdToLookup).success(
@@ -311,7 +312,8 @@
             getContactInfo : getContactInfo,
             getLocalContactInfo : getLocalContactInfo,
             saveLocalContactInfo : saveLocalContactInfo,
-            searchUsers : searchUsers,
+            searchUsersLastName : searchUsersLastName,
+            searchUsersNetId : searchUsersNetId,
             searchLocalContactInfo : searchLocalContactInfo,
             getBasicInfo   : getBasicInfo,
             getEmergencyInfo : getEmergencyInfo
