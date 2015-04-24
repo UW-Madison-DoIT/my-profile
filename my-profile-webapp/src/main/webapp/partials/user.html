@@ -5,7 +5,7 @@
     <div class="col-xs-6">
       <div class="userSearchResultName">
         <span><strong>
-          {{people.attributes.displayName[0]}}
+          {{people.attributes.displayName[0] ? people.attributes.displayName[0]:people.name}}
         </strong></span>
       </div>
     </div>
@@ -32,7 +32,7 @@
                 people.contactInformation.addresses.length === 0">
       <div class="info-card">
         <span>
-          No local contact addresses available for {{people.attributes.displayName[0]}}
+          No local contact addresses available for {{people.attributes.displayName[0] ? people.attributes.displayName[0]:people.name}}
         </span>
       </div>
     </div>
