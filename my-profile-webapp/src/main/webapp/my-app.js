@@ -37,35 +37,35 @@
             $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
         };
         
-        //merge json feed function from 
-        //http://samonstuff.blogspot.com/2012/02/merging-json-objects.html
-        var mergeJson = function(o1, o2) {
-          var tempNewObj = o1;
-          //if o1 is an object - {}
-          if (o1.length === undefined && typeof o1 !== "number") {
-            $.each(o2, function(key, value) {
-              if (o1[key] === undefined) {
-                tempNewObj[key] = value;
-              } else {
-                tempNewObj[key] = mergeJson(o1[key], o2[key]);
-              }
-            });
-          } 
-          //else if o1 is an array - []
-          else if (o1.length > 0 && typeof o1 !== "string") {
-            $.each(o2, function(index) {
-              if (JSON.stringify(o1).indexOf(JSON.stringify(o2[index])) === -1) {
-                tempNewObj.push(o2[index]);
-              }
-            });
-          }
-          //handling other types like string or number
-          else {
-            //taking value from the second object o2
-            //could be modified to keep o1 value with tempNewObj = o1;
-            tempNewObj = o2;
-          }
-          return tempNewObj;
+        var merge = function(one, two){
+            if (!one.people) return {people:two.people};
+            if (!two.people) return {people:one.people};
+            var final = {people:one.people};
+            for(var i = 0 ; i < two.people.length;i++){
+                var item = two.people[i];
+                insert(item, final);
+            }
+            return final;
+          };
+        
+        var insert = function(item, obj){
+            var people = obj.people;
+            var insertIndex = people.length;
+            for(var i = 0; i < people.length; i++){
+                if(String(item.attributes.uid) === String(people[i].attributes.uid)){
+                   // ignore duplicates
+                   insertIndex = -1;
+                   break;
+                } else if(item.attributes.uid < people[i].attributes.uid){
+                   insertIndex = i;
+                   break;
+                }
+            }
+            if(insertIndex == people.length){
+                people.push(item);
+            } else if(insertIndex != -1) {
+                people.splice(insertIndex,0,item);
+            }
         };
         
           
@@ -73,7 +73,7 @@
           $scope.search = function() {
             $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
             $q.all([profileService.searchUsersLastName($scope.searchTerm), profileService.searchUsersNetId($scope.searchTerm)]).then(function(result){
-              $scope.result = mergeJson(result[0].data, result[1].data);
+              $scope.result = merge(result[0].data, result[1].data);
               angular.forEach($scope.result.addresses, function(value, key, obj){
                 value.edit = false;
                 value.readOnly=true;
@@ -106,8 +106,6 @@
             }
           });
         };
-        
-
         
         $scope.reset = function(){init();};
         init();
@@ -223,7 +221,7 @@
 
       //service
       
-      app.factory('profileService', function($http, $q, miscService) {
+      app.factory('profileService', function($http, miscService) {
           //var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
           var contactInfoPromise = $http.get('/profile/api/contactInfo.json');
           var basicInfoPromise = $http.get('/profile/samples/basic-info.json');
@@ -247,12 +245,6 @@
               });
           }
           
-
-          
-        
-
-            
-            
           var searchUsersLastName = function(searchTerm){          
             return $http.get('/portal/api/people.json?searchTerms%5B%5D=sn&sn=' + searchTerm).success(
               function(data, status) { //success function
