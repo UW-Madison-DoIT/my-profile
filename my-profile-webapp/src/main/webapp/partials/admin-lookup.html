@@ -42,13 +42,13 @@
                 </div>
               </div>
               <div class='row'>
-                <hr>
+                <hr class="profileHorizontalRule">
                 <div ng-repeat="people in result.people | limitTo:searchResultLimit">
                   <user></user>
                 </div>
               </div>
               <div class="row">
-                <hr>
+                <hr class="profileHorizontalRule">
                 <div class="col-sm-3">
                   <span>Showing {{searchResultLimit>result.people.length ? result.people.length:searchResultLimit}} of {{result.people.length}} results.</span>
                 </div>
