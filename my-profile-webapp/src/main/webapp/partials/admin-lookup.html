@@ -18,9 +18,9 @@
                       <input type='text' required ng-model='searchTerm' style='text-align: center;'>
                     </div>
                     <div>
-                      <button class='btn btn-primary' ng-click="search()" ng-show='form.$valid'>Search</button>
+                      <button class='btn btn-primary' ng-click="searching=true; search()" ng-show='form.$valid'>Search</button>
                       <button class='btn btn-primary disabled' ng-hide='form.$valid' ng-click='instructionBold = true'>Search</button>
-                      <button class='btn btn-default' ng-click="reset()">Clear</button>
+                      <button class='btn btn-default' ng-click="searching=false;reset()">Clear</button>
                     </div>
                   </form>
                 </div>
@@ -30,6 +30,9 @@
         </div>
         <!-- Search Results -->
         <div class='fluid-container'>
+          <div ng-if="searching&&!(result.people&&result.people.length)">
+            <loading-gif data-object="result.people"></loading-gif>
+          </div>
           <div ng-if="result && result.people">
             <!-- If Results found -->
             <div ng-show="result.people.length>0">
@@ -55,7 +58,7 @@
                     ng-show="result.people.length > searchResultLimit">
                     Load More
                   </button>
-                  <button class='btn btn-default' ng-click="reset()">Search Again</button>
+                  <button class='btn btn-default' ng-click="searching=false;reset()">Search Again</button>
                 </div>
               </div>
             </div>
