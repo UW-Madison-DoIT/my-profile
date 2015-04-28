@@ -67,4 +67,6 @@
     <bean id="LocalContactInformationDao" class="edu.wisc.my.profile.local.dao.LocalContactInformationDaoImpl">
         <constructor-arg ref="uportal" />
     </bean>
+    <bean id="LocalUserDao" class="edu.wisc.my.profile.local.dao.LocalUserDaoImpl">
+    </bean>
 </beans>

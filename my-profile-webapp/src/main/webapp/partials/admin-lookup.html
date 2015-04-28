@@ -30,7 +30,7 @@
         </div>
         <!-- Search Results -->
         <div class='fluid-container'>
-          <div ng-if="searching&&!(result.people&&result.people.length)">
+          <div ng-if="searching&&!(result.people&&result.people.length)&&!empty">
             <loading-gif data-object="result.people"></loading-gif>
           </div>
           <div ng-if="result && result.people">

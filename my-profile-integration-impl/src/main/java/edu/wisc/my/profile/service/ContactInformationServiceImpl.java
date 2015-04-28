@@ -56,6 +56,8 @@ public class ContactInformationServiceImpl implements ContactInformationService 
   public void setContactInfoDao(ContactInfoDao contactInfoDao) {
       this.contactInfoDao = contactInfoDao;
   }
+  
+  
 
   @Override
   public ContactInformation getContactInfo(String username, String emplId, String pvi) {

@@ -79,7 +79,9 @@
                 value.edit = false;
                 value.readOnly=true;
               });
-              $scope.empty = result.data && result.data.people.length === 0;
+              if($scope.result && $scope.result.people && $scope.result.people.length === 0){
+                  $scope.empty = true;
+              }
             }, function(data){
               console.warn("Error looking up search term");
               if(data.status === 403) {
