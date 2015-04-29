@@ -31,6 +31,7 @@
         var init = function() {
             $scope.error = "";
             $scope.empty = false;
+            $scope.searching = false;
             $scope.result = [];
             $scope.searchTerm = "";
             $scope.searchResultLimitIncrementor=10;
@@ -40,6 +41,7 @@
           //scope functions
           $scope.search = function() {
             $scope.empty=false;
+            $scope.searching=true;
             $scope.result = [];
             $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
             profileService.searchUsersLastNameAndNetId($scope.searchTerm).then(function(result){
