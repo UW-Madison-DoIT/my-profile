@@ -71,7 +71,7 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
   @Override
   public List<User> getUsers(String username, String manifestGroups, String searchTerm) {
       if(StringUtils.isNotBlank(adminGroup) && manifestGroups.contains(adminGroup)) {
-          logger.info("User {} looked up user {}.",username, searchTerm);
+          logger.info("User {} looked up users using this search term: {}.",username, searchTerm);
           return userDao.getUsersBySearchTerm(searchTerm);
       } else {
           //TODO : implement uw-spring-security
