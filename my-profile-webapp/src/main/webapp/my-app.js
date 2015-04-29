@@ -71,6 +71,7 @@
           
           //scope functions
           $scope.search = function() {
+            $scope.empty=false;
             $scope.result = [];
             $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
             $q.all([profileService.searchUsersLastName($scope.searchTerm), profileService.searchUsersNetId($scope.searchTerm)]).then(function(result){
