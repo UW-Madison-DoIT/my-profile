@@ -62,6 +62,7 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
       return dao.getData(netId);
     } else {
       //TODO : implement uw-spring-security
+      logger.warn("Security violation: User {} looked up user {}.",username, netId);
       throw new SecurityException("Security violation, forbidden.");
     }
 
