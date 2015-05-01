@@ -26,7 +26,7 @@
         
       } ]);
     
-    app.controller('LocalContactAdminController', ['$scope', 'profileService', function($scope, profileService){
+    app.controller('LocalContactAdminController', ['$scope', '$q', 'profileService', function($scope, $q, profileService){
         //init function
         var init = function() {
             $scope.error = "";
