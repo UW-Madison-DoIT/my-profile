@@ -44,8 +44,8 @@
             $scope.searching=true;
             $scope.result = [];
             $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
-            profileService.searchUsersLastNameAndNetId($scope.searchTerm).then(function(result){
-              $scope.result = result.data;
+            $q.all([profileService.searchUsersLastName($scope.searchTerm), profileService.searchUsersNetId($scope.searchTerm)]).then(function(result){
+              $scope.result = merge(result[0].data, result[1].data);
               angular.forEach($scope.result.addresses, function(value, key, obj){
                 value.edit = false;
                 value.readOnly=true;
@@ -219,14 +219,23 @@
               });
           }
           
-          var searchUsersLastNameAndNetId = function(searchTerm){          
-            return $http.get('/profile/api/localContactInfo/searchUsers?searchTerm=' + searchTerm).success(
+          var searchUsersLastName = function(searchTerm){          
+            return $http.get('/portal/api/people.json?searchTerms%5B%5D=sn&sn=' + searchTerm).success(
               function(data, status) { //success function
                 return data.data;
               }).error(function(data, status) { // failure function
                 miscService.redirectUser(status, "Search admin local contact info");
               });
             };
+            
+          var searchUsersNetId = function(searchTerm){
+            return $http.get('/portal/api/people.json?searchTerms%5B%5D=username&username=' + searchTerm).success(
+              function(data, status) { //success function
+                return data.data;
+              }).error(function(data, status) { // failure function
+                miscService.redirectUser(status, "Search admin local contact info");
+              });
+          };
           
           var searchLocalContactInfo = function(netIdToLookup) {
               return $http.get('/profile/api/localContactInfo/adminLookup?netId=' + netIdToLookup).success(
@@ -269,7 +278,8 @@
             getContactInfo : getContactInfo,
             getLocalContactInfo : getLocalContactInfo,
             saveLocalContactInfo : saveLocalContactInfo,
-            searchUsersLastNameAndNetId : searchUsersLastNameAndNetId,
+            searchUsersLastName : searchUsersLastName,
+            searchUsersNetId : searchUsersNetId,
             searchLocalContactInfo : searchLocalContactInfo,
             getBasicInfo   : getBasicInfo,
             getEmergencyInfo : getEmergencyInfo
