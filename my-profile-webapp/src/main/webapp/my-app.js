@@ -37,6 +37,37 @@
             $scope.searchResultLimitIncrementor=10;
             $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
         };
+        
+        var merge = function(one, two){
+          if (!one.people) return {people:two.people};
+          if (!two.people) return {people:one.people};
+          var final = {people:one.people};
+          for(var i = 0 ; i < two.people.length;i++){
+            var item = two.people[i];
+            insert(item, final);
+          }
+          return final;
+        };
+        
+        var insert = function(item, obj){
+          var people = obj.people;
+          var insertIndex = people.length;
+            for(var i = 0; i < people.length; i++){
+              if(String(item.attributes.uid) === String(people[i].attributes.uid)){
+              // ignore duplicates
+              insertIndex = -1;
+              break;
+            } else if(item.attributes.uid < people[i].attributes.uid){
+              insertIndex = i;
+              break;
+            }
+          }
+          if(insertIndex == people.length){
+            people.push(item);
+          } else if(insertIndex != -1) {
+            people.splice(insertIndex,0,item);
+          }
+        };
           
           //scope functions
           $scope.search = function() {
@@ -44,8 +75,8 @@
             $scope.searching=true;
             $scope.result = [];
             $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
-            profileService.searchUsersLastNameAndNetId($scope.searchTerm).then(function(result){
-              $scope.result = result.data;
+            $q.all([profileService.searchUsersLastName($scope.searchTerm), profileService.searchUsersNetId($scope.searchTerm)]).then(function(result){
+              $scope.result = merge(result[0].data, result[1].data);
               angular.forEach($scope.result.addresses, function(value, key, obj){
                 value.edit = false;
                 value.readOnly=true;
@@ -219,14 +250,23 @@
               });
           }
           
-          var searchUsersLastNameAndNetId = function(searchTerm){          
-            return $http.get('/profile/api/localContactInfo/searchUsers?searchTerm=' + searchTerm).success(
+          var searchUsersLastName = function(searchTerm){          
+            return $http.get('/portal/api/people.json?searchTerms%5B%5D=sn&sn=' + searchTerm).success(
               function(data, status) { //success function
                 return data.data;
               }).error(function(data, status) { // failure function
                 miscService.redirectUser(status, "Search admin local contact info");
               });
             };
+            
+          var searchUsersNetId = function(searchTerm){
+            return $http.get('/portal/api/people.json?searchTerms%5B%5D=username&username=' + searchTerm).success(
+              function(data, status) { //success function
+                return data.data;
+              }).error(function(data, status) { // failure function
+                miscService.redirectUser(status, "Search admin local contact info");
+              });
+          };
           
           var searchLocalContactInfo = function(netIdToLookup) {
               return $http.get('/profile/api/localContactInfo/adminLookup?netId=' + netIdToLookup).success(
@@ -269,7 +309,8 @@
             getContactInfo : getContactInfo,
             getLocalContactInfo : getLocalContactInfo,
             saveLocalContactInfo : saveLocalContactInfo,
-            searchUsersLastNameAndNetId : searchUsersLastNameAndNetId,
+            searchUsersLastName : searchUsersLastName,
+            searchUsersNetId : searchUsersNetId,
             searchLocalContactInfo : searchLocalContactInfo,
             getBasicInfo   : getBasicInfo,
             getEmergencyInfo : getEmergencyInfo
