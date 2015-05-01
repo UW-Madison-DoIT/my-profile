@@ -1,50 +1,78 @@
 <link href="css/app.css" rel="stylesheet" type="text/css"/>
 <div class="portlet-frame" style='display: inline-block; width: 100%;'>
-    <portlet-header app-title="Find Local Information" app-image="img/square.jpg"></portlet-header>
-    <div class="portlet-body">
-        <div ng-controller="LocalContactAdminController as localContactAdminCtrl">
-            <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
-            <div class="col-xs-12">
-                <div class='fluid-container'>
-                    <div class='row'>
-                        <div class='col-sm-8 col-sm-offset-2'>
-                            <div class=' info-card' style='text-align: center;'>
-                                <p><i class="fa fa-exclamation-triangle"></i> For use only in case of emergency. All searches will be logged.</p>
-                                <div class='admin-lookup-form'>
-                                    <form name='form' novalidate>
-                                        <span ng-class='{bold : instructionBold}'>Enter Student's NetID</span>
-                                        <div>
-                                            <input type='text' required ng-model='netIdToLookup' style='text-align: center;'>
-                                        </div>
-                                        <div>
-                                            <button class='btn btn-primary' ng-click="search()" ng-show='form.$valid'>Search</button>
-                                            <button class='btn btn-primary disabled' ng-hide='form.$valid' ng-click='instructionBold = true'>Search</button>
-                                            <button class='btn btn-default' ng-click="reset()">Clear</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+  <portlet-header app-title="Find Local Information" app-image="img/square.jpg"></portlet-header>
+  <div class="portlet-body">
+    <div ng-controller="LocalContactAdminController as localContactAdminCtrl">
+      <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
+      <!-- User Lookup Form -->
+      <div class="col-xs-12">
+        <div class='fluid-container'>
+          <div class='row'>
+            <div class='col-sm-8 col-sm-offset-2'>
+              <div class=' info-card' style='text-align: center;'>
+                <p><i class="fa fa-exclamation-triangle"></i> For use only in case of emergency. All searches will be logged.</p>
+                <div class='admin-lookup-form'>
+                  <form name='form' novalidate>
+                    <span ng-class='{bold : instructionBold}'>Student's last name or NetID</span>
+                    <div>
+                      <input type='text' required ng-model='searchTerm' style='text-align: center;'>
                     </div>
-                </div>
-                <div class='fluid-container'>
-                    <div class='row'>
-                        <div ng-class="{'col-sm-offset-2' : (result.addresses.length === 1),
-                                        'col-sm-8' : (result.addresses.length  === 1),
-                                        'col-sm-6' : (result.addresses.length % 2 === 0),
-                                        'col-sm-4' : (result.addresses.length % 3 === 0)}" ng-repeat="address in result.addresses">
-                            <div class=' info-card'>
-                                <address></address>
-                            </div>
-                        </div>
-                        <div ng-if="result && result.addresses.length === 0" class='col-sm-8 col-sm-offset-2'>
-                            <div class='info-card'>
-                                <p>No addresses stored for this netId.</p>
-                            </div>
-                        </div>
+                    <div>
+                      <button class='btn btn-primary' ng-click="search()" ng-show='form.$valid'>Search</button>
+                      <button class='btn btn-primary disabled' ng-hide='form.$valid' ng-click='instructionBold = true'>Search</button>
+                      <button class='btn btn-default' ng-click="reset()">Clear</button>
                     </div>
+                  </form>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+        <!-- Search Results -->
+        <div class='fluid-container'>
+          <div ng-if="searching&&!(result.people&&result.people.length)&&!empty">
+            <loading-gif></loading-gif>
+          </div>
+          <div ng-if="result && result.people">
+            <!-- If Results found -->
+            <div ng-show="result.people.length>0">
+              <div class="row">
+                <div class="col-sm-3">
+                  <span>Showing {{searchResultLimit>result.people.length ? result.people.length:searchResultLimit}} of {{result.people.length}} results.</span>
+                </div>
+              </div>
+              <div class='row'>
+                <hr class="profileHorizontalRule">
+                <div ng-repeat="people in result.people | limitTo:searchResultLimit">
+                  <user></user>
+                </div>
+              </div>
+              <div class="row">
+                <hr class="profileHorizontalRule">
+                <div class="col-sm-3">
+                  <span>Showing {{searchResultLimit>result.people.length ? result.people.length:searchResultLimit}} of {{result.people.length}} results.</span>
+                </div>
+                <div style="text-align:center;" class='col-sm-6' ng-show="result.people.length > 0">
+                  <button class="btn btn-primary" 
+                    ng-click="searchResultLimit = searchResultLimit + searchResultLimitIncrementor"
+                    ng-show="result.people.length > searchResultLimit">
+                    Load More
+                  </button>
+                  <button class='btn btn-default' ng-click="reset()">Search Again</button>
+                </div>
+              </div>
+            </div>
+            <!-- If no results found -->
+            <div  ng-show="result.people.length === 0">
+              <div class="row">
+                <div style="text-align:center;" class='col-sm-8 col-sm-offset-2'>
+                  <p>No search results found.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

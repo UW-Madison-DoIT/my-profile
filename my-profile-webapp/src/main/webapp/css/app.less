@@ -3,10 +3,8 @@
 
 .info-card {
   padding: 1em;
-  border:1px solid black; 
   border-radius: 4px; 
-  box-shadow: 1px 1px 10px gray;
-  background : white;
+  background-color : #f7f7f7;
   margin : 1em;
 }
 
@@ -16,6 +14,50 @@
 .wrapper {
   position: relative;
   z-index: 90;
+}
+
+address{
+    margin-bottom:0px;
+}
+
+.profileHorizontalRule{
+    margin-bottom:0px;
+    margin-top:0px;
+}
+
+.userAttributesRow{
+  margin-left:0px;
+  margin-right:0px;
+}
+.userAttributesRow:hover, .userAttributesRow:hover span{
+  text-decoration:underline;
+  cursor: pointer; cursor: hand;
+}
+.oddRow{
+  background-color:#E0E0E0;
+}
+.detailsLink{
+  color: #600;
+  float:right;
+  margin-right:20px;
+}
+.userSearchResultName{
+  margin-left:20px;
+}
+.userSearchResultName, .detailsLink{
+  min-height:50px;
+  display:table;
+}
+.userSearchResultName span, .detailsLink span{
+  display:table-cell;
+  vertical-align:middle;
+  float:none;
+}
+.noContactInfoFound{
+  text-align:center;
+}
+.searchResultsLimitInformation{
+  margin-left:20px;
 }
 
 .ribbon-wrapper {
@@ -70,4 +112,11 @@
 
 form .ng-invalid {
   border-color : red;
+}
+.admin-lookup-form input {
+  padding:4px 10px;
+  margin-top:5px;
+  border-radius:4px;
+  font-size:1.2em;
+  border:1px solid #ddd;
 }

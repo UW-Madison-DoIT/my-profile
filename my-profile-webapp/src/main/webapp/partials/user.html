@@ -1,0 +1,43 @@
+<div>
+  <!-- Show Search Results -->
+  <div class="userAttributesRow row display-table"  ng-class="($index % 2 ===0) ? 'evenRow':'oddRow'" 
+    ng-click="showingDetails || lookupUser(people.attributes.username[0], $index); showingDetails=!showingDetails">
+    <div class="col-xs-6">
+      <div class="userSearchResultName">
+        <span><strong>
+          {{people.attributes.displayName[0] ? people.attributes.displayName[0]:people.name}}
+        </strong></span>
+      </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="detailsLink" ng-switch on="showingDetails">
+        <span ng-switch-when="false">Details <i class="fa fa-caret-right"></i></span>
+        <span ng-switch-when="true">Hide <i class="fa fa-caret-down"></i></span>
+        <span ng-switch-default>Details <i class="fa fa-caret-right"></i></span>
+      </div>
+    </div>
+  </div>
+  <!-- Show the users local contact information or display if not found -->
+  <div class="row" ng-show="showingDetails">
+    <div ng-class="{'col-sm-offset-2' : (people.contactInformation.addresses.length === 1),
+                    'col-sm-8' : (people.contactInformation.addresses.length  === 1),
+                    'col-sm-6' : (people.contactInformation.addresses.length > 1)}" 
+         ng-repeat="address in people.contactInformation.addresses">
+      <div class=' info-card'>
+        <p><strong>Local Address</strong></p>
+        <address></address>
+      </div>
+    </div>
+    <div class="noContactInfoFound col-sm-offset-2 col-sm-8" ng-show="!people.contactInformation.addresses.length || 
+                people.contactInformation.addresses.length === 0">
+      <div class="info-card">
+        <span>
+          No local contact addresses available for {{people.attributes.displayName[0] ? people.attributes.displayName[0]:people.name}}
+        </span>
+      </div>
+    </div>
+    <div class="col-xs-12" >
+      <hr class="profileHorizontalRule">
+    </div>
+  </div>
+</div>
