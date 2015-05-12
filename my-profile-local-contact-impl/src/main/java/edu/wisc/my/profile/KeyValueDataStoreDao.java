@@ -1,4 +1,4 @@
-package edu.wisc.my.profile.local.dao;
+package edu.wisc.my.profile;
 
 import javax.sql.DataSource;
 

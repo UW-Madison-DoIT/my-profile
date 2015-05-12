@@ -2,6 +2,7 @@ package edu.wisc.my.profile.local.dao;
 
 import javax.sql.DataSource;
 
+import edu.wisc.my.profile.KeyValueDataStoreDao;
 import edu.wisc.my.profile.model.ContactInformation;
 
 public class LocalContactInformationDaoImpl extends KeyValueDataStoreDao<ContactInformation> implements LocalContactInformationDao {
