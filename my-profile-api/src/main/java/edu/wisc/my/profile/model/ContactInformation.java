@@ -10,6 +10,8 @@ public class ContactInformation {
   private String id;
   private String legalName;
   private String preferredName;
+  private String relationship;
+  private List<TypeValue> languages;
   private List<TypeValue> phoneNumbers = new ArrayList<TypeValue>();
   private List<TypeValue> emails = new ArrayList<TypeValue>();
   private List<ContactAddress> addresses = new ArrayList<ContactAddress>();
@@ -55,5 +57,17 @@ public class ContactInformation {
   }
   public void setLastModified(DateTime lastModified) {
     this.lastModified = lastModified;
+  }
+  public String getRelationship() {
+    return relationship;
+  }
+  public void setRelationship(String relationship) {
+    this.relationship = relationship;
+  }
+  public List<TypeValue> getLanguages() {
+    return languages;
+  }
+  public void setLanguages(List<TypeValue> languages) {
+    this.languages = languages;
   }
 }
