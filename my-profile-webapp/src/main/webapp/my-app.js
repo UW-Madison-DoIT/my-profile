@@ -9,7 +9,7 @@
          when('/main', {templateUrl: 'partials/main.html'}).
          when('/local', {templateUrl: 'partials/local-address.html'}).
          when('/local/adminLookup', {templateUrl: 'partials/admin-lookup.html'}).
-         when('/emergencyContact', {templateUrl: 'partials/emergency-contact.html'}).
+         when('/emergencyInfo', {templateUrl: 'partials/emergency-info.html'}).
          otherwise({
              redirectTo: '/main'
          });

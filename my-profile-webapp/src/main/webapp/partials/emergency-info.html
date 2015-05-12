@@ -1,24 +1,30 @@
-<div ng-controller="EmergencyInformationController as emergencyInfoCtrl" class='wrapper info-card'>
-    <div class="ribbon-wrapper"><div class="ribbon">Demo</div></div>
-    <h2>Emergency Information <button class='btn btn-primary pull-right'><i class='fa fa-edit'></i> Edit</button></h2>
-    <div style='padding-top: 1em;'>
-    <table class='table table-hover'>
-        <tr>
-            <td>Emergency Contacts</td> 
-            <td>
-                <ul style='padding: 0;'>
-                  <li ng-repeat='contact in emergencyContacts'>{{contact.name}} ({{contact.relationship}})<br>{{contact.number}}</li>
-                </ul>
-            </td>
-        </tr>
-        <!-- <tr>
-            <td>Departments</td> 
-            <td>
-                <ul style='padding: 0;'>
-                  <li ng-repeat='phone in contactInfo.phoneNumbers'>{{phone.number}}</li>
-                </ul>
-            </td>
-        </tr> -->
-    </table>
+<link href="css/app.css" rel="stylesheet" type="text/css"/>
+<div class="portlet-frame" style='display: inline-block; width: 100%;'>
+    <portlet-header app-title="My Profile - Emergency Info" app-image="img/square.jpg"></portlet-header>
+
+    <div class="portlet-body">
+        <!-- App Navigation if Needed -->
+        <div class="inner-nav-container">
+            <ul class="inner-nav">
+                <li ><a href="#/main">My Profile</a></li>
+                <li class="active"><a href="#/emergencyInfo">Emergency Info</a></li>
+            </ul>
+        </div>
+        <div class="col-xs-12 no-padding">
+            <div class="row">
+                <div class="col-xs-12">
+                    <p>State law requires the university to collect emergency contact information for every student.<a href="#">Learn more here</a>.</p>
+                </div>
+            </div>
+            <div class='row'>
+                <div class='col-sm-6'>
+                    <div class='info-card'>
+                        <h1>Emergency Contact</h1>
+                        <p>No contact saved yet.</p>
+                        <button class="btn btn-default">Add emergency contact</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
