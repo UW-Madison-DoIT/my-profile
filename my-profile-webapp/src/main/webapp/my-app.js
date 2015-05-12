@@ -223,6 +223,12 @@
             templateUrl : 'partials/emergency-info.html'
           }
         });
+      app.directive('countries', function() {
+          return {
+            restrict : 'E',
+            templateUrl : 'partials/countries.html'
+          }
+        });
 
       //service
       
