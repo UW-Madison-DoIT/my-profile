@@ -181,9 +181,13 @@
       
       app.controller('EmergencyInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
           $scope.emergencyContacts = [];
+          $scope.showEmergencyForm = false;
           profileService.getEmergencyInfo().then(function(result){
               $scope.emergencyContacts = result.data.emergencyContacts;
           });
+          $scope.addEmergencyContact = function() {
+            $scope.showEmergencyForm = true;
+          };
           
       }]);
       
