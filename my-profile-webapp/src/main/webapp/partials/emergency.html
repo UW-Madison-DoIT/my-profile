@@ -1,0 +1,52 @@
+<div ng-if='!contact.edit || contact.edit == false'>
+    <p>{{ contact.preferredName }}</p>
+    <br>
+    <div ng-repeat="phone in contact.phoneNumbers">
+        <p>{{ phone.value }} ({{ phone.type }})</p>
+    </div>
+    <br>
+    <p ng-if="contact.relationship">Relationship: {{ contact.relationship }}</p>
+    <p ng-if="contact.languages[0]">First Language: {{ contact.languages[0].value }}</p>
+    <p ng-if="contact.languages[1]">Second Language: {{ contact.languages[1].value }}</p>
+    <span ng-hide='address.readOnly'>
+        <button class='btn btn-flat' ng-click='addEdit()'>Add another</button>
+        <button class='btn btn-outline' ng-click='contact.edit = true'>Edit</button>
+        <button class='btn btn-outline' ng-click='deleteContact($index)'>Delete</button>
+    </span>
+</div>
+<div ng-if='contact.edit'>
+    <form novalidate>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input class="form-control" id='name' type='text' required ng-model="contact.preferredName">
+        </div>
+        <!-- <div ng-repeat="line in address.addressLines | limitTo:5 track by $index" class="form-group">
+            <label for="addressLine{{$index}}">Address Line {{$index + 1}}</label>
+            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index == 0' required  maxlength='100'>
+            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index != 0' maxlength='100'>
+        </div>
+        <button class='btn btn-outline' type='text' ng-click='address.addressLines.push("")' ng-if='address.addressLines.length <= 4'>Add line</button>
+        <div class='form-group'>
+            <label for="city">City</label>
+            <input class="form-control" type='text' ng-model='address.city' required maxlength='100'>
+        </div>
+        <div class='form-group'>
+            <label for="state">State/Province/Region</label>
+            <input class="form-control" id='state' type='text' ng-model='address.state' required maxlength='100'>
+        </div>
+        <div class='form-group'>
+            <label for="postalCode">Zip</label>
+            <input class="form-control" id="postalCode" type='text' ng-model='address.postalCode' required maxlength='100'>
+        </div>
+        <div class='form-group'>
+            <label for="country">Country</label>
+            <input class="form-control" id='country' type='text' ng-model='address.country' required maxlength='200'>
+        </div>
+        <div class='form-group'>
+            <label for="comment">More Information <small>({{100 - address.comment.length}} characters left)</small></label>
+            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment' maxlength='100'></textarea>
+        </div> -->
+        <button class='btn btn-primary btn-flat' style='margin-right: 10px;' ng-click="save()">Save</button>
+        <button class='btn btn-outline' ng-click='cancel()'>Cancel</button>
+    </form>
+</div>

@@ -2,7 +2,7 @@
 <div class="portlet-frame" style='display: inline-block; width: 100%;'>
     <portlet-header app-title="My Profile - Emergency Info" app-image="img/square.jpg"></portlet-header>
 
-    <div class="portlet-body" ng-controller="EmergencyInformationController as emergencyInfoCtrl">
+    <div class="portlet-body">
         <!-- App Navigation if Needed -->
         <div class="inner-nav-container">
             <ul class="inner-nav">
@@ -17,159 +17,37 @@
                 </div>
             </div>
             <div class='row'>
-                <div class='col-sm-6'>
-                    <div class='info-card emergency-contact'>
+                <div class='col-sm-6' ng-controller="EmergencyInformationController as emergencyInfoCtrl">
+                    <div ng-if="emergencyInfo.length === 0" class='info-card'>
                         <h1>Emergency Contact</h1>
-                        <!-- If contact(s) exist -->
-                        <div ng-if="emergencyContacts.length !== 0" ng-repeat="contact in emergencyContacts">
-                            <p>{{ contact.preferredName }}</p>
-                            <div ng-repeat="address in contact.addresses">
-                                <p>{{ address.addressLines[0] }}</p>
-                                <p>{{ address.addressLines[1] }}</p>
-                                <p>{{ address.city }}, {{ address.state }} {{ address.postalCode }}</p>
-                            </div>
-                            <br>
-                            <div ng-repeat="phone in contact.phoneNumbers">
-                                <p>{{ phone.value }} ({{ phone.type }})</p>
-                            </div>
-                            <br>
-                            <p ng-if="contact.relationship">Relationship: {{ contact.relationship }}</p>
-                            <p ng-if="contact.languages[0]">First Language: {{ contact.languages[0].value }}</p>
-                            <p ng-if="contact.languages[1]">Second Language: {{ contact.languages[1].value }}</p>
-                            <button class="btn btn-default" ng-click="addEmergencyContact()">Add another</button>
-                            <button class="btn btn-default">Edit</button>
-                            <button class="btn btn-default">Delete</button>
-                        </div>
-
-                        <!-- If no contacts exist -->
-                        <p ng-if="emergencyContacts.length === 0">No contact saved yet.</p>
-                        <button class="btn btn-default" ng-if="emergencyContacts.length === 0" ng-click="addEmergencyContact()">Add emergency contact</button>
-
-                        <!-- Add a new emergency contact -->
-                        <div ng-if="showEmergencyForm">
-                            <h3>Add Emergency Contact</h3>
-                            <form>
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" class="form-control">
-                                <label for="addressLine1">Address Line 1</label>
-                                <input type="text" name="addressLine1" class="form-control">
-                                <button class="btn btn-default">Add address line</button>
-                                <br>
-                                <label for="city">City</label>
-                                <input type="text" name="city" class="form-control">
-                                <label for="state">State / Province / Region</label>
-                                <input type="text" name="state" class="form-control">
-                                <label for="zip">ZIP</label>
-                                <input type="text" name="zip" class="form-control" placeholder="12345">
-                                <label for="country">Country</label>
-                                <countries></countries>
-                                <div class="form-group">
-                                    <div class="col-xs-7 no-padding">
-                                        <label for="phone">Phone</label>
-                                        <input type="tel" name="phone" class="form-control" placeholder="(123) 456-7890">
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <label for="phone-type">Type</label>
-                                        <select name="phone-type" class="form-control">
-                                            <option value="mobile">Mobile</option>
-                                            <option value="home">Home</option>
-                                            <option value="work">Work</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button class="btn btn-default">Add phone</button><br>
-                                <label for="relationship">Relationship</label>
-                                <input type="text" name="relationship" class="form-control" placeholder="i.e. Mother">
-                                <label for="firstLanguage">First language</label>
-                                <input type="text" name="firstLanguage" class="form-control" placeholder="i.e. English">
-                                <button class="btn btn-default">Add language</button>
-                                <br>
-                                <label for="moreInfo">More Information (optional)</label>
-                                <textarea name="moreInfo" class="form-control"></textarea>
-                            </div>
-                            </form>
-                            <button class="btn btn-primary">Save</button>
-                            <button class="btn btn-default">Cancel</button>
+                        <p>You have no emergency contact information stored.</p>
+                        <button class='btn btn-primary' ng-click='addEdit()'>Add emergency contact</button>
+                    </div>
+                    <div ng-repeat="contact in emergencyInfo">
+                        <div class='info-card emergency-contact'>
+                            <h1>Emergency Contact</h1>
+                            <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
+                            <loading-gif data-object='emergencyInfo'></loading-gif>
+                            <emergency></emergency>                        
                         </div>
                     </div>
                 </div>
-                <div class='col-sm-6'>
-                    <div class='info-card emergency-contact'>
+                <div class='col-sm-6' ng-controller="LocalContactInformationController as localContactInfoCtrl">
+                    <div ng-if="contactInfo.addresses.length === 0" class=' info-card'>
                         <h1>My Local Address</h1>
-                        <!-- If contact(s) exist -->
-                        <div ng-if="emergencyContacts.length !== 0" ng-repeat="contact in emergencyContacts">
-                            <p>{{ contact.preferredName }}</p>
-                            <div ng-repeat="address in contact.addresses">
-                                <p>{{ address.addressLines[0] }}</p>
-                                <p>{{ address.addressLines[1] }}</p>
-                                <p>{{ address.city }}, {{ address.state }} {{ address.postalCode }}</p>
-                            </div>
-                            <br>
-                            <div ng-repeat="phone in contact.phoneNumbers">
-                                <p>{{ phone.value }} ({{ phone.type }})</p>
-                            </div>
-                            <br>
-                            <p ng-if="contact.relationship">Relationship: {{ contact.relationship }}</p>
-                            <p ng-if="contact.languages[0]">First Language: {{ contact.languages[0].value }}</p>
-                            <p ng-if="contact.languages[1]">Second Language: {{ contact.languages[1].value }}</p>
-                            <button class="btn btn-default" ng-click="addEmergencyContact()">Add another</button>
-                            <button class="btn btn-default">Edit</button>
-                            <button class="btn btn-default">Delete</button>
+                        <p>You have no local address information stored.</p>
+                        <button class='btn btn-primary' ng-click='addEdit()'>Add local address</button>
+                    </div>
+                    <div ng-repeat="address in contactInfo.addresses">
+                        <div class='info-card local-address'>
+                            <h1>My Local Address</h1>
+                            <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
+                            <loading-gif data-object='contactInfo'></loading-gif>
+                            <address></address>
                         </div>
-
-                        <!-- If no contacts exist -->
-                        <p ng-if="emergencyContacts.length === 0">No contact saved yet.</p>
-                        <button class="btn btn-default" ng-if="emergencyContacts.length === 0" ng-click="addEmergencyContact()">Add emergency contact</button>
-
-                        <!-- Add a new emergency contact -->
-                        <div ng-if="showEmergencyForm">
-                            <h3>Add Emergency Contact</h3>
-                            <form>
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" class="form-control">
-                                <label for="addressLine1">Address Line 1</label>
-                                <input type="text" name="addressLine1" class="form-control">
-                                <button class="btn btn-default">Add address line</button>
-                                <br>
-                                <label for="city">City</label>
-                                <input type="text" name="city" class="form-control">
-                                <label for="state">State / Province / Region</label>
-                                <input type="text" name="state" class="form-control">
-                                <label for="zip">ZIP</label>
-                                <input type="text" name="zip" class="form-control" placeholder="i.e. 12345">
-                                <label for="country">Country</label>
-                                <countries></countries>
-                                <div class="form-group">
-                                    <div class="col-xs-7 no-padding">
-                                        <label for="phone">Phone</label>
-                                        <input type="tel" name="phone" class="form-control" placeholder="i.e. (123) 456-7890">
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <label for="phone-type">Type</label>
-                                        <select name="phone-type" class="form-control">
-                                            <option value="mobile">Mobile</option>
-                                            <option value="home">Home</option>
-                                            <option value="work">Work</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <button class="btn btn-default">Add phone</button><br>
-                                <label for="relationship">Relationship</label>
-                                <input type="text" name="relationship" class="form-control" placeholder="i.e. Mother">
-                                <label for="firstLanguage">First language</label>
-                                <input type="text" name="firstLanguage" class="form-control" placeholder="i.e. English">
-                                <button class="btn btn-default">Add language</button>
-                                <br>
-                                <label for="moreInfo">More Information (optional)</label>
-                                <textarea name="moreInfo" class="form-control"></textarea>
-                            </div>
-                            </form>
-                            <button class="btn btn-primary">Save</button>
-                            <button class="btn btn-default">Cancel</button>
+                        <div ng-if="contactInfo.addresses.length === 0" class='info-card'>
+                            <p>You have no local address information stored.</p>
+                            <button class='btn btn-primary' ng-click='addEdit()'>Add local address</button>
                         </div>
                     </div>
                 </div>

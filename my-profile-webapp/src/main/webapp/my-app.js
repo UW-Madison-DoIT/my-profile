@@ -165,6 +165,9 @@
                   $scope.contactInfo = {};
                   $scope.error = "There was an issue getting your local address information. Please try again later.";
               });
+            if ( $scope.contactInfo.length === 0 ) {
+              $scope.noAddresses = true;
+            }
         }
         
         //run init
@@ -180,14 +183,69 @@
       } ]);
       
       app.controller('EmergencyInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
-          $scope.emergencyContacts = [];
-          $scope.showEmergencyForm = false;
-          profileService.getEmergencyInfo().then(function(result){
-              $scope.emergencyContacts = result.data.emergencyContacts;
-          });
-          $scope.addEmergencyContact = function() {
-            $scope.showEmergencyForm = true;
-          };
+          // $scope.emergencyInfo = [];
+          // $scope.showEmergencyForm = false;
+          // profileService.getEmergencyInfo().then(function(result){
+          //     $scope.emergencyContacts = result.data.emergencyContacts;
+          // });
+          // $scope.addEmergencyContact = function() {
+          //   $scope.showEmergencyForm = true;
+          // };
+
+          //scope functions
+        $scope.addEdit = function() {
+          $scope.emergencyInfo.push({ preferredName : "", edit : true})
+        }
+        
+        $scope.save = function() {
+            $scope.notSaving = false;
+            $scope.error = "";
+            profileService.saveEmergencyContactInfo($scope.emergencyInfo)
+                .then(function(result){//success
+                    $scope.emergencyInfo = result.data;
+                    angular.forEach($scope.emergencyInfo, function(value, key, obj){
+                        value.edit = false;
+                    });
+                    $scope.notSaving = true;
+                },function(data, status){//error
+                    $scope.notSaving = true;
+                    $scope.error = "There was an issue saving your contact, please try again later."
+                });
+        }
+        
+        $scope.deleteContact = function(index) {
+            $scope.emergencyInfo.splice(index,1);
+            $scope.save();
+        };
+        
+        $scope.cancel = function() {
+            init();
+        }
+        
+        //local functions
+        var init = function() {
+            $scope.emergencyInfo = [];
+            $scope.error = "";
+            $scope.notSaving = true;
+            profileService.getEmergencyContactInfo()
+                .then(
+                  function(result){//success
+                    $scope.emergencyInfo = result.data;
+                    //clear out any editing that may have been saved
+                    angular.forEach($scope.emergencyInfo, function(value, key, obj){
+                        value.edit = false;
+                    })
+                }, function(result, status){//error
+                  $scope.emergencyInfo = {};
+                  $scope.error = "There was an issue getting your local address information. Please try again later.";
+              });
+            if ( $scope.emergencyInfo.length === 0 ) {
+              $scope.noContacts = true;
+            }
+        }
+        
+        //run init
+        init();
           
       }]);
       
@@ -227,6 +285,12 @@
             templateUrl : 'partials/emergency-info.html'
           }
         });
+      app.directive('emergency', function() {
+          return {
+            restrict : 'E',
+            templateUrl : 'partials/emergency.html'
+          }
+        });
       app.directive('countries', function() {
           return {
             restrict : 'E',
@@ -240,7 +304,7 @@
           //var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
           var contactInfoPromise = $http.get('/profile/api/contactInfo.json');
           var basicInfoPromise = $http.get('/profile/samples/basic-info.json');
-          var emergencyInfoPromise = $http.get('/profile/samples/emergency-info.json');
+          var emergencyInfoPromise = $http.get('/profile/api/emergencyInfo.json');
         
           var getContactInfo = function() {
               return contactInfoPromise.success(
@@ -296,6 +360,25 @@
                   miscService.redirectUser(status, "Get local contact info");
                });
           };
+
+          var getEmergencyContactInfo = function() {
+              return $http.get('/profile/api/emergencyContactInfo/get.json').success(
+                 function(data, status) { //success function
+                     return data;
+                 }).error(function(data, status) { // failure function
+                 miscService.redirectUser(status, "Get emergency contact info");
+              });
+          }
+
+          var saveEmergencyContactInfo = function (emergencyInfo) {
+              emergencyInfo.lastModified = null;
+              return $http.post('/profile/api/emergencyContactInfo/set',emergencyInfo).success(
+                  function(data, status) { //success function
+                      return data;
+                  }).error(function(data, status) { // failure function
+                  miscService.redirectUser(status, "Set emergency contact info");
+               });
+          };
           
           var getBasicInfo = function() {
               return basicInfoPromise.success(
@@ -306,24 +389,25 @@
               });
           }
           
-          var getEmergencyInfo = function() {
-              return emergencyInfoPromise.success(
-                 function(data, status) { //success function
-                     return data.emergencyContacts;
-                 }).error(function(data, status) { // failure function
-                 miscService.redirectUser(status, "Get emergency info");
-              });
-          }
+          // var getEmergencyInfo = function() {
+          //     return emergencyInfoPromise.success(
+          //        function(data, status) { //success function
+          //            return data.emergencyContacts;
+          //        }).error(function(data, status) { // failure function
+          //        miscService.redirectUser(status, "Get emergency info");
+          //     });
+          // }
         
           return {
             getContactInfo : getContactInfo,
             getLocalContactInfo : getLocalContactInfo,
             saveLocalContactInfo : saveLocalContactInfo,
+            saveEmergencyContactInfo : saveEmergencyContactInfo,
             searchUsersLastName : searchUsersLastName,
             searchUsersNetId : searchUsersNetId,
             searchLocalContactInfo : searchLocalContactInfo,
             getBasicInfo   : getBasicInfo,
-            getEmergencyInfo : getEmergencyInfo
+            getEmergencyContactInfo : getEmergencyContactInfo
           }
         });
 })();
