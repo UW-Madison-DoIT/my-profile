@@ -1,5 +1,7 @@
 <div ng-if='!contact.edit || contact.edit == false'>
     <p>{{ contact.preferredName }}</p>
+    <p ng-repeat="line in contact.addresses[0].addressLines">{{ line }}</p>
+    <p>{{ contact.addresses[0].city }}, {{ contact.addresses[0].state }} {{ contact.addresses[0].postalCode }}</p>
     <br>
     <div ng-repeat="phone in contact.phoneNumbers">
         <p>{{ phone.value }} ({{ phone.type }})</p>
@@ -9,9 +11,9 @@
     <p ng-if="contact.languages[0]">First Language: {{ contact.languages[0].value }}</p>
     <p ng-if="contact.languages[1]">Second Language: {{ contact.languages[1].value }}</p>
     <span ng-hide='address.readOnly'>
-        <button class='btn btn-flat' ng-click='addEdit()'>Add another</button>
-        <button class='btn btn-outline' ng-click='contact.edit = true'>Edit</button>
-        <button class='btn btn-outline' ng-click='deleteContact($index)'>Delete</button>
+        <button class='btn btn-primary' ng-click='addEdit()'>Add another</button>
+        <button class='btn btn-default' ng-click='contact.edit = true'>Edit</button>
+        <button class='btn btn-default' ng-click='deleteContact($index)'>Delete</button>
     </span>
 </div>
 <div ng-if='contact.edit'>
@@ -29,43 +31,49 @@
             <div class="col-xs-5">
                 <label for="phone-type{{$index}}">Type</label>
                 <select id="phone-type{{$index}}" class="form-control" required ng-model="contact.phoneNumbers[$index].type">
-                    <option value="mobile">Mobile</option>
+                    <option value="mobile" selected="selected">Mobile</option>
                     <option value="home">Home</option>
                     <option value="work">Work</option>
                     <option value="other">Other</option>
                 </select>
             </div>
         </div>
-        <button class="btn btn-outline" type="text" ng-click="contact.phoneNumbers.push('')">Add phone number</button>
-        <br>
-        <p>{{ emergencyInfo }}</p>
-        <!-- <div ng-repeat="line in address.addressLines | limitTo:5 track by $index" class="form-group">
+        <button class="btn btn-default" type="text" ng-click="contact.phoneNumbers.push('')">Add another phone number</button>
+        <div class="form-group">
+            <label for="zip">Relationship</label>
+            <input class="form-control" id='zip' type='text' required ng-model="contact.relationship">
+        </div>
+        <div ng-repeat="line in contact.addresses[0].addressLines | limitTo:5 track by $index" class="form-group">
             <label for="addressLine{{$index}}">Address Line {{$index + 1}}</label>
-            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index == 0' required  maxlength='100'>
-            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index != 0' maxlength='100'>
+            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='contact.addresses[0].addressLines[$index]' ng-if='$index === 0' required maxlength='100'>
+            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='contact.addresses[0].addressLines[$index]' ng-if='$index !== 0' maxlength='100'>
         </div>
-        <button class='btn btn-outline' type='text' ng-click='address.addressLines.push("")' ng-if='address.addressLines.length <= 4'>Add line</button>
-        <div class='form-group'>
+        <button class='btn btn-default' type='text' ng-click='contact.addresses[0].addressLines.push("")' ng-if='contact.addresses[0].addressLines.length <= 4'>Add address line</button>
+        <div class="form-group">
             <label for="city">City</label>
-            <input class="form-control" type='text' ng-model='address.city' required maxlength='100'>
+            <input class="form-control" id='city' type='text' required ng-model="contact.addresses[0].city">
         </div>
-        <div class='form-group'>
-            <label for="state">State/Province/Region</label>
-            <input class="form-control" id='state' type='text' ng-model='address.state' required maxlength='100'>
+        <div class="form-group">
+            <label for="city">State</label>
+            <input class="form-control" id='state' type='text' required ng-model="contact.addresses[0].state">
         </div>
-        <div class='form-group'>
-            <label for="postalCode">Zip</label>
-            <input class="form-control" id="postalCode" type='text' ng-model='address.postalCode' required maxlength='100'>
+        <div class="form-group">
+            <label for="zip">ZIP</label>
+            <input class="form-control" id='zip' type='text' required ng-model="contact.addresses[0].postalCode">
         </div>
-        <div class='form-group'>
+        <div class="form-group">
             <label for="country">Country</label>
-            <input class="form-control" id='country' type='text' ng-model='address.country' required maxlength='200'>
+            <countries></countries>
         </div>
-        <div class='form-group'>
-            <label for="comment">More Information <small>({{100 - address.comment.length}} characters left)</small></label>
-            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment' maxlength='100'></textarea>
-        </div> -->
-        <button class='btn btn-primary btn-flat' style='margin-right: 10px;' ng-click="save()">Save</button>
-        <button class='btn btn-outline' ng-click='cancel()'>Cancel</button>
+        <div ng-repeat="phone in contact.languages | limitTo:2 track by $index" class="form-group">
+            <label for="language{{$index}}" ng-if="$index === 0">First Language</label>
+            <input type="text" id="language{{$index}}" required class="form-control" placeholder="i.e. English" ng-model="contact.languages[$index].value" ng-if="$index === 0">
+            <label for="language{{$index}}" ng-if="$index !== 0">Second Language</label>
+            <input type="tel" id="language{{$index}}" class="form-control" placeholder="i.e. Spanish" ng-model="contact.languages[$index].value" ng-if="$index !== 0">
+        </div>
+        <button class="btn btn-default" type="text" ng-click="contact.languages.push('')">Add another language</button>
+        <br>
+        <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save()">Save</button>
+        <button class='btn btn-default' ng-click='cancel()'>Cancel</button>
     </form>
 </div>

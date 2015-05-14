@@ -194,7 +194,7 @@
 
           //scope functions
         $scope.addEdit = function() {
-          $scope.emergencyInfo.push({ preferredName : "", phoneNumbers : [""], languages : [""], edit : true})
+          $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], phoneNumbers : [""], languages : [""], edit : true})
         }
         
         $scope.save = function() {
