@@ -371,7 +371,9 @@
           }
 
           var saveEmergencyContactInfo = function (emergencyInfo) {
-              emergencyInfo.lastModified = null;
+              angular.forEach(emergencyInfo, function(value, key, obj){
+                  value.lastModified = null;
+              });
               return $http.post('/profile/api/emergencyContactInfo/set',emergencyInfo).success(
                   function(data, status) { //success function
                       return data;
