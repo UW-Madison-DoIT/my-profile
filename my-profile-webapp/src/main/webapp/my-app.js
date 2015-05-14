@@ -183,16 +183,6 @@
       } ]);
       
       app.controller('EmergencyInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
-          // $scope.emergencyInfo = [];
-          // $scope.showEmergencyForm = false;
-          // profileService.getEmergencyInfo().then(function(result){
-          //     $scope.emergencyContacts = result.data.emergencyContacts;
-          // });
-          // $scope.addEmergencyContact = function() {
-          //   $scope.showEmergencyForm = true;
-          // };
-
-          //scope functions
         $scope.addEdit = function() {
           $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], phoneNumbers : [""], languages : [""], edit : true})
         }
@@ -391,14 +381,6 @@
               });
           }
           
-          // var getEmergencyInfo = function() {
-          //     return emergencyInfoPromise.success(
-          //        function(data, status) { //success function
-          //            return data.emergencyContacts;
-          //        }).error(function(data, status) { // failure function
-          //        miscService.redirectUser(status, "Get emergency info");
-          //     });
-          // }
         
           return {
             getContactInfo : getContactInfo,
