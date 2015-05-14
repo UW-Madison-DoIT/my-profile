@@ -20,6 +20,25 @@
             <label for="name">Name</label>
             <input class="form-control" id='name' type='text' required ng-model="contact.preferredName">
         </div>
+        <div ng-repeat="phone in contact.phoneNumbers | limitTo:5 track by $index" class="form-group">
+            <div class="col-xs-7 no-padding">
+                <label for="phone{{$index}}">Phone</label>
+                <input type="tel" id="phone{{$index}}" required class="form-control" placeholder="i.e. 123-456-7890" ng-model="contact.phoneNumbers[$index].value" ng-if="$index === 0">
+                <input type="tel" id="phone{{$index}}" class="form-control" placeholder="i.e. 123-456-7890" ng-model="contact.phoneNumbers[$index].value" ng-if="$index !== 0">
+            </div>
+            <div class="col-xs-5">
+                <label for="phone-type{{$index}}">Type</label>
+                <select id="phone-type{{$index}}" class="form-control" required ng-model="contact.phoneNumbers[$index].type">
+                    <option value="mobile">Mobile</option>
+                    <option value="home">Home</option>
+                    <option value="work">Work</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-outline" type="text" ng-click="contact.phoneNumbers.push('')">Add phone number</button>
+        <br>
+        <p>{{ emergencyInfo }}</p>
         <!-- <div ng-repeat="line in address.addressLines | limitTo:5 track by $index" class="form-group">
             <label for="addressLine{{$index}}">Address Line {{$index + 1}}</label>
             <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index == 0' required  maxlength='100'>
