@@ -294,7 +294,6 @@
           //var contactInfoPromise = $http.get('/profile/samples/contact-info.json');
           var contactInfoPromise = $http.get('/profile/api/contactInfo.json');
           var basicInfoPromise = $http.get('/profile/samples/basic-info.json');
-          var emergencyInfoPromise = $http.get('/profile/api/emergencyInfo.json');
         
           var getContactInfo = function() {
               return contactInfoPromise.success(
