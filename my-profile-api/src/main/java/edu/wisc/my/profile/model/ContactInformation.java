@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 public class ContactInformation {
   private DateTime lastModified;
+  private boolean edit;
   private String id;
   private String legalName;
   private String preferredName;
@@ -69,5 +70,11 @@ public class ContactInformation {
   }
   public void setLanguages(List<TypeValue> languages) {
     this.languages = languages;
+  }
+  public boolean isEdit() {
+    return edit;
+  }
+  public void setEdit(boolean edit) {
+    this.edit = edit;
   }
 }

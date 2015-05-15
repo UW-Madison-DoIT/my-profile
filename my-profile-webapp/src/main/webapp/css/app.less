@@ -2,10 +2,36 @@
 
 
 .info-card {
-  padding: 1em;
+  padding: 15px;
   border-radius: 4px; 
-  background-color : #f7f7f7;
-  margin : 1em;
+  background-color : #f3f3f3;
+  margin : 15px;
+  h1 {
+    padding:0px;
+    margin:0px 0px 10px 0px;
+    font-size:24px;
+  }
+}
+.emergency-contact,
+.local-address {
+  p {
+    margin:0px;
+  }
+  label {
+    padding-top:10px;
+  }
+  .btn-default {
+    background-color:#fff;
+  }
+}
+.top-info {
+  text-align:center;
+  font-size:18px;
+  font-weight:400;
+  margin-top:10px;
+  a {
+    color:#b70101;
+  }
 }
 
 @demo-color : #B70101;
@@ -111,7 +137,10 @@ address{
 }
 
 form .ng-invalid {
-  border-color : red;
+  border-color : #b70101;
+}
+form .ng-valid {
+  border-color : #5cb85c;
 }
 .admin-lookup-form input {
   padding:4px 10px;

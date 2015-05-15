@@ -1,1 +1,81 @@
-{"emergencyContacts" : [{"relationship" : "Spouse" , "number" : "608-555-1111","name" : "Armstead M Feland"}]}
+[
+{
+   "lastModified":{
+      "year":2015,
+      "weekyear":2015,
+      "yearOfEra":2015,
+      "centuryOfEra":20,
+      "dayOfYear":96,
+      "dayOfMonth":6,
+      "dayOfWeek":1,
+      "era":1,
+      "weekOfWeekyear":15,
+      "yearOfCentury":15,
+      "monthOfYear":4,
+      "millisOfSecond":549,
+      "millisOfDay":77402549,
+      "secondOfMinute":2,
+      "secondOfDay":77402,
+      "minuteOfHour":30,
+      "minuteOfDay":1290,
+      "hourOfDay":21,
+      "millis":1428355802549,
+      "chronology":{
+         "zone":{
+            "fixed":true,
+            "id":"UTC"
+         }
+      },
+      "zone":{
+         "fixed":true,
+         "id":"UTC"
+      },
+      "equalNow":false,
+      "afterNow":false,
+      "beforeNow":true
+   },
+   "id" : null,
+   "preferredName":"Linda Hanstra",
+   "relationship" : "Mom",
+   "languages" : [ 
+       { 
+         "type" : "1",
+         "value" : "English" 
+       }
+   ],
+   "phoneNumbers":[
+      { 
+        "type" : "mobile",
+        "value" : "1234567897" 
+      }
+   ],
+   "addresses":[
+      {
+         "type":null,
+         "addressLines":[
+            "1210 West Dayton Street",
+            "Room 3233"
+         ],
+         "city":"Madison",
+         "country":"United States",
+         "state":"Wisconsin",
+         "postalCode":"53706",
+         "comment":null,
+         "edit":false         
+      },
+      {
+         "type":null,
+         "addressLines":[
+            "1210 West Dayton Street",
+            ""
+         ],
+         "city":"Madison",
+         "country":"United States",
+         "state":"Wisconsin",
+         "postalCode":"53706",
+         "comment":"i work here",
+         "edit":true
+      }
+   ]
+}
+]
