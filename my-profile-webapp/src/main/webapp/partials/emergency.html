@@ -1,28 +1,26 @@
 <div ng-if='!contact.edit || contact.edit == false'>
     <p>{{ contact.preferredName }}</p>
-    <p ng-repeat="line in contact.addresses[0].addressLines">{{ line }}</p>
-    <p>{{ contact.addresses[0].city }}, {{ contact.addresses[0].state }} {{ contact.addresses[0].postalCode }}</p>
-    <br>
     <div ng-repeat="phone in contact.phoneNumbers">
         <p>{{ phone.value }} ({{ phone.type }})</p>
     </div>
+    <p>{{ contact.emails[0].value }}</p>
     <br>
     <p ng-if="contact.relationship">Relationship: {{ contact.relationship }}</p>
     <p ng-if="contact.languages[0]">First Language: {{ contact.languages[0].value }}</p>
     <p ng-if="contact.languages[1]">Second Language: {{ contact.languages[1].value }}</p>
-    <span ng-hide='address.readOnly'>
+    <span ng-hide='contact.readOnly'>
         <button class='btn btn-primary' ng-click='addEdit()'>Add another</button>
         <button class='btn btn-default' ng-click='contact.edit = true'>Edit</button>
         <button class='btn btn-default' ng-click='deleteContact($index)'>Delete</button>
     </span>
 </div>
 <div ng-if='contact.edit'>
-    <form novalidate>
+    <form novalidate class="emergency-info">
         <div class="form-group">
             <label for="name">Name</label>
             <input class="form-control" id='name' type='text' required ng-model="contact.preferredName">
         </div>
-        <div ng-repeat="phone in contact.phoneNumbers | limitTo:5 track by $index" class="form-group">
+        <div ng-repeat="phone in contact.phoneNumbers | limitTo:3 track by $index" class="form-group">
             <div class="col-xs-7 no-padding">
                 <label for="phone{{$index}}">Phone</label>
                 <input type="tel" id="phone{{$index}}" required class="form-control" placeholder="i.e. 123-456-7890" ng-model="contact.phoneNumbers[$index].value" ng-if="$index === 0">
@@ -40,10 +38,14 @@
         </div>
         <button class="btn btn-default" type="text" ng-click="contact.phoneNumbers.push('')">Add another phone number</button>
         <div class="form-group">
-            <label for="zip">Relationship</label>
-            <input class="form-control" id='zip' type='text' required ng-model="contact.relationship">
+            <label for="email">Email</label>
+            <input class="form-control" id='email' type='text' required ng-model="contact.emails[0].value">
         </div>
-        <div ng-repeat="line in contact.addresses[0].addressLines | limitTo:5 track by $index" class="form-group">
+        <div class="form-group">
+            <label for="relationship">Relationship</label>
+            <input class="form-control" id='relationship' type='text' required ng-model="contact.relationship">
+        </div>
+        <!-- <div ng-repeat="line in contact.addresses[0].addressLines | limitTo:5 track by $index" class="form-group">
             <label for="addressLine{{$index}}">Address Line {{$index + 1}}</label>
             <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='contact.addresses[0].addressLines[$index]' ng-if='$index === 0' required maxlength='100'>
             <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='contact.addresses[0].addressLines[$index]' ng-if='$index !== 0' maxlength='100'>
@@ -64,7 +66,7 @@
         <div class="form-group">
             <label for="country">Country</label>
             <countries></countries>
-        </div>
+        </div> -->
         <div ng-repeat="phone in contact.languages | limitTo:2 track by $index" class="form-group">
             <label for="language{{$index}}" ng-if="$index === 0">First Language</label>
             <input type="text" id="language{{$index}}" required class="form-control" placeholder="i.e. English" ng-model="contact.languages[$index].value" ng-if="$index === 0">

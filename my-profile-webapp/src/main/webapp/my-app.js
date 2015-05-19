@@ -184,7 +184,7 @@
       
       app.controller('EmergencyInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
         $scope.addEdit = function() {
-          $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], phoneNumbers : [""], languages : [""], edit : true})
+          $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], languages : [""], edit : true});
         }
         
         $scope.save = function() {
@@ -380,6 +380,14 @@
               });
           }
           
+          // var getEmergencyInfo = function() {
+          //     return emergencyInfoPromise.success(
+          //        function(data, status) { //success function
+          //            return data.emergencyContacts;
+          //        }).error(function(data, status) { // failure function
+          //        miscService.redirectUser(status, "Get emergency info");
+          //     });
+          // }
         
           return {
             getContactInfo : getContactInfo,
