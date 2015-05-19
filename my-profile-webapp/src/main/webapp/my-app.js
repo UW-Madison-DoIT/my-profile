@@ -379,16 +379,7 @@
                  miscService.redirectUser(status, "Get basic info");
               });
           }
-          
-          // var getEmergencyInfo = function() {
-          //     return emergencyInfoPromise.success(
-          //        function(data, status) { //success function
-          //            return data.emergencyContacts;
-          //        }).error(function(data, status) { // failure function
-          //        miscService.redirectUser(status, "Get emergency info");
-          //     });
-          // }
-        
+       
           return {
             getContactInfo : getContactInfo,
             getLocalContactInfo : getLocalContactInfo,

@@ -45,28 +45,6 @@
             <label for="relationship">Relationship</label>
             <input class="form-control" id='relationship' type='text' required ng-model="contact.relationship">
         </div>
-        <!-- <div ng-repeat="line in contact.addresses[0].addressLines | limitTo:5 track by $index" class="form-group">
-            <label for="addressLine{{$index}}">Address Line {{$index + 1}}</label>
-            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='contact.addresses[0].addressLines[$index]' ng-if='$index === 0' required maxlength='100'>
-            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='contact.addresses[0].addressLines[$index]' ng-if='$index !== 0' maxlength='100'>
-        </div>
-        <button class='btn btn-default' type='text' ng-click='contact.addresses[0].addressLines.push("")' ng-if='contact.addresses[0].addressLines.length <= 4'>Add address line</button>
-        <div class="form-group">
-            <label for="city">City</label>
-            <input class="form-control" id='city' type='text' required ng-model="contact.addresses[0].city">
-        </div>
-        <div class="form-group">
-            <label for="city">State</label>
-            <input class="form-control" id='state' type='text' required ng-model="contact.addresses[0].state">
-        </div>
-        <div class="form-group">
-            <label for="zip">ZIP</label>
-            <input class="form-control" id='zip' type='text' required ng-model="contact.addresses[0].postalCode">
-        </div>
-        <div class="form-group">
-            <label for="country">Country</label>
-            <countries></countries>
-        </div> -->
         <div ng-repeat="phone in contact.languages | limitTo:2 track by $index" class="form-group">
             <label for="language{{$index}}" ng-if="$index === 0">First Language</label>
             <input type="text" id="language{{$index}}" required class="form-control" placeholder="i.e. English" ng-model="contact.languages[$index].value" ng-if="$index === 0">
