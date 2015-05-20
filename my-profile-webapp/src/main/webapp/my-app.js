@@ -184,12 +184,13 @@
       
       app.controller('EmergencyInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
         $scope.addEdit = function() {
-          $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], languages : [""], edit : true});
+          $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], edit : true});
         }
         
         $scope.save = function() {
             $scope.notSaving = false;
             $scope.error = "";
+            
             profileService.saveEmergencyContactInfo($scope.emergencyInfo)
                 .then(function(result){//success
                     $scope.emergencyInfo = result.data;

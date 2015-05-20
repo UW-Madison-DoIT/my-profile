@@ -12,7 +12,7 @@ public class ContactInformation {
   private String legalName;
   private String preferredName;
   private String relationship;
-  private List<TypeValue> languages;
+  private String comments;
   private List<TypeValue> phoneNumbers = new ArrayList<TypeValue>();
   private List<TypeValue> emails = new ArrayList<TypeValue>();
   private List<ContactAddress> addresses = new ArrayList<ContactAddress>();
@@ -65,11 +65,11 @@ public class ContactInformation {
   public void setRelationship(String relationship) {
     this.relationship = relationship;
   }
-  public List<TypeValue> getLanguages() {
-    return languages;
+  public String getComments() {
+    return comments;
   }
-  public void setLanguages(List<TypeValue> languages) {
-    this.languages = languages;
+  public void setComments(String comments) {
+    this.comments = comments;
   }
   public boolean isEdit() {
     return edit;

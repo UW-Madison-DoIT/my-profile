@@ -24,6 +24,28 @@
     background-color:#fff;
   }
 }
+
+.emergency-info {
+  max-width:350px;
+  #name,
+  .phone-number,
+  #comments
+  {
+    width:100%;
+    display:block;
+  }
+  #email {
+    max-width:250px;
+  }
+  #relationship {
+    max-width:150px;
+  }
+  .phone-type {
+    padding-left:15px;
+  }
+}
+
+
 .top-info {
   text-align:center;
   font-size:18px;
@@ -136,11 +158,20 @@ address{
   right: 0;
 }
 
-form .ng-invalid {
+form .ng-invalid,
+form .has-error {
   border-color : #b70101;
 }
 form .ng-valid {
   border-color : #5cb85c;
+}
+form .ng-pristine {
+  border-color : #ccc;
+}
+form .form-help {
+  color:#b70101;
+  padding:3px 10px;
+  font-size:12px;
 }
 .admin-lookup-form input {
   padding:4px 10px;
