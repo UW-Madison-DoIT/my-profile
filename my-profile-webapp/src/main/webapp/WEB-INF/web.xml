@@ -32,6 +32,21 @@
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    
+    <servlet>
+      <servlet-name>StaticServlet</servlet-name>
+      <jsp-file>/index.jsp</jsp-file>
+    </servlet>
+  
+    <!-- Keep this in sync with angular-page.js 
+    -->
+    <servlet-mapping>
+      <servlet-name>StaticServlet</servlet-name>
+      <url-pattern>/contact-info</url-pattern>
+      <url-pattern>/local/*</url-pattern>
+      <url-pattern>/emergencyInfo</url-pattern>
+      <url-pattern>/settings</url-pattern>
+    </servlet-mapping>
  
     <servlet-mapping>
         <servlet-name>profile</servlet-name>
@@ -41,6 +56,5 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-  
   
 </web-app>
