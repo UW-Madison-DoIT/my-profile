@@ -171,7 +171,7 @@ define(['angular'], function(angular) {
     
     app.controller('EmergencyInformationController', ['$localStorage','$scope', 'lecService', function($localStorage, $scope, lecService) {
       $scope.addEdit = function() {
-        $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], languages : [""], edit : true});
+          $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], edit : true});
       }
       
       $scope.save = function() {
