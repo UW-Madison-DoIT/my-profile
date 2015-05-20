@@ -46,7 +46,6 @@
       <url-pattern>/local/*</url-pattern>
       <url-pattern>/emergencyInfo</url-pattern>
       <url-pattern>/main</url-pattern>
-      <url-pattern>/settings</url-pattern>
     </servlet-mapping>
  
     <servlet-mapping>
