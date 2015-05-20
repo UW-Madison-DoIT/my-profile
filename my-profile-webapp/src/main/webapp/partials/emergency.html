@@ -20,13 +20,13 @@
             <label for="name">Name</label>
             <input class="form-control" id='name' type='text' required ng-model="contact.preferredName">
         </div>
-        <div ng-repeat="phone in contact.phoneNumbers | limitTo:3 track by $index" class="form-group">
+        <div ng-repeat="phone in contact.phoneNumbers | limitTo:3 track by $index" class="form-group phone-number">
             <div class="col-xs-7 no-padding">
                 <label for="phone{{$index}}">Phone</label>
                 <input type="tel" id="phone{{$index}}" required class="form-control" placeholder="i.e. 123-456-7890" ng-model="contact.phoneNumbers[$index].value" ng-if="$index === 0">
                 <input type="tel" id="phone{{$index}}" class="form-control" placeholder="i.e. 123-456-7890" ng-model="contact.phoneNumbers[$index].value" ng-if="$index !== 0">
             </div>
-            <div class="col-xs-5">
+            <div class="col-xs-5 no-padding phone-type">
                 <label for="phone-type{{$index}}">Type</label>
                 <select id="phone-type{{$index}}" class="form-control" required ng-model="contact.phoneNumbers[$index].type">
                     <option value="mobile" selected="selected">Mobile</option>
@@ -45,7 +45,7 @@
             <label for="relationship">Relationship</label>
             <input class="form-control" id='relationship' type='text' required ng-model="contact.relationship">
         </div>
-        <div ng-repeat="phone in contact.languages | limitTo:2 track by $index" class="form-group">
+        <div ng-repeat="phone in contact.languages | limitTo:2 track by $index" class="form-group languages">
             <label for="language{{$index}}" ng-if="$index === 0">First Language</label>
             <input type="text" id="language{{$index}}" required class="form-control" placeholder="i.e. English" ng-model="contact.languages[$index].value" ng-if="$index === 0">
             <label for="language{{$index}}" ng-if="$index !== 0">Second Language</label>
