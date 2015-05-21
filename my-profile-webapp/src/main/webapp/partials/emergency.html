@@ -1,7 +1,7 @@
 <div ng-if='!contact.edit || contact.edit == false'>
     <p>{{ contact.preferredName }}</p>
     <div ng-repeat="phone in contact.phoneNumbers">
-        <p><span ng-if="$index === 0">Primary Phone: </span>{{ phone.value }} ({{ phone.type }})</p>
+        <p><span ng-if="$index === 0">Primary phone: </span>{{ phone.value }} ({{ phone.type }})</p>
     </div>
     <p>{{ contact.emails[0].value }}</p>
     <br>
@@ -22,10 +22,9 @@
         </div>
         <div ng-repeat="phone in contact.phoneNumbers | limitTo:3 track by $index" class="form-group phone-number">
             <div class="col-xs-7 no-padding">
-                <label for="phone{{$index}}" ng-if="$index === 0">Primary Phone*</label>
+                <label for="phone{{$index}}" ng-if="$index === 0">Primary phone*</label>
                 <input type="tel" id="phone{{$index}}" name="phone{{$index}}" required class="form-control" ng-model="contact.phoneNumbers[$index].value" ng-if="$index === 0" ng-class="{ 'has-error' : emergencyForm.phone0.$invalid && emergencyForm.phone0.$touched }">
-                <label for="phone{{$index}}" ng-if="$index === 1">Secondary Phone</label>
-                <label for="phone{{$index}}" ng-if="$index === 2">Tertiary Phone</label>
+                <label for="phone{{$index}}" ng-if="$index !== 0">Other phone</label>
                 <input type="tel" id="phone{{$index}}" class="form-control" ng-model="contact.phoneNumbers[$index].value" ng-if="$index !== 0">
             </div>
             <div class="col-xs-5 no-padding phone-type">
@@ -53,18 +52,10 @@
             <p class="form-help" ng-show="emergencyForm.relationship.$invalid && emergencyForm.relationship.$touched">Relationship is required</p>
         </div>
         <div class="form-group">
-            <label for="comments">Communication Considerations / Other Comments</label>
-            <textarea class="form-control" id='comments' type='text' ng-model="contact.comments" placeholder="i.e. Speaks Spanish"></textarea>
+            <label for="comments">Comments</label>
+            <textarea class="form-control" id='comments' type='text' ng-model="contact.comments" placeholder="For example, languages spoken or best times to contact"></textarea>
         </div>
-        <p>(*) = Required</p>
-        <!-- <div ng-repeat="phone in contact.languages | limitTo:2 track by $index" class="form-group languages">
-            <label for="language{{$index}}" ng-if="$index === 0">First Language</label>
-            <input type="text" id="language{{$index}}" required class="form-control" placeholder="i.e. English" ng-model="contact.languages[$index].value" ng-if="$index === 0">
-            <label for="language{{$index}}" ng-if="$index !== 0">Second Language</label>
-            <input type="tel" id="language{{$index}}" class="form-control" placeholder="i.e. Spanish" ng-model="contact.languages[$index].value" ng-if="$index !== 0">
-        </div> -->
-        <!-- <button class="btn btn-default" type="text" ng-click="contact.languages.push('')">Add another language</button>
-        <br> -->
+        <p>*Required</p>
         <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save()" ng-disabled="emergencyForm.$invalid">Save</button>
         <button class='btn btn-default' ng-click='cancel()'>Cancel</button>
     </form>
