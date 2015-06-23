@@ -1,4 +1,4 @@
-<div class="portlet-frame" style='display: inline-block; width: 100%;'>
+<div class="row portlet-frame">
   <portlet-header app-title="Find Local Information" app-image="img/square.jpg"></portlet-header>
   <div class="portlet-body">
     <div ng-controller="LocalContactAdminController as localContactAdminCtrl">
@@ -8,17 +8,17 @@
         <div class='fluid-container'>
           <div class='row'>
             <div class='col-sm-8 col-sm-offset-2'>
-              <div class=' info-card' style='text-align: center;'>
+              <div class='info-card center'>
                 <p><i class="fa fa-exclamation-triangle"></i> For use only in case of emergency. All searches will be logged.</p>
                 <div class='admin-lookup-form'>
                   <form name='form' novalidate>
-                    <span ng-class='{bold : instructionBold}'>Student's last name or NetID</span>
+                    <span class='bold'>Search by student's last name or NetID</span>
                     <div>
-                      <input type='text' required ng-model='searchTerm' style='text-align: center;'>
+                      <input type='text' required ng-model='searchTerm' class='center' placeholder="e.g. Johnson">
                     </div>
                     <div>
                       <button class='btn btn-primary' ng-click="search()" ng-show='form.$valid'>Search</button>
-                      <button class='btn btn-primary disabled' ng-hide='form.$valid' ng-click='instructionBold = true'>Search</button>
+                      <button class='btn btn-primary disabled' ng-hide='form.$valid'>Search</button>
                       <button class='btn btn-default' ng-click="reset()">Clear</button>
                     </div>
                   </form>
@@ -51,7 +51,7 @@
                 <div class="col-sm-3">
                   <span>Showing {{searchResultLimit>result.people.length ? result.people.length:searchResultLimit}} of {{result.people.length}} results.</span>
                 </div>
-                <div style="text-align:center;" class='col-sm-6' ng-show="result.people.length > 0">
+                <div class='col-sm-6 center' ng-show="result.people.length > 0">
                   <button class="btn btn-primary" 
                     ng-click="searchResultLimit = searchResultLimit + searchResultLimitIncrementor"
                     ng-show="result.people.length > searchResultLimit">
@@ -64,7 +64,7 @@
             <!-- If no results found -->
             <div  ng-show="result.people.length === 0">
               <div class="row">
-                <div style="text-align:center;" class='col-sm-8 col-sm-offset-2'>
+                <div class='col-sm-8 col-sm-offset-2 center'>
                   <p>No search results found.</p>
                 </div>
               </div>
