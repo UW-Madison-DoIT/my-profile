@@ -18,6 +18,7 @@
         <module>my-profile-api</module>
         <module>my-profile-integration-impl</module>
         <module>my-profile-local-contact-impl</module>
+        <module>my-profile-middleware-impl</module>
     </modules>
 
     <scm>

@@ -1,9 +1,6 @@
 package edu.wisc.my.profile.service;
 
-import java.util.List;
-
 import edu.wisc.my.profile.model.ContactInformation;
-import edu.wisc.my.profile.model.User;
 
 public interface EmergencyContactInformationService {
   

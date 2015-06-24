@@ -61,8 +61,14 @@
         <property name="dataSource" ref="isis"/>
     </bean>
     
-    <bean id="uportal" parent="abstractDataSource">
+    <bean id="mw" parent="abstractDataSource">
     </bean>
+    
+    
+    <!-- enable if you want to utilize local info from a uportal key/val pair database -->
+    <!-- 
+    <bean id="uportal" parent="abstractDataSource">
+    </bean> 
     
     <bean id="LocalContactInformationDao" class="edu.wisc.my.profile.local.dao.LocalContactInformationDaoImpl">
         <constructor-arg ref="uportal" />
@@ -70,8 +76,9 @@
     
     <bean id="EmergencyContactInformationDao" class="edu.wisc.my.profile.emergency.dao.EmergencyContactInformationDaoImpl">
         <constructor-arg ref="uportal" />
-    </bean>
+    </bean> 
     
     <bean id="LocalUserDao" class="edu.wisc.my.profile.local.dao.LocalUserDaoImpl">
     </bean>
+    -->
 </beans>

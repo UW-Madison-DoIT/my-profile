@@ -1,0 +1,88 @@
+{
+   "NETID":"vertein",
+   "ADDRESS COUNT 1":{
+      "ADDRESS PRIORITY":1,
+      "ADDRESS LINE 1":"UW-Madison",
+      "ADDRESS LINE 2":"Merit Residence Hall",
+      "ADDRESS LINE 3":"919 W Dayton Street",
+      "ADDRESS LINE 4":"Apt 52",
+      "CITY":"Madison",
+      "STATE":"WI",
+      "ZIP":"53705",
+      "COUNTRY":"USA",
+      "ADDRESS COMMENT":"",
+      "ADDRESS TYPE":"",
+      "ADDRESS EFFECTIVE DATE":"",
+      "ADDRESS EXPIRATION DATE":"",
+      "ADDRESS DTTM":"18-JUN-15"
+   },
+   "PHONE COUNT 1":{
+      "PHONE PRIORITY":1,
+      "PHONE NUMBER":"123-246-3579",
+      "PHONE COMMENT":"",
+      "PHONE DTTM":"18-JUN-15"
+   },
+   "EMERGENCY COUNT 1":{
+      "EMERGENCY CONTACT PRIORITY":1,
+      "EMERGENCY NAME":"Scott Walker",
+      "RELATION":"PT",
+      "RELATION COMMENT":"PARENT",
+      "LANGUAGE SPOKEN 1":"ENG",
+      "LANGUAGE SPOKEN 2":"",
+      "EMERGENCY CONTACT DTTM":"18-JUN-15",
+      "EMERGENCY EMAIL COUNT 1":{
+         "EMERGENCY EMAIL PRIORITY":1,
+         "EMERGENCY EMAIL ADDRESS":"iwanttohelp@wisc.gov",
+         "EMERGENCY EMAIL COMMENT":"Work",
+         "EMERGENCY EMAIL DTTM":"18-JUN-15"
+      },
+      "EMERGENCY EMAIL COUNT 2":{
+         "EMERGENCY EMAIL PRIORITY":2,
+         "EMERGENCY EMAIL ADDRESS":"junkmail@wisc.gov",
+         "EMERGENCY EMAIL COMMENT":"",
+         "EMERGENCY EMAIL DTTM":"18-JUN-15"
+      }
+   },
+   "EMERGENCY COUNT 2":{
+      "EMERGENCY CONTACT PRIORITY":2,
+      "EMERGENCY NAME":"Tom Petri",
+      "RELATION":"FM",
+      "RELATION COMMENT":"UNCLE",
+      "LANGUAGE SPOKEN 1":"ENG",
+      "LANGUAGE SPOKEN 2":"",
+      "EMERGENCY CONTACT DTTM":"18-JUN-15",
+      "EMERGENCY PHONE COUNT 1":{
+         "EMERGENCY PHONE PRIORITY":1,
+         "EMERGENCY PHONE NUMBER":"987-654-321",
+         "EMERGENCY PHONE COMMENT":"Other",
+         "EMERGENCY PHONE DTTM":"18-JUN-15"
+      },
+      "EMERGENCY PHONE COUNT 2":{
+         "EMERGENCY PHONE PRIORITY":2,
+         "EMERGENCY PHONE NUMBER":"608-222-2460",
+         "EMERGENCY PHONE COMMENT":"",
+         "EMERGENCY PHONE DTTM":"18-JUN-15"
+      }
+   },
+   "EMERGENCY COUNT 3":{
+      "EMERGENCY CONTACT PRIORITY":3,
+      "EMERGENCY NAME":"Russ Feingold",
+      "RELATION":"OT",
+      "RELATION COMMENT":"OTHER",
+      "LANGUAGE SPOKEN 1":"ENG",
+      "LANGUAGE SPOKEN 2":"",
+      "EMERGENCY CONTACT DTTM":"18-JUN-15",
+      "EMERGENCY PHONE COUNT 1":{
+         "EMERGENCY PHONE PRIORITY":1,
+         "EMERGENCY PHONE NUMBER":"608-666-7891",
+         "EMERGENCY PHONE COMMENT":"work",
+         "EMERGENCY PHONE DTTM":"18-JUN-15"
+      },
+      "EMERGENCY EMAIL COUNT 1":{
+         "EMERGENCY EMAIL PRIORITY":1,
+         "EMERGENCY EMAIL ADDRESS":"wisconsin.debate@wisc.com",
+         "EMERGENCY EMAIL COMMENT":"",
+         "EMERGENCY EMAIL DTTM":"18-JUN-15"
+      }
+   }
+}

@@ -1,0 +1,24 @@
+## Database Configuration
+isis.driverClassName=
+isis.url=
+isis.username=
+isis.password=
+isis.validationQuery=
+
+## Maximum time to wait for queries to execute
+isisDao.queryTimeout=55
+
+## Database Configuration
+uportal.driverClassName=org.hsqldb.jdbc.JDBCDriver
+uportal.url=jdbc:hsqldb:hsql://localhost:8887/uPortal
+uportal.username=sa
+uportal.password=
+uportal.validationQuery=select 1 from INFORMATION_SCHEMA.SYSTEM_USERS
+
+## Middleware Configuration
+mw.driverClassName=
+mw.url=
+mw.username=
+mw.password=
+mw.validationQuery=
+
