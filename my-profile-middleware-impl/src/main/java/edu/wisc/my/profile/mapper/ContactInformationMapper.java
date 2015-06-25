@@ -49,7 +49,7 @@ public final class ContactInformationMapper {
           try {
             for(int j = 1; j <=3; j++) {
               JSONObject jphone = jcontact.getJSONObject("EMERGENCY PHONE COUNT "+ j);
-              String phone = jphone.getString("EMERGENCY PHONE ADDRESS");
+              String phone = jphone.getString("EMERGENCY PHONE NUMBER");
               String comment = jphone.getString("EMERGENCY PHONE COMMENT");
               ci.getPhoneNumbers().add(new TypeValue(comment, phone));
             }
@@ -106,14 +106,8 @@ public final class ContactInformationMapper {
     }
     return ci;
   }
-
-  public static JSONObject mergeLocalContact(ContactInformation[] dbEmergencyContacts, ContactInformation dbContactInfo, ContactInformation updatedContactInformation) {
-    dbContactInfo.setAddresses(updatedContactInformation.getAddresses());
-    // TODO Auto-generated method stub
-    return convertToJSONObject(dbEmergencyContacts, dbContactInfo);
-  }
   
-  private static JSONObject convertToJSONObject(ContactInformation[] emergencyContacts, ContactInformation ci) {
+  public static JSONObject convertToJSONObject(ContactInformation[] emergencyContacts, ContactInformation ci) {
     JSONObject json = new JSONObject();
     //populate local contact info
     int count=1;
@@ -155,7 +149,7 @@ public final class ContactInformationMapper {
     //TODO: Get language from eci 
     //emergencyContact.put("LANGUAGE SPOKEN 1", eci.get);
     //emergencyContact.put("LANGUAGE SPOKEN 2", eci.get);
-    emergencyContact.put("LANGUAGE SPOKEN 1", "Not Implemented but required field");
+    emergencyContact.put("LANGUAGE SPOKEN 1", "ENG");//todo : bad, no ugh
     DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YY");
     emergencyContact.put("EMERGENCY CONTACT DTTM", formatter.print(DateTime.now()));
     
