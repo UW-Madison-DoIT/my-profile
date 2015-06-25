@@ -2,7 +2,7 @@ package edu.wisc.my.profile.dao;
 
 import edu.wisc.my.profile.model.ContactInformation;
 
-public interface MiddlewareDao {
+public interface LocalContactMiddlewareDao {
 
   ContactInformation getContactInfo(String netId);
 

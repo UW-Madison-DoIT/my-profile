@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import edu.wisc.my.profile.dao.MiddlewareDao;
+import edu.wisc.my.profile.dao.LocalContactMiddlewareDao;
 import edu.wisc.my.profile.model.ContactInformation;
 import edu.wisc.my.profile.model.User;
 
@@ -20,7 +20,7 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
   protected final Logger logger = LoggerFactory.getLogger(getClass());
 
   @Autowired
-  private MiddlewareDao dao;
+  private LocalContactMiddlewareDao dao;
   private String adminGroup;
   
   @Value("${adminGroup}")

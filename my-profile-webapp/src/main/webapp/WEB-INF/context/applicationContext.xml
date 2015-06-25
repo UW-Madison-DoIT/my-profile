@@ -69,6 +69,10 @@
         <constructor-arg ref="mw" />
     </bean>
     
+    <bean id="EmergencyContactDao" class="edu.wisc.my.profile.dao.EmergencyContactMiddlewareDaoImpl">
+        <constructor-arg ref="mw"/>
+    </bean>
+    
     <!-- enable if you want to utilize local info from a uportal key/val pair database -->
     <!-- 
     <bean id="uportal" parent="abstractDataSource">

@@ -1,12 +1,13 @@
 package edu.wisc.my.profile.mapper;
 
+
 import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -19,6 +20,54 @@ import edu.wisc.my.profile.model.TypeValue;
 public final class ContactInformationMapper {
   
   protected static final Logger logger = LoggerFactory.getLogger(ContactInformationMapper.class);
+  
+  public static ContactInformation[] convertToEmergencyContactInformation(JSONObject json) {
+    List <ContactInformation> eci = new ArrayList<ContactInformation>();
+    
+    try {
+      for(int i = 1; i <=3; i++) {
+        JSONObject jcontact = json.getJSONObject("EMERGENCY COUNT " + i);
+        if(jcontact != null) {
+          ContactInformation ci = new ContactInformation();
+          ci.setPreferredName(jcontact.getString("EMERGENCY NAME"));
+          ci.setRelationship(jcontact.getString("RELATION"));
+          ci.setComments(jcontact.getString("RELATION COMMENT"));
+          //le emailz
+          try {
+            for(int j = 1; j <=3; j++) {
+              JSONObject jemail = jcontact.getJSONObject("EMERGENCY EMAIL COUNT "+ j);
+              String email = jemail.getString("EMERGENCY EMAIL ADDRESS");
+              String value = jemail.getString("EMERGENCY EMAIL COMMENT");
+              ci.getEmails().add(new TypeValue(value, email));
+            }
+          } catch (JSONException ex) {
+            logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
+            //nothing to see here, move along
+          }
+          
+          //le phonz
+          try {
+            for(int j = 1; j <=3; j++) {
+              JSONObject jphone = jcontact.getJSONObject("EMERGENCY PHONE COUNT "+ j);
+              String phone = jphone.getString("EMERGENCY PHONE ADDRESS");
+              String comment = jphone.getString("EMERGENCY PHONE COMMENT");
+              ci.getPhoneNumbers().add(new TypeValue(comment, phone));
+            }
+          } catch (JSONException ex) {
+            logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
+          }
+          
+          //add to parent
+          eci.add(ci);
+        }
+        
+      }
+    } catch (JSONException ex) {
+      logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
+    }
+    
+    return eci.toArray(new ContactInformation[3]);
+  }
 
   public static ContactInformation convertToLocalContactInformation(JSONObject json, ContactInformation ci) {
     if(json != null) {

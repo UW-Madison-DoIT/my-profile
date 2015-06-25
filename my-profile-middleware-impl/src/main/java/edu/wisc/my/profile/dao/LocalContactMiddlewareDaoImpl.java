@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import edu.wisc.my.profile.mapper.ContactInformationMapper;
 import edu.wisc.my.profile.model.ContactInformation;
 
-public class LocalContactMiddlewareDaoImpl implements MiddlewareDao {
+public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao {
   
   protected final Logger logger = LoggerFactory.getLogger(getClass());
   
