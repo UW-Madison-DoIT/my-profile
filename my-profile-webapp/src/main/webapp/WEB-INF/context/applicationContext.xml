@@ -61,9 +61,13 @@
         <property name="dataSource" ref="isis"/>
     </bean>
     
+    <!-- middleware datasource -->
     <bean id="mw" parent="abstractDataSource">
     </bean>
     
+    <bean id="LocalContactInformationDao" class="edu.wisc.my.profile.dao.LocalContactMiddlewareDaoImpl">
+        <constructor-arg ref="mw" />
+    </bean>
     
     <!-- enable if you want to utilize local info from a uportal key/val pair database -->
     <!-- 
