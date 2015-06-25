@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import edu.wisc.my.profile.dao.EmergencyContactMiddlewareDao;
-import edu.wisc.my.profile.dao.LocalContactMiddlewareDao;
 import edu.wisc.my.profile.model.ContactInformation;
 
 @Service

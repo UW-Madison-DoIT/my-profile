@@ -73,7 +73,8 @@
         <constructor-arg ref="mw"/>
     </bean>
     
-    <!-- enable if you want to utilize local info from a uportal key/val pair database -->
+    <!-- enable if you want to utilize local info from a uportal key/val pair database
+         you will also have to disable the middleware daos -->
     <!-- 
     <bean id="uportal" parent="abstractDataSource">
     </bean> 

@@ -7,7 +7,4 @@ public interface LocalContactMiddlewareDao {
   ContactInformation getContactInfo(String netId);
 
   ContactInformation setContactInfo(String netId, ContactInformation contactInformation);
-
-  ContactInformation getData(String netId);
-
 }

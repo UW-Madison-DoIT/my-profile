@@ -43,11 +43,4 @@ public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao 
     //return saved content
     return ci;
   }
-
-  @Override
-  public ContactInformation getData(String netId) {
-    // TODO Auto-generated method stub
-    return new ContactInformation();
-  }
-
 }
