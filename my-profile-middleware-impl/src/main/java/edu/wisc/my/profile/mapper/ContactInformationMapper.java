@@ -143,7 +143,7 @@ public final class ContactInformationMapper {
   
   private static JSONObject jsonifyEmergencyContact(ContactInformation eci) {
     JSONObject emergencyContact = new JSONObject();
-    emergencyContact.put("NAME", eci.getPreferredName());
+    emergencyContact.put("EMERGENCY NAME", eci.getPreferredName());
     emergencyContact.put("RELATION", eci.getRelationship());
     emergencyContact.put("RELATION COMMENT", eci.getComments());
     //TODO: Get language from eci 
