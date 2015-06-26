@@ -31,7 +31,7 @@ public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao 
   }
 
   @Override
-  public ContactInformation setContactInfo(String netId, ContactInformation updatedContactInformation) {
+  public ContactInformation setContactInfo(String netId, ContactInformation updatedContactInformation) throws Exception {
     //hack until we refactor
     ContactInformation[] emergencyContacts = ecdao.getData(netId);
     JSONObject json = ContactInformationMapper.convertToJSONObject(emergencyContacts, updatedContactInformation);
@@ -39,8 +39,15 @@ public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao 
     if(logger.isTraceEnabled()) {
       logger.trace("Saving the following JSON: " + json.toString());
     }
-    ContactInformation ci = jdbcTemplate.query("select PERSONPROFILE.PERSONPROFILE.SAVE_PERSON_PROFILE( ? ) from dual", new LocalContactInfoResultSetExtractor(), json.toString());
-    //return saved content
-    return ci;
+    String result = jdbcTemplate.query("select PERSONPROFILE.PERSONPROFILE.SAVE_PERSON_PROFILE( ? ) from dual", new MiddlewareUpdateExtractor(), json.toString());
+    
+    if(MiddlewareUpdateExtractor.SUCCESS.equals(result)) {
+      //  return saved content
+      return updatedContactInformation;
+    } else {
+      throw new Exception("There was an issue saving the local contact information");
+    }
+    
+    
   }
 }

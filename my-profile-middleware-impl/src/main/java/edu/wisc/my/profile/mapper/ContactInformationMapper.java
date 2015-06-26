@@ -66,7 +66,7 @@ public final class ContactInformationMapper {
       logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
     }
     
-    return eci.toArray(new ContactInformation[3]);
+    return eci.toArray(new ContactInformation[0]);
   }
 
   public static ContactInformation convertToLocalContactInformation(JSONObject json, ContactInformation ci) {

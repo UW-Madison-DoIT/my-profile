@@ -39,9 +39,15 @@ public class EmergencyContactMiddlewareDaoImpl implements EmergencyContactMiddle
     if(logger.isTraceEnabled()) {
       logger.trace("Saving the following JSON: " + json.toString());
     }
-    ContactInformation[] cis = jdbcTemplate.query("select PERSONPROFILE.PERSONPROFILE.SAVE_PERSON_PROFILE( ? ) from dual", new EmergencyContactInfoResultSetExtractor(), json.toString());
-    //return saved content
-    return cis;
+    String result = jdbcTemplate.query("select PERSONPROFILE.PERSONPROFILE.SAVE_PERSON_PROFILE( ? ) from dual", new MiddlewareUpdateExtractor(), json.toString());
+    
+    if(MiddlewareUpdateExtractor.SUCCESS.equals(result)) {
+      //return saved content
+      return emergencyContacts;
+    } else {
+      throw new Exception("There was an issue saving the emergency contacts");
+    }
+    
   }
 
 }
