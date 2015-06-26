@@ -48,7 +48,7 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
   public ContactInformation getContactInfo(String username, String manifestGroups, String netId) {
     if(StringUtils.isNotBlank(adminGroup) && manifestGroups.contains(adminGroup)) {
       logger.info("User {} looked up user {}.",username, netId);
-      return dao.getData(netId);
+      return dao.getContactInfo(netId);
     } else {
       //TODO : implement uw-spring-security
       logger.warn("Security violation: User {} looked up user {}.",username, netId);
