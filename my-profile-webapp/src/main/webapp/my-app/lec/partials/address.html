@@ -1,0 +1,66 @@
+<div ng-if='!address.edit || address.edit == false'>
+    <div ng-repeat="line in address.addressLines">
+        {{line}}
+    </div>
+    <div>
+        {{address.city}}, {{address.state}} {{address.postalCode}}
+    </div>
+    <div>
+        {{address.country}}
+    </div>
+    
+    <p>{{address.comment}}</p>
+    <span ng-hide='address.readOnly'>
+        <button class='btn btn-primary' ng-click='addEdit()'>Add another</button>
+        <button class='btn btn-default' ng-click='address.edit = true'>Edit</button>
+        <button class='btn btn-default' ng-click='deleteAddress($index)'>Delete</button>
+    </span>
+</div>
+<div ng-if='address.edit'>
+    <form novalidate name="addressForm">
+        <div ng-repeat="line in address.addressLines | limitTo:5 track by $index" class="form-group">
+            <label for="addressLine{{$index}}">Address Line {{$index + 1}}<span ng-if="$index === 0">*</span></label>
+            <input id='addressLine{{$index}}' name="addressLine{{$index}}" type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index == 0' required  maxlength='100' ng-class="{ 'has-error' : addressForm.addressLine0.$invalid && addressForm.name.$touched }">
+            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index != 0' maxlength='100'>
+            <p class="form-help" ng-show="addressForm.addressLine0.$invalid && addressForm.addressLine0.$touched">At least one address is required</p>
+        </div>
+        <button class='btn btn-default' type='text' ng-click='address.addressLines.push("")' ng-if='address.addressLines.length <= 4'>Add line</button>
+        <div class='form-group'>
+            <label for="city">City*</label>
+            <input class="form-control" type='text' name="city" ng-model='address.city' required maxlength='100'>
+            <p class="form-help" ng-show="addressForm.city.$invalid && addressForm.city.$touched">City is required</p>
+        </div>
+        <div class='form-group'>
+            <label for="country">Country*</label>
+            <select id='country' name="country"
+                    class="form-control" 
+                    required 
+                    ng-model='address.country' >
+                    <option ng-repeat='item in countries  | orderBy:value' value='{{item.key}}' ng-attr-selected="{{isSelection(address.country, item.key)}}">{{item.value}}</option>
+            </select>
+            <p class="form-help" ng-show="addressForm.country.$invalid && addressForm.country.$touched">Country is required</p>
+        </div>
+        <div class='form-group'>
+            <label for="state">State/Province/Region*</label>
+            <select id='state' name="state"
+                    class="form-control" 
+                    required 
+                    ng-model='address.state' >
+                    <option ng-repeat='item in states | filter:{country: address.country} | orderBy:value' ng-if='address.country' value='{{item.key}}' ng-attr-selected="{{isSelection(address.state, item.key)}}">{{item.value}}</option>
+            </select>
+            <p class="form-help" ng-show="addressForm.state.$invalid && addressForm.state.$touched">State is required</p>
+        </div>
+        <div class='form-group'>
+            <label for="postalCode">Zip*</label>
+            <input class="form-control" id="postalCode" name="postalCode" type='text' ng-model='address.postalCode' required maxlength='100'>
+            <p class="form-help" ng-show="addressForm.postalCode.$invalid && addressForm.postalCode.$touched">ZIP code is required</p>
+        </div>
+        <div class='form-group'>
+            <label for="comment">More Information <small>({{100 - address.comment.length}} characters left)</small></label>
+            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment' maxlength='100'></textarea>
+        </div>
+        <p>*Required</p>
+        <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save()" ng-disabled="addressForm.$invalid">Save</button>
+        <button class='btn btn-default' ng-click='cancel()'>Cancel</button>
+    </form>
+</div>

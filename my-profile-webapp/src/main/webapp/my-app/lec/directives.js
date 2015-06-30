@@ -35,4 +35,11 @@ define(['angular', 'require'], function(angular, require) {
         templateUrl : require.toUrl('./partials/emergency.html')
       }
     });
+  
+  app.directive('lecAddress', function() {
+      return {
+        restrict : 'E',
+        templateUrl : require.toUrl('./partials/address.html')
+      }
+    });
 });
