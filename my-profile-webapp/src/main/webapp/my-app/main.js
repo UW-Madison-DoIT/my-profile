@@ -61,8 +61,9 @@ define([
         when('/local/adminLookup', lecRoutes.adminLookup).
         when('/emergencyInfo', lecRoutes.emegencyInfo).
         when('/settings', settingsRoute).
+        when('/settings/profile', profileRoutes.profileSettings).
         otherwise({
-            redirectTo: '/main'
+            redirectTo: '/emergencyInfo'
         });
     }]);
 

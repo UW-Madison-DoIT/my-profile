@@ -18,8 +18,9 @@
  * under the License.
  */
 define(['require'], function(require){
-  return { 
+  return {
       main : {templateUrl: require.toUrl('./partials/main.html')},
-      contactInfo : {templateUrl: require.toUrl('./partials/contact-info.html')}
+      contactInfo : {templateUrl: require.toUrl('./partials/contact-info.html')},
+      profileSettings : {templateUrl : require.toUrl('./partials/settings.html')}
   }
 });
