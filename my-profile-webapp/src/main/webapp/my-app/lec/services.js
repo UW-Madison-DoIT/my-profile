@@ -2,6 +2,23 @@
 
 define(['angular'], function(angular) {
     var app = angular.module('my-app.lec.services', []);
+    
+    app.factory('optionService', function($http, miscService) {
+        
+        var getOptions = function(key) {
+            return $http.get('/profile/json/' + key + '.json', {cache: true}).success(
+                function(data, status) { //success function
+                    return data;
+                }).error(function(data, status) { // failure function
+                miscService.redirectUser(status, "Get options for " + key + " info");
+             });
+        }
+        
+        return {
+            getOptions : getOptions
+        };
+    });
+    
     app.factory('lecService', function($http, miscService) {
         
         //local contact

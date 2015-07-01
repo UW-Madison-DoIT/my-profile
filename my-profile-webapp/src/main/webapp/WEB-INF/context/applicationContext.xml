@@ -61,8 +61,23 @@
         <property name="dataSource" ref="isis"/>
     </bean>
     
-    <bean id="uportal" parent="abstractDataSource">
+    <!-- middleware datasource -->
+    <bean id="mw" parent="abstractDataSource">
     </bean>
+    
+    <bean id="LocalContactInformationDao" class="edu.wisc.my.profile.dao.LocalContactMiddlewareDaoImpl">
+        <constructor-arg ref="mw" />
+    </bean>
+    
+    <bean id="EmergencyContactDao" class="edu.wisc.my.profile.dao.EmergencyContactMiddlewareDaoImpl">
+        <constructor-arg ref="mw"/>
+    </bean>
+    
+    <!-- enable if you want to utilize local info from a uportal key/val pair database
+         you will also have to disable the middleware daos -->
+    <!-- 
+    <bean id="uportal" parent="abstractDataSource">
+    </bean> 
     
     <bean id="LocalContactInformationDao" class="edu.wisc.my.profile.local.dao.LocalContactInformationDaoImpl">
         <constructor-arg ref="uportal" />
@@ -70,8 +85,9 @@
     
     <bean id="EmergencyContactInformationDao" class="edu.wisc.my.profile.emergency.dao.EmergencyContactInformationDaoImpl">
         <constructor-arg ref="uportal" />
-    </bean>
+    </bean> 
     
     <bean id="LocalUserDao" class="edu.wisc.my.profile.local.dao.LocalUserDaoImpl">
     </bean>
+    -->
 </beans>

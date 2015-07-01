@@ -112,7 +112,7 @@ define(['angular'], function(angular) {
       
   }]);
   
-  app.controller('LocalContactInformationController', ['$localStorage','$scope', 'lecService', function($localStorage, $scope, lecService) {
+  app.controller('LocalContactInformationController', ['$localStorage','$scope', 'lecService','COUNTRIES','STATES', function($localStorage, $scope, lecService,COUNTRIES,STATES) {
       //scope functions
       $scope.addEdit = function() {
         $scope.contactInfo.addresses.push({ addressLines : [""], edit : true})
@@ -146,6 +146,8 @@ define(['angular'], function(angular) {
       //local functions
       var init = function() {
           $scope.contactInfo = [];
+          $scope.countries = COUNTRIES;
+          $scope.states = STATES;
           $scope.error = "";
           $scope.notSaving = true;
           lecService.getLocalContactInfo()
@@ -169,10 +171,14 @@ define(['angular'], function(angular) {
       init();
     } ]);
     
-    app.controller('EmergencyInformationController', ['$localStorage','$scope', 'lecService', function($localStorage, $scope, lecService) {
+    app.controller('EmergencyInformationController', ['$localStorage','$scope', 'lecService', 'RELATIONSHIPS', function($localStorage, $scope, lecService, RELATIONSHIPS) {
       $scope.addEdit = function() {
           $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], edit : true});
       }
+      
+      $scope.isSelection = function(relationship, key) {
+          return relationship == key ? 'required' : '';
+      };
       
       $scope.save = function() {
           $scope.notSaving = false;
@@ -201,9 +207,11 @@ define(['angular'], function(angular) {
       
       //local functions
       var init = function() {
+          $scope.relationshipOptions = RELATIONSHIPS;
           $scope.emergencyInfo = [];
           $scope.error = "";
           $scope.notSaving = true;
+          
           lecService.getEmergencyContactInfo()
               .then(
                 function(result){//success

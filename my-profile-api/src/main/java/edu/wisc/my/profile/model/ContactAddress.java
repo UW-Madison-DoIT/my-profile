@@ -3,6 +3,8 @@ package edu.wisc.my.profile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties("$$hashKey")
@@ -14,6 +16,8 @@ public class ContactAddress {
   private String state;
   private String postalCode;
   private String comment;
+  private DateTime effectiveDate;
+  private DateTime expirationDate;
   private boolean edit;
   public String getType() {
     return type;
@@ -62,5 +66,17 @@ public class ContactAddress {
   }
   public void setEdit(boolean edit) {
     this.edit = edit;
+  }
+  public DateTime getEffectiveDate() {
+    return effectiveDate;
+  }
+  public void setEffectiveDate(DateTime effectiveDate) {
+    this.effectiveDate = effectiveDate;
+  }
+  public DateTime getExpirationDate() {
+    return expirationDate;
+  }
+  public void setExpirationDate(DateTime expirationDate) {
+    this.expirationDate = expirationDate;
   }
 }
