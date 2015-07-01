@@ -56,11 +56,12 @@ define([
     app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
         $locationProvider.html5Mode(true);
         $routeProvider.
-        //when('/main', profileRoutes.main).
-        //when('/contact-info', profileRoutes.contactInfo).
+        when('/main', profileRoutes.main).
+        when('/contact-info', profileRoutes.contactInfo).
         when('/local/adminLookup', lecRoutes.adminLookup).
         when('/emergencyInfo', lecRoutes.emegencyInfo).
         when('/settings', settingsRoute).
+        when('/settings/profile', profileRoutes.profileSettings).
         otherwise({
             redirectTo: '/emergencyInfo'
         });

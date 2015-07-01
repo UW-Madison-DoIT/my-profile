@@ -1,0 +1,27 @@
+<div class="row portlet-frame">
+  <div class="portlet-header">
+    <img src="img/stand-back.jpg" alt="Science" height="180px" style="left: 30%; width: inherit;">
+    <h1>My Profile Beta Settings</h1>
+    <p>Opting in/out of beta features</p>
+  </div>
+  <div class="col-xs-12 no-padding portlet-body">
+    <h3 class="home-section-header">Your Options</h3>
+    <ul class='col-sm-6' style='padding-top: 1em;'>
+       <li class="portlet-container-home beta-card-style">
+           <h4>
+               <span class="btn-group">
+                   <label class="btn" ng-class="{'btn-success' : $storage.showMyProfile, 'btn-default' : !$storage.showMyProfile }" ng-model="$storage.showMyProfile" btn-radio="true">On</label>
+                   <label class="btn" ng-class="{'btn-success' : $storage.showMyProfile, 'btn-default' : !$storage.showMyProfile }" ng-model="$storage.showMyProfile" btn-radio="false">Off</label>
+               </span>
+               Show My Profile
+           </h4>
+           <small>Toggles Display of my profile and subnavigation</small>
+       </li>
+    </ul>
+    <ul class="col-sm-6" style='padding-top: 1em;'>
+        <li class="no-padding portlet-container-home  beta-card-style" style='text-align : center;'>
+          <div>no more options at this time</div>
+       </li>
+    </ul>
+  </div>
+</div>
