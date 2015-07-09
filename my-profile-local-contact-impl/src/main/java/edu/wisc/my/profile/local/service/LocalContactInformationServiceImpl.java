@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import edu.wisc.my.profile.local.dao.LocalContactInformationDao;
-import edu.wisc.my.profile.local.dao.LocalUserDao;
 import edu.wisc.my.profile.model.ContactInformation;
 import edu.wisc.my.profile.service.LocalContactInformationService;
 
