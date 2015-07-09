@@ -55,11 +55,5 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
       throw new SecurityException("Security violation, forbidden.");
     }
   }
-
-  @Override
-  public List<User> getUsers(String username, String manifestGroups, String searchTerm) {
-    // TODO implement this once method is provided
-    return null;
-  }
   
 }
