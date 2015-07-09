@@ -1,13 +1,11 @@
 package edu.wisc.my.profile.model;
 
-import java.util.Comparator;
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Comparable{
-    
+
     @JsonProperty("uid")
     public String uid;
     @JsonProperty("givenName")
@@ -16,6 +14,9 @@ public class User implements Comparable{
     public String sn;
     @JsonProperty("displayName")
     public String displayName;
+    @JsonProperty("PVI")
+    public String pvi;
+    
     /**
      * @return the uid (userId)
      */
@@ -71,6 +72,26 @@ public class User implements Comparable{
             return -1;
         }
         User user = (User) o;
-        return(this.uid.compareTo(user.uid));
+        int result = this.sn.compareTo(user.sn);
+        //If last names are not equal return the comparison
+        if(result!=0){
+            return result;
+        }else{ //Else compare users given name
+            return this.givenName.compareTo(user.givenName);
+        }
     }
+    
+    /**
+     * @return the pvi
+     */
+    public String getPvi() {
+        return pvi;
+    }
+    /**
+     * @param pvi the pvi to set
+     */
+    public void setPvi(String pvi) {
+        this.pvi = pvi;
+    }
+    
 }

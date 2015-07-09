@@ -1,9 +1,6 @@
 package edu.wisc.my.profile.service;
 
-import java.util.List;
-
 import edu.wisc.my.profile.model.ContactInformation;
-import edu.wisc.my.profile.model.User;
 
 public interface LocalContactInformationService {
   
@@ -33,14 +30,5 @@ public interface LocalContactInformationService {
    */
   public ContactInformation getContactInfo(String username, String manifestGroups, String netId);
 
-  /**
-   * Returns an alphabetical list by userId list of users matching the searchTerm
-   * on last Name and userId
-   * @param username
-   * @param manifestGroups
-   * @param searchTerm
-   * @return
-   */
-  public List<User> getUsers(String username, String manifestGroups, String searchTerm);
   
 }

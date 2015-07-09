@@ -1,7 +1,5 @@
 package edu.wisc.my.profile.local.service;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 import edu.wisc.my.profile.local.dao.LocalContactInformationDao;
 import edu.wisc.my.profile.local.dao.LocalUserDao;
 import edu.wisc.my.profile.model.ContactInformation;
-import edu.wisc.my.profile.model.User;
 import edu.wisc.my.profile.service.LocalContactInformationService;
 
 @Service
@@ -22,9 +19,6 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
   protected final Logger logger = LoggerFactory.getLogger(getClass());
   
   private LocalContactInformationDao dao;
-  
-  private LocalUserDao userDao;
-  
   
   private String adminGroup;
   
@@ -36,11 +30,6 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
   @Autowired
   public void setLocalContactInfoDao(LocalContactInformationDao lcio) {
     this.dao = lcio;
-  }
-  
-  @Autowired
-  public void setLocalUserDao(LocalUserDao lcio) {
-    this.userDao = lcio;
   }
   
 
@@ -66,17 +55,6 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
       throw new SecurityException("Security violation, forbidden.");
     }
 
-  }
-
-  @Override
-  public List<User> getUsers(String username, String manifestGroups, String searchTerm) {
-      if(StringUtils.isNotBlank(adminGroup) && manifestGroups.contains(adminGroup)) {
-          logger.info("User {} looked up users using this search term: {}.",username, searchTerm);
-          return userDao.getUsersBySearchTerm(searchTerm);
-      } else {
-          //TODO : implement uw-spring-security
-          throw new SecurityException("Security violation, forbidden.");
-      }
   }
 
 }
