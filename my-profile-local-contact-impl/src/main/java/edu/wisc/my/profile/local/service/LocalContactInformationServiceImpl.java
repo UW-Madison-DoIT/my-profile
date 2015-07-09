@@ -56,5 +56,4 @@ public class LocalContactInformationServiceImpl implements LocalContactInformati
     }
 
   }
-
 }
