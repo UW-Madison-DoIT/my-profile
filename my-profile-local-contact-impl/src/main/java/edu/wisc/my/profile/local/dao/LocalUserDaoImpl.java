@@ -36,7 +36,7 @@ public class LocalUserDaoImpl implements LocalUserDao {
         }
         List<User> filteredUsers = new ArrayList<User>();
         for(User u: listUsers){
-            if(searchTerm.equalsIgnoreCase(u.getUid()) || searchTerm.equalsIgnoreCase(u.getSn())){
+            if(searchTerm.equalsIgnoreCase(u.getLastName())){
                 filteredUsers.add(u);
             }
         }

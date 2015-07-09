@@ -1,17 +1,13 @@
 package edu.wisc.my.profile.dao;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 import javax.sql.DataSource;
 
-import oracle.jdbc.OracleTypes;
 
 import org.springframework.jdbc.core.SqlOutParameter;
 import org.springframework.jdbc.core.SqlParameter;
@@ -28,9 +24,10 @@ public class SearchUsersProcedure extends StoredProcedure {
         this.declareParameter( new SqlOutParameter( "output", oracle.jdbc.OracleTypes.CURSOR, new RowMapper<User>() { 
             public User mapRow(ResultSet argResults, int argRowNum ) throws SQLException {
                 User tempUser = new User();
-                tempUser.setGivenName(argResults.getString("FIRST_NAME"));
+                tempUser.setFirstName(argResults.getString("FIRST_NAME"));
                 tempUser.setPvi(argResults.getString("PVI"));
-                tempUser.setSn(argResults.getString("LAST_NAME"));
+                tempUser.setLastName(argResults.getString("LAST_NAME"));
+                tempUser.setMiddleName(argResults.getString("MIDDLE_NAME"));
                 return tempUser;
             } 
           }) 

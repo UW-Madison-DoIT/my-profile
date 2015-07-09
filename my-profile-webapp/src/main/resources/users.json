@@ -1,62 +1,26 @@
 [
     {
-        "uid":"tvertein",
-        "sn":"VERTEIN",
-        "givenName":"TIMOTHY",
-        "displayName":"TIMOTHY K VERTEIN"
+        "PVI":"admin",
+        "lastName":"Administrator",
+        "middleName":"Ashley",
+        "firstName":"Amy"
     },
     {
-        "uid":"admin",
-        "sn":"Administrator",
-        "givenName":"Amy",
-        "displayName":"Amy Administrator"
+        "PVI":"staff",
+        "lastName":"Staff",
+        "middleName":"Flag",
+        "firstName":"Samuel"
     },
     {
-        "uid":"apetro",
-        "sn":"Petro",
-        "givenName":"Andrew",
-        "displayName":"Andrew Petro"
+        "PVI":"student",
+        "lastName":"Student",
+        "middleName":"tooCoolForSchool",
+        "firstName":"Steven"
     },
     {
-        "uid":"hanstra",
-        "sn":"HANSTRA",
-        "givenName":"Jared",
-        "displayName":"Jared Hanstra"
-    },
-    {
-        "uid":"levett",
-        "sn":"LEVETT",
-        "givenName":"TIMOTHY",
-        "displayName":"TIMOTHY E LEVETT"
-    },
-    {
-        "uid":"mjadas",
-        "sn":"ADAS",
-        "givenName":"MICHAEL",
-        "displayName":"MICHAEL J ADAS"
-    },
-    {
-        "uid":"serrie",
-        "sn":"Serrie",
-        "givenName":"KEIR",
-        "displayName":"KEIR SERRIE"
-    },
-    {
-        "uid":"staff",
-        "sn":"Staff",
-        "givenName":"Samuel",
-        "displayName":"Sam F Staff"
-    },
-    {
-        "uid":"student",
-        "sn":"Student",
-        "givenName":"Steven",
-        "displayName":"Steve tooCoolForSchool Student"
-    },
-    {
-        "uid":"vertein",
-        "givenName":"TIMOTHY",
-        "sn":"VERTEIN",
-        "displayName":"TIMOTHY APOLO VERTEIN"
+        "PVI":"student2",
+        "lastName":"Student",
+        "middleName":"notCoolEnoughForSchool",
+        "firstName":"Steve"
     }
 ]

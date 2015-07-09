@@ -1,6 +1,5 @@
 package edu.wisc.my.profile.service;
 
-import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import edu.wisc.my.profile.dao.LocalContactMiddlewareDao;
 import edu.wisc.my.profile.model.ContactInformation;
-import edu.wisc.my.profile.model.User;
 
 @Service
 public class LocalContactInformationServiceImpl implements LocalContactInformationService {
