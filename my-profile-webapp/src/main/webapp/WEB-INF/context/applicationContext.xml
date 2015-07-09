@@ -69,6 +69,10 @@
         <constructor-arg ref="mw" />
     </bean>
     
+    <bean id="SearchUsersMiddlewareDao" class="edu.wisc.my.profile.dao.SearchUsersMiddlewareDaoImpl">
+        <constructor-arg ref="mw"/>
+    </bean>
+    
     <bean id="EmergencyContactDao" class="edu.wisc.my.profile.dao.EmergencyContactMiddlewareDaoImpl">
         <constructor-arg ref="mw"/>
     </bean>

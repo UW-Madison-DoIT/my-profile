@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import edu.wisc.my.profile.model.ContactInformation;
 import edu.wisc.my.profile.model.User;
 import edu.wisc.my.profile.service.LocalContactInformationService;
+import edu.wisc.my.profile.service.SearchUsersService;
 
 @Controller
 @RequestMapping("/localContactInfo")
@@ -32,6 +33,9 @@ public class LocalContactAdminController {
   
   @Autowired
   private LocalContactInformationService service;
+  
+  @Autowired
+  private SearchUsersService searchUsersService;
   
   @Value("${manifestAttribute}")
   public void setManifestGroupAttribute(String attr) {
@@ -52,7 +56,7 @@ public class LocalContactAdminController {
         logger.warn("User hit admin service w/o username set");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       }
-      List<User> users = service.getUsers(username, manifestGroups, searchTerm);
+      List<User> users = searchUsersService.getUsers(username, manifestGroups, searchTerm);
       JSONObject jsonToReturn = new JSONObject();
       JSONArray userList = new JSONArray();
       for(User u:users){
