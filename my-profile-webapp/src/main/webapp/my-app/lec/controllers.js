@@ -32,37 +32,6 @@ define(['angular'], function(angular) {
           $scope.searchResultLimitIncrementor=10;
           $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
       };
-      
-      var merge = function(one, two){
-        if (!one.people) return {people:two.people};
-        if (!two.people) return {people:one.people};
-        var final = {people:one.people};
-        for(var i = 0 ; i < two.people.length;i++){
-          var item = two.people[i];
-          insert(item, final);
-        }
-        return final;
-      };
-      
-      var insert = function(item, obj){
-        var people = obj.people;
-        var insertIndex = people.length;
-          for(var i = 0; i < people.length; i++){
-            if(String(item.attributes.uid) === String(people[i].attributes.uid)){
-            // ignore duplicates
-            insertIndex = -1;
-            break;
-          } else if(item.attributes.uid < people[i].attributes.uid){
-            insertIndex = i;
-            break;
-          }
-        }
-        if(insertIndex == people.length){
-          people.push(item);
-        } else if(insertIndex != -1) {
-          people.splice(insertIndex,0,item);
-        }
-      };
         
         //scope functions
         $scope.search = function() {
@@ -70,8 +39,8 @@ define(['angular'], function(angular) {
           $scope.searching=true;
           $scope.result = [];
           $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
-          $q.all([lecService.searchUsersLastName($scope.searchTerm), lecService.searchUsersNetId($scope.searchTerm)]).then(function(result){
-            $scope.result = merge(result[0].data, result[1].data);
+          lecService.searchUsers($scope.searchTerm).then(function(result){
+            $scope.result = result.data;
             angular.forEach($scope.result.addresses, function(value, key, obj){
               value.edit = false;
               value.readOnly=true;
@@ -98,7 +67,7 @@ define(['angular'], function(angular) {
           });
           $scope.empty = result.data && result.data.addresses.length === 0;
         }, function(data){
-          console.warn("Error looking up netId");
+          console.warn("Error looking up person");
           if(data.status === 403) {
             $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
           } else {

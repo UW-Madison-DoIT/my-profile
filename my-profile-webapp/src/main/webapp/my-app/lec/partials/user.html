@@ -1,11 +1,11 @@
 <div>
   <!-- Show Search Results -->
   <div class="userAttributesRow row display-table"  ng-class="($index % 2 ===0) ? 'evenRow':'oddRow'" 
-    ng-click="showingDetails || lookupUser(people.attributes.username[0], $index); showingDetails=!showingDetails">
+    ng-click="showingDetails || lookupUser(people.pvi, $index); showingDetails=!showingDetails">
     <div class="col-xs-6">
       <div class="userSearchResultName">
         <span><strong>
-          {{people.attributes.displayName[0] ? people.attributes.displayName[0]:people.name}}
+          {{people.firstName}} {{people.middleName}} {{people.lastName}}
         </strong></span>
       </div>
     </div>
@@ -32,7 +32,7 @@
                 people.contactInformation.addresses.length === 0">
       <div class="info-card">
         <span>
-          No local contact addresses available for {{people.attributes.displayName[0] ? people.attributes.displayName[0]:people.name}}
+          No local contact addresses available for {{people.firstName}} {{people.middleName}} {{people.lastName}}
         </span>
       </div>
     </div>
