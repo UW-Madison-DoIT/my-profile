@@ -61,20 +61,11 @@ public class LocalContactAdminController {
       JSONArray userList = new JSONArray();
       for(User u:users){
           JSONObject user = new JSONObject();
-          JSONObject attributes = new JSONObject();
-          JSONArray userNameArray = new JSONArray();
-          JSONArray displayNameArray = new JSONArray();
-          
-          userNameArray.put(u.getUid());
-          displayNameArray.put(u.getDisplayName());
-          
-          user.put("username", userNameArray);
-          user.put("givenName", u.getGivenName());
-          user.put("sn", u.getSn());
-          user.put("displayName", displayNameArray);
-          
-          attributes.put("attributes", user);
-          userList.put(attributes);
+          user.put("lastName", u.getLastName());
+          user.put("firstName", u.getFirstName());
+          user.put("pvi", u.getPvi());
+          user.put("middleName", u.getMiddleName());
+          userList.put(user);
       }
       jsonToReturn.put("people", userList);
       response.setContentType("application/json");
