@@ -65,23 +65,14 @@ define(['angular'], function(angular) {
         
         //search
         
-        var searchUsersLastName = function(searchTerm){          
-          return $http.get('/portal/api/people.json?searchTerms%5B%5D=sn&sn=' + searchTerm).success(
+        var searchUsers = function(searchTerm){          
+          return $http.get('/profile/api/localContactInfo/searchUsers?searchTerm=' + searchTerm).success(
             function(data, status) { //success function
               return data.data;
             }).error(function(data, status) { // failure function
               miscService.redirectUser(status, "Search admin local contact info");
             });
           };
-          
-        var searchUsersNetId = function(searchTerm){
-          return $http.get('/portal/api/people.json?searchTerms%5B%5D=username&username=' + searchTerm).success(
-            function(data, status) { //success function
-              return data.data;
-            }).error(function(data, status) { // failure function
-              miscService.redirectUser(status, "Search admin local contact info");
-            });
-        };
         
         var searchLocalContactInfo = function(netIdToLookup) {
             return $http.get('/profile/api/localContactInfo/adminLookup?netId=' + netIdToLookup).success(
@@ -97,8 +88,7 @@ define(['angular'], function(angular) {
           saveLocalContactInfo : saveLocalContactInfo,
           getEmergencyContactInfo : getEmergencyContactInfo,
           saveEmergencyContactInfo : saveEmergencyContactInfo,
-          searchUsersLastName : searchUsersLastName,
-          searchUsersNetId : searchUsersNetId,
+          searchUsers : searchUsers,
           searchLocalContactInfo : searchLocalContactInfo
         }
       });
