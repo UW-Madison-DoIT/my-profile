@@ -1,5 +1,7 @@
 package edu.wisc.my.profile.web;
 
+import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +20,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+
 import edu.wisc.my.profile.model.ContactInformation;
 import edu.wisc.my.profile.model.User;
+import edu.wisc.my.profile.service.EmergencyContactInformationService;
 import edu.wisc.my.profile.service.LocalContactInformationService;
 import edu.wisc.my.profile.service.SearchUsersService;
 
@@ -32,7 +38,10 @@ public class LocalContactAdminController {
   private String usernameAttribute;
   
   @Autowired
-  private LocalContactInformationService service;
+  private EmergencyContactInformationService emergencyService;
+  
+  @Autowired
+  private LocalContactInformationService localService;
   
   @Autowired
   private SearchUsersService searchUsersService;
@@ -77,20 +86,25 @@ public class LocalContactAdminController {
   }
   
   @RequestMapping(method = RequestMethod.GET, value="/adminLookup")
-  public @ResponseBody ContactInformation getContactInfo(HttpServletRequest request, @RequestParam("netId") String netId, HttpServletResponse response) {
+  public @ResponseBody void getContactInfo(HttpServletRequest request, @RequestParam("netId") String netId, HttpServletResponse response) {
     try {
       String username = request.getHeader(usernameAttribute);
       String manifestGroups = request.getHeader(manifestAttribute);
+      Gson gson = new Gson();
+      
       if(StringUtils.isBlank(username)) {
         logger.warn("User hit admin service w/o username set");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        return null;
       }
-      return service.getContactInfo(username,manifestGroups, netId);
+      ContactInformation[] emergencyInfo = emergencyService.getContactInfo(username, manifestGroups, netId);
+      ContactInformation localInfo = localService.getContactInfo(username,manifestGroups, netId);
+      String localContactInfoString = gson.toJson(localInfo);
+      String emergencyContactInfoString = gson.toJson(emergencyInfo);
+      response.setContentType("application/json");
+      response.getWriter().write("{\"emergency\":"+ emergencyContactInfoString +" , \"local\":"+localContactInfoString+"}");
     } catch (Exception e) {
       logger.error("Issue happened during lookup", e);
       response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-      return null;
     }
   }
 
