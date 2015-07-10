@@ -21,7 +21,7 @@
                     <div ng-if="emergencyInfo.length === 0" class='info-card'>
                         <h1>Emergency Contact</h1>
                         <div class="description-box">
-                          <p>A parent, relative, or other individual to contact in case of an emergency.</p>
+                          <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
                         </div>
                         <p><i class="fa fa-exclamation-triangle warn-icon"></i>No contact entered yet.</p>
                         <button class='btn btn-primary' ng-click='addEdit()'>Add emergency contact</button>
@@ -30,7 +30,7 @@
                         <div class='info-card emergency-contact'>
                             <h1>Emergency Contact</h1>
                             <div class="description-box">
-                              <p>A parent, relative, or other individual to contact in case of an emergency.</p>
+                              <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
                             </div>
                             <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
                             <emergency></emergency>
