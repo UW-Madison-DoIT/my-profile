@@ -61,11 +61,15 @@ define(['angular'], function(angular) {
       $scope.lookupUser = function(netIdToLookup, index) {
         lecService.searchLocalContactInfo(netIdToLookup).then(function(result){
           $scope.result.people[index].contactInformation = result.data;
-          angular.forEach($scope.result.people[index].contactInformation.addresses, function(value, key, obj){
+          angular.forEach($scope.result.people[index].contactInformation.local.addresses, function(value, key, obj){
             value.edit = false;
             value.readOnly=true;
           });
-          $scope.empty = result.data && result.data.addresses.length === 0;
+          angular.forEach($scope.result.people[index].contactInformation.emergency, function(value, key, obj){
+            value.edit = false;
+            value.readOnly=true;
+          });
+          $scope.empty = result.data && result.data.local.addresses.length === 0;
         }, function(data){
           console.warn("Error looking up person");
           if(data.status === 403) {
