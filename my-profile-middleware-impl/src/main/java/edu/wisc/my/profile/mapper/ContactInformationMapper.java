@@ -95,7 +95,7 @@ public final class ContactInformationMapper {
             ca.setState(address.getString("STATE"));
             ca.setPostalCode(address.getString("ZIP"));
             ca.setCountry(address.getString("COUNTRY"));
-            ca.setComment(address.getString("ADDRESS COMMENT"));
+            ca.setComment(StringEscapeUtils.unescapeJson(address.getString("ADDRESS COMMENT")));
             ca.setType(address.getString("ADDRESS TYPE"));
             ci.getAddresses().add(ca);
           }
@@ -122,7 +122,7 @@ public final class ContactInformationMapper {
       address.put("STATE", ca.getState());
       address.put("ZIP", ca.getPostalCode());
       address.put("COUNTRY", ca.getCountry());
-      address.put("ADDRESS COMMENT", ca.getComment());
+      address.put("ADDRESS COMMENT", ca.getComment()+" ");
       address.put("ADDRESS PRIORITY", count);
       DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YY");
       address.put("ADDRESS DTTM", formatter.print(ci.getLastModified()));
