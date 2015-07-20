@@ -4,6 +4,7 @@ package edu.wisc.my.profile.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -31,7 +32,7 @@ public final class ContactInformationMapper {
           ContactInformation ci = new ContactInformation();
           ci.setPreferredName(jcontact.getString("EMERGENCY NAME"));
           ci.setRelationship(jcontact.getString("RELATION"));
-          ci.setComments(jcontact.getString("RELATION COMMENT"));
+          ci.setComments(StringEscapeUtils.unescapeJson(jcontact.getString("RELATION COMMENT")));
           //le emailz
           try {
             for(int j = 1; j <=3; j++) {
@@ -94,7 +95,7 @@ public final class ContactInformationMapper {
             ca.setState(address.getString("STATE"));
             ca.setPostalCode(address.getString("ZIP"));
             ca.setCountry(address.getString("COUNTRY"));
-            ca.setComment(address.getString("ADDRESS COMMENT"));
+            ca.setComment(StringEscapeUtils.unescapeJson(address.getString("ADDRESS COMMENT")));
             ca.setType(address.getString("ADDRESS TYPE"));
             ci.getAddresses().add(ca);
           }
@@ -121,7 +122,11 @@ public final class ContactInformationMapper {
       address.put("STATE", ca.getState());
       address.put("ZIP", ca.getPostalCode());
       address.put("COUNTRY", ca.getCountry());
-      address.put("ADDRESS COMMENT", ca.getComment());
+      StringBuilder addressComment = new StringBuilder(ca.getComment());
+      if(addressComment!=null && addressComment.toString().endsWith("\"")){
+          addressComment.append(" ");
+      }
+      address.put("ADDRESS COMMENT", addressComment.toString());
       address.put("ADDRESS PRIORITY", count);
       DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YY");
       address.put("ADDRESS DTTM", formatter.print(ci.getLastModified()));
@@ -145,7 +150,11 @@ public final class ContactInformationMapper {
     JSONObject emergencyContact = new JSONObject();
     emergencyContact.put("EMERGENCY NAME", eci.getPreferredName());
     emergencyContact.put("RELATION", eci.getRelationship());
-    emergencyContact.put("RELATION COMMENT", eci.getComments());
+    StringBuilder relationComment = new StringBuilder(eci.getComments());
+    if(relationComment!=null && relationComment.toString().endsWith("\"")){
+        relationComment.append(" ");
+    }
+    emergencyContact.put("RELATION COMMENT", relationComment);
     //TODO: Get language from eci 
     //emergencyContact.put("LANGUAGE SPOKEN 1", eci.get);
     //emergencyContact.put("LANGUAGE SPOKEN 2", eci.get);
