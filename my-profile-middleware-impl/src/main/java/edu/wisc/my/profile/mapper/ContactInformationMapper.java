@@ -4,6 +4,7 @@ package edu.wisc.my.profile.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -31,7 +32,7 @@ public final class ContactInformationMapper {
           ContactInformation ci = new ContactInformation();
           ci.setPreferredName(jcontact.getString("EMERGENCY NAME"));
           ci.setRelationship(jcontact.getString("RELATION"));
-          ci.setComments(jcontact.getString("RELATION COMMENT"));
+          ci.setComments(StringEscapeUtils.unescapeJson(jcontact.getString("RELATION COMMENT")));
           //le emailz
           try {
             for(int j = 1; j <=3; j++) {
@@ -145,7 +146,7 @@ public final class ContactInformationMapper {
     JSONObject emergencyContact = new JSONObject();
     emergencyContact.put("EMERGENCY NAME", eci.getPreferredName());
     emergencyContact.put("RELATION", eci.getRelationship());
-    emergencyContact.put("RELATION COMMENT", eci.getComments());
+    emergencyContact.put("RELATION COMMENT", eci.getComments()+" ");
     //TODO: Get language from eci 
     //emergencyContact.put("LANGUAGE SPOKEN 1", eci.get);
     //emergencyContact.put("LANGUAGE SPOKEN 2", eci.get);
