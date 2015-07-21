@@ -122,11 +122,17 @@ public final class ContactInformationMapper {
       address.put("STATE", ca.getState());
       address.put("ZIP", ca.getPostalCode());
       address.put("COUNTRY", ca.getCountry());
-      StringBuilder addressComment = new StringBuilder(ca.getComment());
-      if(addressComment!=null && addressComment.toString().endsWith("\"")){
-          addressComment.append(" ");
+      
+      if(ca.getComment()!=null && !ca.getComment().isEmpty()){
+          StringBuilder addressComment = new StringBuilder(ca.getComment());
+          if(addressComment.toString().endsWith("\"")){
+              addressComment.append(" ");
+          }
+          address.put("ADDRESS COMMENT", addressComment.toString());
+      }else{
+          address.put("ADDRESS COMMENT", ca.getComment());
       }
-      address.put("ADDRESS COMMENT", addressComment.toString());
+      
       address.put("ADDRESS PRIORITY", count);
       DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YY");
       address.put("ADDRESS DTTM", formatter.print(ci.getLastModified()));
@@ -150,11 +156,17 @@ public final class ContactInformationMapper {
     JSONObject emergencyContact = new JSONObject();
     emergencyContact.put("EMERGENCY NAME", eci.getPreferredName());
     emergencyContact.put("RELATION", eci.getRelationship());
-    StringBuilder relationComment = new StringBuilder(eci.getComments());
-    if(relationComment!=null && relationComment.toString().endsWith("\"")){
-        relationComment.append(" ");
+    
+    if(eci.getComments()!=null && !eci.getComments().isEmpty()){
+        StringBuilder relationComment = new StringBuilder(eci.getComments());
+        if(relationComment.toString().endsWith("\"")){
+            relationComment.append(" ");
+        }
+        emergencyContact.put("RELATION COMMENT", relationComment.toString());
+    }else{
+        emergencyContact.put("RELATION COMMENT", eci.getComments());
     }
-    emergencyContact.put("RELATION COMMENT", relationComment);
+    
     //TODO: Get language from eci 
     //emergencyContact.put("LANGUAGE SPOKEN 1", eci.get);
     //emergencyContact.put("LANGUAGE SPOKEN 2", eci.get);
