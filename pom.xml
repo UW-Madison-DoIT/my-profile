@@ -46,23 +46,23 @@
             <dependency>
               <groupId>edu.wisc.my.portal.angular</groupId>
               <artifactId>angularjs-portal-frame</artifactId>
-              <version>4.1.1.22</version>
+              <version>4.1.1.24</version>
               <type>war</type>
             </dependency>
-            
+
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
                 <version>${joda.version}</version>
             </dependency>
-            
+
             <dependency>
               <groupId>com.fasterxml.jackson.datatype</groupId>
               <artifactId>jackson-datatype-joda</artifactId>
               <version>${jackson.version}</version>
-            </dependency> 
-            
-        
+            </dependency>
+
+
             <dependency>
                 <groupId>commons-dbcp</groupId>
                 <artifactId>commons-dbcp</artifactId>
@@ -78,13 +78,13 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
                 <version>2.5</version>
             </dependency>
-            
+
             <!-- Logging -->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
@@ -130,13 +130,13 @@
                 <artifactId>spring-webmvc</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-beans</artifactId>
                 <version>${spring.version}</version>
             </dependency>
-            
+
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-context</artifactId>
