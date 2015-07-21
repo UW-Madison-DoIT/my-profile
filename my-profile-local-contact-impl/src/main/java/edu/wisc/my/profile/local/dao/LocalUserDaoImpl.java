@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +13,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.wisc.my.profile.local.dao.LocalUserDao;
+import edu.wisc.my.profile.model.SearchTerm;
 import edu.wisc.my.profile.model.User;
 
 
@@ -21,9 +23,10 @@ public class LocalUserDaoImpl implements LocalUserDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<User> getUsersBySearchTerm(String searchTerm){
-        if(searchTerm == null){
-            searchTerm = "";
+    public List<User> getUsersBySearchTerm(SearchTerm searchTerm){
+        List<User> filteredUsers = new ArrayList<User>();
+        if(searchTerm == null || StringUtils.isEmpty(searchTerm.getLastName())){
+            return filteredUsers;
         }
         ObjectMapper mapper = new ObjectMapper();
         ClassLoader classLoader = getClass().getClassLoader();
@@ -34,10 +37,12 @@ public class LocalUserDaoImpl implements LocalUserDao {
         } catch (Exception e) {
             logger.error("Issue during search for users", e);
         }
-        List<User> filteredUsers = new ArrayList<User>();
+        
         for(User u: listUsers){
-            if(u.getLastName().toLowerCase().contains(searchTerm.toLowerCase())){
-                filteredUsers.add(u);
+            if(u.getLastName().toLowerCase().contains(searchTerm.getLastName().toLowerCase())){
+                if(StringUtils.isEmpty(searchTerm.getLastName()) || u.getFirstName().toLowerCase().contains(searchTerm.getFirstName().toLowerCase())){
+                    filteredUsers.add(u);
+                }
             }
         }
         Collections.sort(filteredUsers);

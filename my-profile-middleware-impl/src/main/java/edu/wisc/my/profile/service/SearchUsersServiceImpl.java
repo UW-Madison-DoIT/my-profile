@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import edu.wisc.my.profile.dao.SearchUsersMiddlewareDao;
+import edu.wisc.my.profile.model.SearchTerm;
 import edu.wisc.my.profile.model.User;
 
 @Service
@@ -28,7 +29,7 @@ public class SearchUsersServiceImpl implements SearchUsersService{
     }
     
     @Override
-    public List<User> getUsers(String username, String manifestGroups, String searchTerm) {
+    public List<User> getUsers(String username, String manifestGroups, SearchTerm searchTerm) {
         if(StringUtils.isNotBlank(adminGroup) && manifestGroups.contains(adminGroup)) {
             logger.info("User {} looked up users using this search term: {}.",username, searchTerm);
             return searchUsersDao.getUsersBySearchTerm(searchTerm);

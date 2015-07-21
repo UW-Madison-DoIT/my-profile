@@ -28,7 +28,8 @@ define(['angular'], function(angular) {
           $scope.empty = false;
           $scope.searching = false;
           $scope.result = [];
-          $scope.searchTerm = "";
+          $scope.firstName ="";
+          $scope.lastName = "";
           $scope.searchResultLimitIncrementor=10;
           $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
       };
@@ -39,7 +40,7 @@ define(['angular'], function(angular) {
           $scope.searching=true;
           $scope.result = [];
           $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
-          lecService.searchUsers($scope.searchTerm).then(function(result){
+          lecService.searchUsers($scope.firstName, $scope.lastName).then(function(result){
             $scope.result = result.data;
             angular.forEach($scope.result.addresses, function(value, key, obj){
               value.edit = false;
