@@ -1,7 +1,10 @@
 <div ng-if='!contact.edit || contact.edit == false'>
     <p>{{ contact.preferredName }}</p>
     <div ng-repeat="phone in contact.phoneNumbers">
-        <p><span ng-if="$index === 0">Primary phone: </span>{{ phone.value }} ({{ phone.type }})</p>
+        <p ng-if='phone.value && phone.type'>
+          <span ng-if="$index === 0">Primary phone: </span>
+          <span>{{ phone.value }} ({{ phone.type }})</span>
+        </p>
     </div>
     <p>{{ contact.emails[0].value }}</p>
     <br>
@@ -21,27 +24,31 @@
             <p class="form-help" ng-show="emergencyForm.name.$invalid && emergencyForm.name.$touched">Name is required</p>
         </div>
         <div ng-repeat="phone in contact.phoneNumbers | limitTo:3 track by $index" class="form-group phone-number">
-            <div class="col-xs-7 no-padding">
+            <div class="col-xs-5 no-padding">
                 <label for="phone{{$index}}" ng-if="$index === 0">Primary phone*</label>
-                <input type="tel" id="phone{{$index}}" name="phone{{$index}}" required class="form-control" ng-model="contact.phoneNumbers[$index].value" ng-if="$index === 0" ng-class="{ 'has-error' : emergencyForm.phone0.$invalid && emergencyForm.phone0.$touched }">
+                <input type="tel" id="phone{{$index}}" name="phone{{$index}}" ng-required='$index === 0'  class="form-control" ng-model="contact.phoneNumbers[$index].value" ng-if="$index === 0" ng-class="{ 'has-error' : emergencyForm.phone0.$invalid && emergencyForm.phone0.$touched }">
                 <label for="phone{{$index}}" ng-if="$index !== 0">Other phone</label>
                 <input type="tel" id="phone{{$index}}" class="form-control" ng-model="contact.phoneNumbers[$index].value" ng-if="$index !== 0">
             </div>
             <div class="col-xs-5 no-padding phone-type">
                 <label for="phoneType{{$index}}" ng-if="$index === 0">Type*</label>
                 <label for="phoneType{{$index}}" ng-if="$index !== 0">Type</label>
-                <select id="phoneType{{$index}}" name="phoneType{{$index}}" class="form-control" required ng-model="contact.phoneNumbers[$index].type" ng-class="{ 'has-error' : emergencyForm.phoneType0.$invalid && emergencyForm.phoneType0.$touched }">
+                <select id="phoneType{{$index}}" name="phoneType{{$index}}" class="form-control" ng-required='$index === 0' ng-model="contact.phoneNumbers[$index].type" ng-class="{ 'has-error' : emergencyForm.phoneType0.$invalid && emergencyForm.phoneType0.$touched }">
                     <option value="mobile" selected="selected">Mobile</option>
                     <option value="home">Home</option>
                     <option value="work">Work</option>
                     <option value="other">Other</option>
                 </select>
+                
             </div>
-            <p class="form-help" ng-show="emergencyForm.phone0.$invalid && emergencyForm.phone0.$touched && $index === 0">Phone number is required</p>
-            <p class="form-help" ng-show="emergencyForm.phoneType0.$invalid && emergencyForm.phoneType0.$touched && $index === 0">Phone type is required</p>
+            <div class='col-xs-2 no-padding'><button aria-label="Delete Phone Number" class='btn btn-default' style='top : 25px; margin-left: 10px;' ng-click='contact.phoneNumbers.splice($index, 1)' ng-if="$index !== 0"><i class='fa fa-trash'></i></a></div>
+            <div class='col-xs-12'>
+              <p class="form-help" ng-show="emergencyForm.phone0.$invalid && emergencyForm.phone0.$touched && $index === 0">Phone number is required</p>
+              <p class="form-help" ng-show="emergencyForm.phoneType0.$invalid && emergencyForm.phoneType0.$touched && $index === 0">Phone type is required</p>
+            </div>
         </div>
-        <button class="btn btn-default" type="text" ng-click="contact.phoneNumbers.push('')">Add another phone number</button>
-        <div class="form-group">
+        <button class="btn btn-default" type="text" ng-click='contact.phoneNumbers.push({"type" : "", value : ""})' ng-if='contact.phoneNumbers.length < 3'>Add another phone number</button>
+        <div class="form-group col-xs-12 no-padding">
             <label for="email">Email*</label>
             <input class="form-control" id='email' name="email" type='text' required ng-model="contact.emails[0].value" ng-class="{ 'has-error' : emergencyForm.email.$invalid && emergencyForm.email.$touched }">
             <p class="form-help" ng-show="emergencyForm.email.$invalid && emergencyForm.email.$touched">Email is required</p>

@@ -176,12 +176,14 @@ public final class ContactInformationMapper {
     
     int pcount = 1;
     for(TypeValue phone : eci.getPhoneNumbers()) {
-      JSONObject jphone = new JSONObject();
-      jphone.put("EMERGENCY PHONE PRIORITY", pcount);
-      jphone.put("EMERGENCY PHONE NUMBER", phone.getValue());
-      jphone.put("EMERGENCY PHONE COMMENT", phone.getType());
-      jphone.put("EMERGENCY PHONE DTTM", formatter.print(DateTime.now()));
-      emergencyContact.put("EMERGENCY PHONE COUNT " + pcount++, jphone);
+      if(!phone.isEmpty()) {
+        JSONObject jphone = new JSONObject();
+        jphone.put("EMERGENCY PHONE PRIORITY", pcount);
+        jphone.put("EMERGENCY PHONE NUMBER", phone.getValue());
+        jphone.put("EMERGENCY PHONE COMMENT", phone.getType());
+        jphone.put("EMERGENCY PHONE DTTM", formatter.print(DateTime.now()));
+        emergencyContact.put("EMERGENCY PHONE COUNT " + pcount++, jphone);
+      }
     }
     
     int ecount = 1;
