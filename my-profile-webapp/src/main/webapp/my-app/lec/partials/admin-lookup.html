@@ -11,10 +11,15 @@
               <div class='info-card center'>
                 <div class='admin-lookup-form'>
                   <form name='form' novalidate>
-                    <span class='bold'>Search by student's first name (optional) and last name</span>
-                    <div>
-                      <input type='text' ng-model='firstName' class='center' placeholder="e.g. John">
-                      <input type='text' required ng-model='lastName' class='center' placeholder="e.g. Johnson">
+                    <div class="name-form">
+                      <div class="firstname">
+                        <label for='firstName'>First Name (optional)</label>
+                        <input type='text' id='firstName' ng-model='firstName' class='center' placeholder="e.g. John">
+                      </div>
+                      <div class="lastname">
+                        <label for='lastName'>Last Name (required)</label>
+                        <input type='text' required id='lastName' ng-model='lastName' class='center' placeholder="e.g. Johnson">
+                      </div>
                     </div>
                     <div>
                       <button class='btn btn-primary' ng-click="search()" ng-show='form.$valid'>Search</button>
