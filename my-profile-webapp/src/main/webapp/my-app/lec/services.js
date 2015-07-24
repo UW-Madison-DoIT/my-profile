@@ -65,8 +65,9 @@ define(['angular'], function(angular) {
         
         //search
         
-        var searchUsers = function(searchTerm){          
-          return $http.get('/profile/api/localContactInfo/searchUsers?searchTerm=' + searchTerm).success(
+        var searchUsers = function(firstName, lastName){
+          var searchTerms = {"firstName":firstName, "lastName":lastName};
+          return $http.get('/profile/api/localContactInfo/searchUsers?searchTerms=' + JSON.stringify(searchTerms)).success(
             function(data, status) { //success function
               return data.data;
             }).error(function(data, status) { // failure function

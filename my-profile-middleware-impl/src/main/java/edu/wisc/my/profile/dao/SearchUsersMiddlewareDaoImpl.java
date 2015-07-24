@@ -10,6 +10,9 @@ import java.util.Map.Entry;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
+
+import edu.wisc.my.profile.model.SearchTerm;
 import edu.wisc.my.profile.model.User;
 
 
@@ -23,12 +26,18 @@ public class SearchUsersMiddlewareDaoImpl implements SearchUsersMiddlewareDao{
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<User> getUsersBySearchTerm(String searchTerm) {
+    public List<User> getUsersBySearchTerm(SearchTerm searchTerm) {
+        List<User> userList = new ArrayList<User>();
+        //Return empty list if search term is null or no last name searched
+        if(searchTerm == null || StringUtils.isEmpty(searchTerm.getLastName())){
+            return userList;
+        }
+        
         SearchUsersProcedure sup = new SearchUsersProcedure(datasource);
         Map<String, Object> result = new HashMap<String, Object>();
-        result = sup.searchUsers(null, searchTerm.toUpperCase());
+        result = sup.searchUsers(searchTerm.getFirstName(), searchTerm.getLastName());
         Iterator<Entry<String, Object>> entries = result.entrySet().iterator();
-        List<User> userList = new ArrayList<User>();
+        
         while (entries.hasNext()) {
             Map.Entry<String, Object> entry = (Map.Entry<String, Object>) entries.next();
             //the value is the list of users

@@ -1,7 +1,5 @@
 package edu.wisc.my.profile.web;
 
-import java.io.StringWriter;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import edu.wisc.my.profile.model.ContactInformation;
+import edu.wisc.my.profile.model.SearchTerm;
 import edu.wisc.my.profile.model.User;
 import edu.wisc.my.profile.service.EmergencyContactInformationService;
 import edu.wisc.my.profile.service.LocalContactInformationService;
@@ -57,7 +55,7 @@ public class LocalContactAdminController {
   }
   
   @RequestMapping(method = RequestMethod.GET, value="/searchUsers")
-  public @ResponseBody void getUsers(HttpServletRequest request, @RequestParam("searchTerm") String searchTerm, HttpServletResponse response) {
+  public @ResponseBody void getUsers(HttpServletRequest request, @RequestParam("searchTerms") JSONObject searchTerms, HttpServletResponse response) {
     try {
       String username = request.getHeader(usernameAttribute);
       String manifestGroups = request.getHeader(manifestAttribute);
@@ -65,6 +63,9 @@ public class LocalContactAdminController {
         logger.warn("User hit admin service w/o username set");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
       }
+      SearchTerm searchTerm = new SearchTerm();
+      searchTerm.setFirstName(searchTerms.optString("firstName"));
+      searchTerm.setLastName(searchTerms.optString("lastName"));
       List<User> users = searchUsersService.getUsers(username, manifestGroups, searchTerm);
       JSONObject jsonToReturn = new JSONObject();
       JSONArray userList = new JSONArray();
