@@ -35,8 +35,8 @@
             <select id='country' name="country"
                     class="form-control"
                     required
-                    ng-model='address.country' >
-                    <option ng-repeat="item in countries  | orderBy:'value'" value='{{item.key}}' ng-attr-selected="{{isSelection(address.country, item.key)}}">{{item.value}}</option>
+                    ng-model='address.country'
+                    ng-options="country.key as country.value for country in countries | orderBy:'value'">
             </select>
             <p class="form-help" ng-show="addressForm.country.$invalid && addressForm.country.$touched">Country is required</p>
         </div>
