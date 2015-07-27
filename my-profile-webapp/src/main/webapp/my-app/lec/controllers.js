@@ -89,7 +89,7 @@ define(['angular'], function(angular) {
   app.controller('LocalContactInformationController', ['$localStorage','$scope', 'lecService','COUNTRIES','STATES', function($localStorage, $scope, lecService,COUNTRIES,STATES) {
       //scope functions
       $scope.addEdit = function() {
-        $scope.contactInfo.addresses.push({ addressLines : [""], edit : true})
+        $scope.contactInfo.addresses.push({ addressLines : [""], country : 'USA', state : 'WI', edit : true});
       }
 
       $scope.save = function() {
@@ -149,7 +149,7 @@ define(['angular'], function(angular) {
       $scope.addEdit = function() {
           $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], edit : true});
       }
-      
+
       $scope.save = function() {
           $scope.notSaving = false;
           $scope.error = "";
