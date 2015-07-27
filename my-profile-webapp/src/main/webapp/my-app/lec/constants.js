@@ -1338,8 +1338,6 @@ define(["angular"], function(angular) {
 { "key" : "PU", "value" : "Pesaro e Urbino", "country" : "ITA"},
 { "key" : "VS", "value" : "Medio Campidano", "country" : "ITA"},
 { "key" : "IN", "value" : "Indiana", "country" : "USA"},
-{ "key" : "K0", "value" : "KY-Kenton County Tiered Tax", "country" : "USA"},
-{ "key" : "K1", "value" : "KY-Hazard Tiered Tax", "country" : "USA"},
 { "key" : "KS", "value" : "Kansas", "country" : "USA"},
 { "key" : "KY", "value" : "Kentucky", "country" : "USA"},
 { "key" : "LA", "value" : "Louisiana", "country" : "USA"},
@@ -1351,7 +1349,6 @@ define(["angular"], function(angular) {
 { "key" : "MO", "value" : "Missouri", "country" : "USA"},
 { "key" : "MS", "value" : "Mississippi", "country" : "USA"},
 { "key" : "MT", "value" : "Montana", "country" : "USA"},
-{ "key" : "Z5", "value" : "MD 2.50 % local tax", "country" : "USA"},
 { "key" : "NC", "value" : "North Carolina", "country" : "USA"},
 { "key" : "ND", "value" : "North Dakota", "country" : "USA"},
 { "key" : "NE", "value" : "Nebraska", "country" : "USA"},
@@ -1771,4 +1768,3 @@ define(["angular"], function(angular) {
     return config;
 
 });
-
