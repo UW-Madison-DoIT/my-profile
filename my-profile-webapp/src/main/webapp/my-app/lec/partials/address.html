@@ -8,7 +8,7 @@
     <div>
         {{address.country}}
     </div>
-    
+
     <p>{{address.comment}}</p>
     <span ng-hide='address.readOnly'>
         <button class='btn btn-primary' ng-click='addEdit()'>Add another</button>
@@ -33,22 +33,23 @@
         <div class='form-group'>
             <label for="country">Country*</label>
             <select id='country' name="country"
-                    class="form-control" 
-                    required 
-                    ng-model='address.country' >
-                    <option ng-repeat='item in countries  | orderBy:value' value='{{item.key}}' ng-attr-selected="{{isSelection(address.country, item.key)}}">{{item.value}}</option>
+                    class="form-control"
+                    required
+                    ng-model='address.country'
+                    ng-options="country.key as country.value for country in countries | orderBy:'value'"
+                    ng-change="address.state = ''">
             </select>
             <p class="form-help" ng-show="addressForm.country.$invalid && addressForm.country.$touched">Country is required</p>
         </div>
         <div class='form-group'>
             <label for="state">State/Province/Region*</label>
             <select id='state' name="state"
-                    class="form-control" 
-                    required 
-                    ng-model='address.state' >
-                    <option ng-repeat='item in states | filter:{country: address.country} | orderBy:value' ng-if='address.country' value='{{item.key}}' ng-attr-selected="{{isSelection(address.state, item.key)}}">{{item.value}}</option>
+                    class="form-control"
+                    ng-model='address.state' ng-disabled='!address.country || (states | filter:{country: address.country}).length === 0'>
+                    <option  ng-if='!address.country' value=''>Select country first</option>
+                    <option  ng-if='address.country && (states | filter:{country: address.country}).length === 0' value=''>No states/provinces/regions for this country</option>
+                    <option  ng-if='address.country' ng-repeat="item in states | filter:{country: address.country} | orderBy:'value'" value='{{item.key}}' ng-attr-selected="{{isSelection(address.state, item.key)}}">{{item.value}}</option>
             </select>
-            <p class="form-help" ng-show="addressForm.state.$invalid && addressForm.state.$touched">State is required</p>
         </div>
         <div class='form-group'>
             <label for="postalCode">Zip*</label>

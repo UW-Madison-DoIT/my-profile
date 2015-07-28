@@ -33,7 +33,7 @@ define(['angular'], function(angular) {
           $scope.searchResultLimitIncrementor=10;
           $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
       };
-        
+
         //scope functions
         $scope.search = function() {
           $scope.empty=false;
@@ -58,7 +58,7 @@ define(['angular'], function(angular) {
             }
           });
         };
-      
+
       $scope.lookupUser = function(netIdToLookup, index) {
         lecService.searchLocalContactInfo(netIdToLookup).then(function(result){
           $scope.result.people[index].contactInformation = result.data;
@@ -80,18 +80,18 @@ define(['angular'], function(angular) {
           }
         });
       };
-      
+
       $scope.reset = function(){init();};
       init();
-      
+
   }]);
-  
+
   app.controller('LocalContactInformationController', ['$localStorage','$scope', 'lecService','COUNTRIES','STATES', function($localStorage, $scope, lecService,COUNTRIES,STATES) {
       //scope functions
       $scope.addEdit = function() {
-        $scope.contactInfo.addresses.push({ addressLines : [""], edit : true})
+        $scope.contactInfo.addresses.push({ addressLines : [""], country : 'USA', state : 'WI', edit : true});
       }
-      
+
       $scope.save = function() {
           $scope.notSaving = false;
           $scope.error = "";
@@ -107,16 +107,16 @@ define(['angular'], function(angular) {
                   $scope.error = "There was an issue saving your address, please try again later."
               });
       }
-      
+
       $scope.deleteAddress = function(index) {
           $scope.contactInfo.addresses.splice(index,1);
           $scope.save();
       };
-      
+
       $scope.cancel = function() {
           init();
       }
-      
+
       //local functions
       var init = function() {
           $scope.contactInfo = [];
@@ -140,20 +140,16 @@ define(['angular'], function(angular) {
             $scope.noAddresses = true;
           }
       }
-      
+
       //run init
       init();
     } ]);
-    
+
     app.controller('EmergencyInformationController', ['$localStorage','$scope', 'lecService', 'RELATIONSHIPS', function($localStorage, $scope, lecService, RELATIONSHIPS) {
       $scope.addEdit = function() {
           $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], edit : true});
       }
-      
-      $scope.isSelection = function(relationship, key) {
-          return relationship == key ? 'required' : '';
-      };
-      
+
       $scope.save = function() {
           $scope.notSaving = false;
           $scope.error = "";
@@ -169,23 +165,23 @@ define(['angular'], function(angular) {
                   $scope.error = "There was an issue saving your contact, please try again later."
               });
       }
-      
+
       $scope.deleteContact = function(index) {
           $scope.emergencyInfo.splice(index,1);
           $scope.save();
       };
-      
+
       $scope.cancel = function() {
           init();
       }
-      
+
       //local functions
       var init = function() {
           $scope.relationshipOptions = RELATIONSHIPS;
           $scope.emergencyInfo = [];
           $scope.error = "";
           $scope.notSaving = true;
-          
+
           lecService.getEmergencyContactInfo()
               .then(
                 function(result){//success
@@ -202,9 +198,9 @@ define(['angular'], function(angular) {
             $scope.noContacts = true;
           }
       }
-      
+
       //run init
       init();
-        
+
     }]);
 });
