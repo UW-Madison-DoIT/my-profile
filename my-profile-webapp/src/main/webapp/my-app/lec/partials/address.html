@@ -36,7 +36,8 @@
                     class="form-control"
                     required
                     ng-model='address.country'
-                    ng-options="country.key as country.value for country in countries | orderBy:'value'">
+                    ng-options="country.key as country.value for country in countries | orderBy:'value'"
+                    ng-change="address.state = ''">
             </select>
             <p class="form-help" ng-show="addressForm.country.$invalid && addressForm.country.$touched">Country is required</p>
         </div>
@@ -45,8 +46,8 @@
             <select id='state' name="state"
                     class="form-control"
                     ng-model='address.state' ng-disabled='!address.country || (states | filter:{country: address.country}).length === 0'>
-                    <option  ng-if='!address.country' value=''>Select Country First</option>
-                    <option  ng-if='address.country && (states | filter:{country: address.country}).length === 0' value=''>No States/Provinces/Regions for this country</option>
+                    <option  ng-if='!address.country' value=''>Select country first</option>
+                    <option  ng-if='address.country && (states | filter:{country: address.country}).length === 0' value=''>No states/provinces/regions for this country</option>
                     <option  ng-if='address.country' ng-repeat="item in states | filter:{country: address.country} | orderBy:'value'" value='{{item.key}}' ng-attr-selected="{{isSelection(address.state, item.key)}}">{{item.value}}</option>
             </select>
         </div>
