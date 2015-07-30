@@ -131,6 +131,10 @@ define(['angular'], function(angular) {
                   //clear out any editing that may have been saved
                   angular.forEach($scope.contactInfo.addresses, function(value, key, obj){
                       value.edit = false;
+                      if(value.type === "HOUSING") {
+                          value.readOnly=true;
+                          value.housing = true;
+                      }
                   })
               }, function(result, status){//error
                 $scope.contactInfo = {};
