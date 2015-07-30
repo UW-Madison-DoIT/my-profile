@@ -10,10 +10,11 @@
     </div>
 
     <p>{{address.comment}}</p>
-    <span ng-hide='address.readOnly'>
-        <button class='btn btn-primary' ng-click='addEdit()'>Add another</button>
-        <button class='btn btn-default' ng-click='address.edit = true'>Edit</button>
-        <button class='btn btn-default' ng-click='deleteAddress($index)'>Delete</button>
+    <p ng-if='address.housing' class='housing-notice'>Provided by UW Housing</p>
+    <span>
+        <button class='btn btn-primary' ng-click='addEdit()' ng-hide='address.readOnly && !address.housing'>Add another</button>
+        <button class='btn btn-default' ng-click='address.edit = true' ng-hide='address.readOnly'>Edit</button>
+        <button class='btn btn-default' ng-click='deleteAddress($index)' ng-hide='address.readOnly'>Delete</button>
     </span>
 </div>
 <div ng-if='address.edit'>
