@@ -20,7 +20,7 @@ import edu.wisc.my.profile.model.User;
 public class SearchUsersProcedure extends StoredProcedure {
     
     public SearchUsersProcedure(DataSource dataSource){
-        super(dataSource, "PERSONPROFILE.PERSONPROFILE.GET_SEARCH_PERSON");
+        super(dataSource, "PERSONPROFILE.PERSONPROFILE.GET_SEARCH_PERSON3");
         this.declareParameter( new SqlOutParameter( "output", oracle.jdbc.OracleTypes.CURSOR, new RowMapper<User>() { 
             public User mapRow(ResultSet argResults, int argRowNum ) throws SQLException {
                 User tempUser = new User();
