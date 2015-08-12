@@ -40,6 +40,18 @@
   </div>
   
   <div class="row" ng-show="showingDetails">
+    <div class='col-sm-offset-2 col-sm-8'>
+      <div class='info-card'>
+        <p><strong>Local Phone Numbers</strong></p>
+        <div ng-repeat="phone in people.contactInformation.local.phoneNumbers">{{phone.type}} : {{phone.value}}</div>
+        <div ng-if='people.contactInformation.local.phoneNumbers && people.contactInformation.local.phoneNumbers.length === 0'>
+          No local phone numbers available for {{people.firstName}} {{people.middleName}} {{people.lastName}}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row" ng-show="showingDetails">
     <div ng-class="{'col-sm-offset-2' : (people.contactInformation.emergency.length === 1),
                     'col-sm-8' : (people.contactInformation.emergency.length  === 1),
                     'col-sm-6' : (people.contactInformation.emergency.length > 1)}" 
