@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import edu.wisc.my.profile.mapper.ContactInformationMapper;
 import edu.wisc.my.profile.model.ContactInformation;
+import edu.wisc.my.profile.model.TypeValue;
 
 public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao {
   
@@ -17,6 +18,9 @@ public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao 
   
   @Autowired
   private EmergencyContactMiddlewareDao ecdao;
+  
+  @Autowired
+  private EmergencyPhoneNumberDao pNumDao;
   
   private JdbcTemplate jdbcTemplate;  
   
@@ -34,7 +38,8 @@ public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao 
   public ContactInformation setContactInfo(String netId, ContactInformation updatedContactInformation) throws Exception {
     //hack until we refactor
     ContactInformation[] emergencyContacts = ecdao.getData(netId);
-    JSONObject json = ContactInformationMapper.convertToJSONObject(emergencyContacts, updatedContactInformation);
+    TypeValue[] phoneNumbers = pNumDao.getPhoneNumbers(netId);
+    JSONObject json = ContactInformationMapper.convertToJSONObject(emergencyContacts, updatedContactInformation, phoneNumbers);
     json.put("NETID", netId);
     if(logger.isTraceEnabled()) {
       logger.trace("Saving the following JSON: " + json.toString());

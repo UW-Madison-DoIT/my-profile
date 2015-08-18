@@ -1,6 +1,5 @@
 package edu.wisc.my.profile.mapper;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,10 +107,40 @@ public final class ContactInformationMapper {
     return ci;
   }
   
-  public static JSONObject convertToJSONObject(ContactInformation[] emergencyContacts, ContactInformation ci) {
+  /**
+   * Extracts Phone Number from JSONObject
+   * @param json
+   * @return A TypeValue representing phone numbers, TypeValue may be empty if
+   * no phone number exists, may return null if parameter is null
+   */
+  public static TypeValue[] convertToEmergencyPhoneNumber(JSONObject json){
+      if(json == null){
+          return null;
+      }
+      List<TypeValue> phoneNumbers = new ArrayList<TypeValue>();
+      //phoneNumbers
+      for(int i=1; i<=3; i++){
+          try {
+              JSONObject phoneNumberLine = json.getJSONObject("PHONE COUNT " + i);
+              if(phoneNumberLine != null){
+                  TypeValue phoneNumber = new TypeValue();
+                  phoneNumber.setValue(phoneNumberLine.getString("PHONE NUMBER"));
+                  phoneNumber.setType(phoneNumberLine.getString("PHONE COMMENT"));
+                  phoneNumbers.add(phoneNumber);
+              }
+          }catch(JSONException ex){
+              //Probably safe.  Will throw exception if PHONE COUNT +i does not return object
+              logger.trace(ex.getMessage());
+          }
+      }
+      return phoneNumbers.toArray(new TypeValue[phoneNumbers.size()]);
+  }
+  
+  public static JSONObject convertToJSONObject(ContactInformation[] emergencyContacts, ContactInformation ci, TypeValue[] phoneNumbers) {
     JSONObject json = new JSONObject();
     //populate local contact info
     int count=1;
+    DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YY");
     for(ContactAddress ca : ci.getAddresses()) {
       JSONObject address = new JSONObject();
       int alcount = 1;
@@ -134,13 +163,23 @@ public final class ContactInformationMapper {
       }
       
       address.put("ADDRESS PRIORITY", count);
-      DateTimeFormatter formatter = DateTimeFormat.forPattern("dd-MMM-YY");
       address.put("ADDRESS DTTM", formatter.print(ci.getLastModified()));
       json.put("ADDRESS COUNT " + count++, address);
     }
-    
-    //TODO : populate local phone 
-      
+
+    //Add Emergency Phone Number
+    count = 1;
+    for(TypeValue phoneNumber: phoneNumbers){
+        if(phoneNumber.getType()!=null && phoneNumber.getValue()!=null){
+            JSONObject emergencyPhoneNumber = new JSONObject();
+            emergencyPhoneNumber.put("PHONE PRIORITY", count);
+            emergencyPhoneNumber.put("PHONE NUMBER", phoneNumber.getValue());
+            emergencyPhoneNumber.put("PHONE COMMENT", phoneNumber.getType());
+            emergencyPhoneNumber.put("PHONE DTTM", formatter.print(phoneNumber.getLastModified()));
+            json.put("PHONE COUNT "+count, emergencyPhoneNumber);
+        }
+    }
+
     //populate emergency contact info
     count = 1;
     for(ContactInformation eci : emergencyContacts) {

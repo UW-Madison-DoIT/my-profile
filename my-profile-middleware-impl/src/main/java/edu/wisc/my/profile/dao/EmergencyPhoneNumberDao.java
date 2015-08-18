@@ -9,7 +9,7 @@ public interface EmergencyPhoneNumberDao {
      * @param netid
      * @return a TypeValue representing phone numbers
      */
-    TypeValue[] getPhoneNumber(String netId);
+    TypeValue[] getPhoneNumbers(String netId);
     
     
     /**
@@ -19,6 +19,6 @@ public interface EmergencyPhoneNumberDao {
      * @return the saved phone numbers
      * @throws Exception
      */
-    TypeValue[] setPhoneNumber(String netId, TypeValue[] phoneNumbers) throws Exception;
+    TypeValue[] setPhoneNumbers(String netId, TypeValue[] phoneNumbers) throws Exception;
     
 }
