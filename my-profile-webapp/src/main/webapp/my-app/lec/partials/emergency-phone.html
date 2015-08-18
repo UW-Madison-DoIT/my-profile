@@ -1,0 +1,41 @@
+<loading-gif data-object='emergencyPhoneNumbers' data-reuse="true"></loading-gif>
+<div class='info-card' ng-if="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0">
+  <h1>My Emergency Phone Number</h1>
+  <div class="description-box">
+    <p>An emergency phone number where you can be reached in cases of safety</p>
+  </div>
+  <div ng-if="emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 && !edit" >
+    <p>
+      <i class="fa fa-exclamation-triangle warn-icon"></i>No Phone Number inserted yet!
+    </p>
+  </div>
+  <div>
+    <p ng-if="!edit && emergencyPhoneNumbers.emergencyPhoneNumbers.length">
+      Emergency Phone: {{emergencyPhoneNumbers.emergencyPhoneNumbers[0].value}} ({{emergencyPhoneNumbers.emergencyPhoneNumbers[0].type}})
+    </p>
+    <div ng-hide="!edit">
+      <form novalidate name="emergencyPhoneNumberForm">
+        <div class="row">
+          <div class="col-xs-6">
+            <label for="emergencyPhoneNumber" >Emergency Phone</label>
+            <input type="tel" id="emergencyPhoneNumber" name="emergencyPhoneNumber" class="form-control" required ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
+          </div>
+          <div class="col-xs-6 phone-type">
+            <label for="emergencyPhoneType">Type*</label>
+            <select id="emergencyPhoneType" name="emergencyPhoneType" class="form-control" required ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
+              <option value="Mobile">Mobile</option>
+              <option value="Home">Home</option>
+              <option value="Work">Work</option>
+            </select>
+          </div>
+        </div>
+        <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save(); edit = false;" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</button>
+        <button class='btn btn-default' ng-click='cancel()'>Cancel</button>
+      </form>
+    </div>
+    <button ng-show="!edit" ng-click="edit = true" class='btn btn-default' ng-switch="emergencyPhoneNumbers.emergencyPhoneNumbers.length">
+      <span ng-switch-when="0">Add</span>
+      <span ng-switch-default>Update</span>
+    </button>
+  </div>
+</div>
