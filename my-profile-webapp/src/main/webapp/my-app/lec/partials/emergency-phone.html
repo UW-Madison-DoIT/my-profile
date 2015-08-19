@@ -17,12 +17,12 @@
       <form novalidate name="emergencyPhoneNumberForm">
         <div class="row form-group">
           <div class="col-xs-6">
-            <label for="emergencyPhoneNumber" >Phone Number*</label>
-            <input type="tel" id="emergencyPhoneNumber" name="emergencyPhoneNumber" class="form-control" required ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
+            <label id="emergencyPhoneNumberLabel" for="emergencyPhoneNumber" >Phone Number*</label>
+            <input type="tel" id="emergencyPhoneNumber" name="emergencyPhoneNumber" class="form-control" required aria-required="true" aria-labelledby="emergencyPhoneNumberLabel" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
           </div>
           <div class="col-xs-6 phone-type">
-            <label for="emergencyPhoneType">Type*</label>
-            <select id="emergencyPhoneType" name="emergencyPhoneType" class="form-control" required ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
+            <label id="emergencyPhoneTypeLabel" for="emergencyPhoneType">Type*</label>
+            <select id="emergencyPhoneType" name="emergencyPhoneType" class="form-control" required aria-required="true" aria-labelledby="emergencyPhoneTypeLabel" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
               <option value="mobile">Mobile</option>
               <option value="home">Home</option>
               <option value="work">Work</option>
@@ -30,13 +30,13 @@
           </div>
         </div>
         <p>*Required</p>
-        <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save(); edit = false;" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</button>
-        <button class='btn btn-default' ng-click='cancel()'>Cancel</button>
+        <button class='btn btn-primary' aria-label="Save phone number" style='margin-right: 10px;' ng-click="save(); edit = false;" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</button>
+        <button class='btn btn-default' aria-label="Cancel" ng-click='cancel()'>Cancel</button>
       </form>
     </div>
     <div ng-show="!edit" ng-click="edit = true" ng-switch="emergencyPhoneNumbers.emergencyPhoneNumbers.length">
-      <button class='btn btn-primary' ng-switch-when="0">Add phone number</button>
-      <button class='btn btn-default' ng-switch-default>Update phone number</button>
+      <button aria-label="Add phone number" class='btn btn-primary' ng-switch-when="0">Add phone number</button>
+      <button aria-label="Update phone number" class='btn btn-default' ng-switch-default>Update phone number</button>
     </div>
   </div>
 </div>
