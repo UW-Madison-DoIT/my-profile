@@ -47,9 +47,7 @@ public class EmergencyPhoneNumberDaoImpl implements EmergencyPhoneNumberDao {
         }
         JSONObject json = ContactInformationMapper.convertToJSONObject(emergencyContacts, localInfo, phNumberWithDate);
         json.put("NETID", netId);
-        if(logger.isTraceEnabled()) {
-          logger.trace("Saving the following JSON: " + json.toString());
-        }
+        logger.trace("Saving the following JSON: {}" + json);
         String result = jdbcTemplate.query("select PERSONPROFILE.PERSONPROFILE.SAVE_PERSON_PROFILE( ? ) from dual", new MiddlewareUpdateExtractor(), json.toString());
         
         if(MiddlewareUpdateExtractor.SUCCESS.equals(result)) {
