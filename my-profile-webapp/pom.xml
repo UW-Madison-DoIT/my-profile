@@ -11,8 +11,8 @@
   
   <dependencies>
     <dependency>
-      <groupId>edu.wisc.my.portal.angular</groupId>
-      <artifactId>angularjs-portal-frame</artifactId>
+      <groupId>edu.wisc.my.apps</groupId>
+      <artifactId>uw-frame</artifactId>
       <type>war</type>
     </dependency>
     <dependency>
