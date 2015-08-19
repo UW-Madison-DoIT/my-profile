@@ -13,18 +13,16 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="top-info">
-                        <p>State and federal laws require the university to collect emergency contact information for every student. <a target='_blank' href="https://kb.wisc.edu/page.php?id=54484">Learn more here</a>.</p>
+                        <p>State and federal laws require the university to collect emergency contact information for every student. Learn more in the <a target='_blank' href="https://kb.wisc.edu/page.php?id=54484">KnowledgeBase</a>.</p>
                         <p>This information is being collected for the safety of our students. Only authorized UW personnel will be able to access it.</p>
                     </div>
                 </div>
             </div>
-            <div class="row">
-              <div class='col-sm-6 center-block' ng-controller="EmergencyPhoneController as emergencyPhoneCtrl">
-                <emergency-phone></emergency-phone>
-              </div>
-            </div>
             <div class='row'>
-                <div class='col-sm-6' ng-controller="EmergencyInformationController as emergencyInfoCtrl">
+                <div class='col-sm-12 col-md-4' ng-controller="EmergencyPhoneController as emergencyPhoneCtrl">
+                    <emergency-phone></emergency-phone>
+                </div>
+                <div class='col-sm-12 col-md-4' ng-controller="EmergencyInformationController as emergencyInfoCtrl">
                     <loading-gif data-object='emergencyInfo' data-empty='noContacts'></loading-gif>
                     <div ng-if="emergencyInfo.length === 0" class='info-card'>
                         <h1>Emergency Contact</h1>
@@ -45,7 +43,7 @@
                         </div>
                     </div>
                 </div>
-                <div class='col-sm-6' ng-controller="LocalContactInformationController as localContactInfoCtrl">
+                <div class='col-sm-12 col-md-4' ng-controller="LocalContactInformationController as localContactInfoCtrl">
                     <loading-gif data-object='contactInfo'></loading-gif>
                     <div ng-if="contactInfo.addresses.length === 0" class='info-card'>
                         <h1>My Local Address</h1>
