@@ -46,7 +46,7 @@ define(['angular'], function(angular) {
                 function(data, status){
                     return data;
                 }).error(function(data, status){
-                    miscService.redirectUser(status, "Get emergency contact info");
+                    miscService.redirectUser(status, "Get emergency phone number");
                 });
         };
         
@@ -55,7 +55,7 @@ define(['angular'], function(angular) {
                 function(data, status) { //success function
                     return data;
                 }).error(function(data, status) { // failure function
-                    miscService.redirectUser(status, "Get emergency contact info");
+                    miscService.redirectUser(status, "Set emergency phone number");
              });
         };
         
