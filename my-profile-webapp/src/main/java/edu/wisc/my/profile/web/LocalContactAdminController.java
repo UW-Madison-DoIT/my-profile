@@ -22,8 +22,10 @@ import com.google.gson.Gson;
 
 import edu.wisc.my.profile.model.ContactInformation;
 import edu.wisc.my.profile.model.SearchTerm;
+import edu.wisc.my.profile.model.TypeValue;
 import edu.wisc.my.profile.model.User;
 import edu.wisc.my.profile.service.EmergencyContactInformationService;
+import edu.wisc.my.profile.service.EmergencyPhoneNumberService;
 import edu.wisc.my.profile.service.LocalContactInformationService;
 import edu.wisc.my.profile.service.SearchUsersService;
 
@@ -43,6 +45,9 @@ public class LocalContactAdminController {
   
   @Autowired
   private SearchUsersService searchUsersService;
+  
+  @Autowired
+  private EmergencyPhoneNumberService emPhoneNumberService;
   
   @Value("${manifestAttribute}")
   public void setManifestGroupAttribute(String attr) {
@@ -99,10 +104,14 @@ public class LocalContactAdminController {
       }
       ContactInformation[] emergencyInfo = emergencyService.getContactInfo(username, manifestGroups, netId);
       ContactInformation localInfo = localService.getContactInfo(username,manifestGroups, netId);
+      TypeValue[] emergencyPhoneNumbers = emPhoneNumberService.getEmergencyPhoneNumbers(username, manifestGroups, netId);
       String localContactInfoString = gson.toJson(localInfo);
       String emergencyContactInfoString = gson.toJson(emergencyInfo);
+      String emergencyPhoneNumbersString = gson.toJson(emergencyPhoneNumbers);
       response.setContentType("application/json");
-      response.getWriter().write("{\"emergency\":"+ emergencyContactInfoString +" , \"local\":"+localContactInfoString+"}");
+      response.getWriter().write("{\"emergency\":"+ emergencyContactInfoString +
+              " , \"local\":"+localContactInfoString+
+              " , \"emergencyPhoneNumbers\":"+emergencyPhoneNumbersString+"}");
     } catch (Exception e) {
       logger.error("Issue happened during lookup", e);
       response.setStatus(HttpServletResponse.SC_FORBIDDEN);
