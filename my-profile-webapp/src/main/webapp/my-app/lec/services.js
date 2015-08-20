@@ -41,6 +41,24 @@ define(['angular'], function(angular) {
              });
         };
         
+        var getEmergencyPhoneNumber = function(){
+            return $http.get('/profile/api/emergencyPhoneNumber/get.json').success(
+                function(data, status){
+                    return data;
+                }).error(function(data, status){
+                    miscService.redirectUser(status, "Get emergency phone number");
+                });
+        };
+        
+        var saveEmergencyPhoneNumber = function(emergencyPhoneNumber){
+            return $http.post('/profile/api/emergencyPhoneNumber/set',emergencyPhoneNumber).success(
+                function(data, status) { //success function
+                    return data;
+                }).error(function(data, status) { // failure function
+                    miscService.redirectUser(status, "Set emergency phone number");
+             });
+        };
+        
         //emergency
         var getEmergencyContactInfo = function() {
             return $http.get('/profile/api/emergencyContactInfo/get.json').success(
@@ -89,6 +107,8 @@ define(['angular'], function(angular) {
           saveLocalContactInfo : saveLocalContactInfo,
           getEmergencyContactInfo : getEmergencyContactInfo,
           saveEmergencyContactInfo : saveEmergencyContactInfo,
+          getEmergencyPhoneNumber : getEmergencyPhoneNumber,
+          saveEmergencyPhoneNumber : saveEmergencyPhoneNumber,
           searchUsers : searchUsers,
           searchLocalContactInfo : searchLocalContactInfo
         }

@@ -85,6 +85,42 @@ define(['angular'], function(angular) {
       init();
 
   }]);
+  
+  app.controller('EmergencyPhoneController', ['$localStorage','$scope', 'lecService', function($localStorage, $scope, lecService) {
+    //scope functions
+    
+    $scope.cancel = function() {
+      init();
+    };
+    
+    $scope.save = function() {
+      lecService.saveEmergencyPhoneNumber($scope.emergencyPhoneNumbers.emergencyPhoneNumbers)
+        .then(function(result){//success
+        },function(data, status){//error
+          $scope.error = "There was an issue saving your address, please try again later.";
+        });
+    };
+
+    //local functions
+    var init = function() {
+      $scope.emergencyPhoneNumbers = [];
+      $scope.error = ""; 
+      $scope.empty = false;
+      lecService.getEmergencyPhoneNumber()
+        .then(function(result){//success
+          $scope.emergencyPhoneNumbers = result.data;
+          if ( $scope.emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 ) {
+              $scope.empty = true;
+          }
+        }, function(result, status){//error
+          $scope.emergencyPhoneNumbers = {};
+          $scope.error = "There was an issue getting your local address information. Please try again later.";
+        });
+    };
+
+    //run init
+    init();
+  } ]);
 
   app.controller('LocalContactInformationController', ['$localStorage','$scope', 'lecService','COUNTRIES','STATES', function($localStorage, $scope, lecService,COUNTRIES,STATES) {
       //scope functions

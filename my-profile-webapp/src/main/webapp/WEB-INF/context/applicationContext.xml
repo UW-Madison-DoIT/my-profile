@@ -77,6 +77,10 @@
         <constructor-arg ref="mw"/>
     </bean>
     
+    <bean id="EmergencyPhoneNumberDao" class="edu.wisc.my.profile.dao.EmergencyPhoneNumberDaoImpl">
+        <constructor-arg ref="mw" />
+    </bean>
+    
     <!-- enable if you want to utilize local info from a uportal key/val pair database
          you will also have to disable the middleware daos -->
     <!-- 
@@ -90,6 +94,10 @@
     <bean id="EmergencyContactInformationDao" class="edu.wisc.my.profile.emergency.dao.EmergencyContactInformationDaoImpl">
         <constructor-arg ref="uportal" />
     </bean> 
+    
+    <bean id="EmergencyPhoneNumberDao" class="edu.wisc.my.profile.emergencyPhone.dao.EmergencyPhoneNumberDaoImpl">
+         <constructor-arg ref="uportal" />
+    </bean>
     
     <bean id="LocalUserDao" class="edu.wisc.my.profile.local.dao.LocalUserDaoImpl">
     </bean>
