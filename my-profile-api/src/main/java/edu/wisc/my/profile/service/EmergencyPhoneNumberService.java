@@ -19,5 +19,8 @@ public interface EmergencyPhoneNumberService{
      * @throws Exception 
      */
     public TypeValue[] setEmergencyPhoneNumbers(String netid, TypeValue[] phoneNumbers) throws Exception;
+
+    public TypeValue[] getEmergencyPhoneNumbers(String username,
+            String manifestGroups, String netId);
     
 }
