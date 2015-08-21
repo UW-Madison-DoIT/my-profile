@@ -33,8 +33,7 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="edu.wisc.my.profile.isis.dao"/>
-    
+  
     <!--
      | Reads in properties files to provide setting of bean properties in the application context
      +-->
@@ -52,13 +51,6 @@
         <property name="numTestsPerEvictionRun" value="10" />
         <property name="minEvictableIdleTimeMillis" value="150000" />
         <property name="connectionProperties" value="oracle.net.CONNECT_TIMEOUT=4000;oracle.net.READ_TIMEOUT=12000;oracle.jdbc.ReadTimeout=12000" />
-    </bean>
-    
-    <bean id="isis" parent="abstractDataSource">
-    </bean>
-    
-    <bean id="isisDao" class="edu.wisc.my.profile.isis.dao.JdbcIsisDao">
-        <property name="dataSource" ref="isis"/>
     </bean>
     
     <!-- middleware datasource -->
