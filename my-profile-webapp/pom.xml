@@ -22,7 +22,7 @@
     </dependency>
     <dependency>
         <groupId>${project.groupId}</groupId>
-        <artifactId>my-profile-integration-impl</artifactId>
+        <artifactId>my-profile-mock-impl</artifactId>
         <version>${project.version}</version>
     </dependency>
     <!--<dependency>
@@ -101,6 +101,16 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-webmvc</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
     </dependency>
     
     <dependency>
