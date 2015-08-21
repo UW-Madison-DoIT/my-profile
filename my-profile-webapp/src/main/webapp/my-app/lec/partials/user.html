@@ -43,8 +43,8 @@
     <div class='col-sm-offset-2 col-sm-8'>
       <div class='info-card'>
         <p><strong>Local Phone Numbers</strong></p>
-        <div ng-repeat="phone in people.emegencyPhoneNumbers">{{phone.type}} : {{phone.value}}</div>
-        <div ng-if='people.emegencyPhoneNumbers && people.emegencyPhoneNumbers.length === 0'>
+        <div ng-repeat="phone in people.contactInformation.emergencyPhoneNumbers">{{phone.type}} : {{phone.value}}</div>
+        <div ng-if='people.contactInformation.emergencyPhoneNumbers && people.contactInformation.emergencyPhoneNumbers.length === 0'>
           No local phone numbers available for {{people.firstName}} {{people.middleName}} {{people.lastName}}
         </div>
       </div>
