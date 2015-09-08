@@ -16,6 +16,14 @@
       <artifactId>jackson-databind</artifactId>
     </dependency>
     <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.fatboyindustrial.gson-jodatime-serialisers</groupId>
+      <artifactId>gson-jodatime-serialisers</artifactId>
+    </dependency>
+    <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
     </dependency>

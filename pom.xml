@@ -33,6 +33,8 @@
         <jackson.version>2.2.2</jackson.version>
         <person-directory.version>1.5.2-M1</person-directory.version>
         <spring.security.version>3.2.6.RELEASE</spring.security.version>
+        <gson.version>1.7.1</gson.version>
+        <gson-jodaTime-serializer.version>1.0.0</gson-jodaTime-serializer.version>
     </properties>
 
     <repositories>
@@ -61,7 +63,17 @@
               <artifactId>jackson-datatype-joda</artifactId>
               <version>${jackson.version}</version>
             </dependency>
-
+            
+            <dependency>
+              <groupId>com.google.code.gson</groupId>
+              <artifactId>gson</artifactId>
+              <version>${gson.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>com.fatboyindustrial.gson-jodatime-serialisers</groupId>
+              <artifactId>gson-jodatime-serialisers</artifactId>
+              <version>${gson-jodaTime-serializer.version}</version>
+            </dependency>   
 
             <dependency>
                 <groupId>commons-dbcp</groupId>

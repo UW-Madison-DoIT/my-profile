@@ -55,6 +55,7 @@ public class EmergencyPhoneNumberController {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
             emPhoneNumberService.setEmergencyPhoneNumbers(uid, (TypeValue[]) phoneNumbers);
+            logger.info("User {} saved phone numbers {}", uid, phoneNumbers);
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             logger.error("Issue setting emergency phone number data", e);

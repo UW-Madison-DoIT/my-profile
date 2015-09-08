@@ -49,6 +49,7 @@ public class EmergencyContactInformationController {
         response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         return ci;
       }
+      logger.info("User {} saved emergency contact information {}", uid, ci);
       return ci;
     } else {
       return ci;
