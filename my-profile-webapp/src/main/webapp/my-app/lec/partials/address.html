@@ -58,8 +58,8 @@
             <p class="form-help" ng-show="addressForm.postalCode.$invalid && addressForm.postalCode.$touched">ZIP code is required</p>
         </div>
         <div class='form-group'>
-            <label for="comment">More Information <small>({{100 - address.comment.length}} characters left)</small></label>
-            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment' maxlength='100' placeholder="For example, if you are only here on certain days."></textarea>
+            <label for="comment">More Information <small>({{50 - address.comment.length}} characters left)</small></label>
+            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment' maxlength='50' placeholder="For example, if you are only here on certain days."></textarea>
         </div>
         <p>*Required</p>
         <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save()" ng-disabled="addressForm.$invalid">Save</button>

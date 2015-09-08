@@ -66,8 +66,8 @@
             <p class="form-help" ng-show="emergencyForm.relationship.$invalid && emergencyForm.relationship.$touched">Relationship is required</p>
         </div>
         <div class="form-group">
-            <label for="comments">Comments</label>
-            <textarea class="form-control" id='comments' type='text' ng-model="contact.comments" placeholder="For example, languages spoken or best times to contact"></textarea>
+            <label for="comments">Comments <small>({{50 - contact.comments.length}} characters left)</small></label>
+            <textarea class="form-control" id='comments' type='text' ng-model="contact.comments" maxlength='50' placeholder="For example, languages spoken or best times to contact"></textarea>
         </div>
         <p>*Required</p>
         <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save()" ng-disabled="emergencyForm.$invalid">Save</button>
