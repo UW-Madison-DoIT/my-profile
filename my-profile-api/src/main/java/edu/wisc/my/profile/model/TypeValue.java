@@ -4,6 +4,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fatboyindustrial.gsonjodatime.Converters;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class TypeValue {
@@ -53,6 +56,13 @@ public class TypeValue {
     result = prime * result + ((type == null) ? 0 : type.hashCode());
     result = prime * result + ((value == null) ? 0 : value.hashCode());
     return result;
+  }
+  
+  @Override
+  public String toString(){
+      //Converter not needed if we used java 8
+      Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
+      return gson.toJson(this);
   }
 
   @Override

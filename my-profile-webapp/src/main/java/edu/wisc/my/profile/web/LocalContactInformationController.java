@@ -49,6 +49,7 @@ public class LocalContactInformationController {
         response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         return ci;
       }
+      logger.info("User {} saved local contact information {}", uid, ci);
       return ci;
     } else {
       return ci;

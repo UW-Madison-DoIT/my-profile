@@ -5,6 +5,10 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.fatboyindustrial.gsonjodatime.Converters;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 public class ContactInformation {
   private DateTime lastModified;
   private boolean edit;
@@ -76,5 +80,11 @@ public class ContactInformation {
   }
   public void setEdit(boolean edit) {
     this.edit = edit;
+  }
+  @Override
+  public String toString(){
+      //Converter not needed if we used java 8
+      Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
+      return gson.toJson(this);
   }
 }
