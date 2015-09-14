@@ -42,7 +42,7 @@ public class EmergencyPhoneNumberController {
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
             logger.error("Issue happened during lookup", e);
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         }
     }
     

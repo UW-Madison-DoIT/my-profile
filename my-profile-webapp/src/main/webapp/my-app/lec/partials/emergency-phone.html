@@ -1,5 +1,6 @@
+<div ng-controller="EmergencyPhoneController as EmergencyPhoneCtrl">
 <loading-gif data-object='emergencyPhoneNumbers' data-reuse="true"></loading-gif>
-<div class='info-card' ng-if="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0">
+<div class='info-card' ng-show="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0">
   <h1>My Phone Number</h1>
   <div class="description-box">
     <p>A number where you can be reached in an emergency.</p>
@@ -30,7 +31,7 @@
           </div>
         </div>
         <p>*Required</p>
-        <button class='btn btn-primary' aria-label="Save phone number" style='margin-right: 10px;' ng-click="save(); edit = false;" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</button>
+        <button class='btn btn-primary' aria-label="Save phone number" style='margin-right: 10px;' ng-click="save()" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</button>
         <button class='btn btn-default' aria-label="Cancel" ng-click='cancel()'>Cancel</button>
       </form>
     </div>
@@ -39,4 +40,5 @@
       <button aria-label="Update phone number" class='btn btn-default' ng-switch-default>Update phone number</button>
     </div>
   </div>
+</div>
 </div>
