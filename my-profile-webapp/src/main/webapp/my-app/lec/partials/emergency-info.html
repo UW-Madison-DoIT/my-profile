@@ -18,8 +18,18 @@
                     </div>
                 </div>
             </div>
+            <div class="row" ng-controller='ErrorController as errorCtrl'>
+                <div class="col-xs-12">
+                  <script type="text/ng-template" id="alert.html">
+                    <div class="alert" role="alert">
+                      <div ng-transclude></div>
+                    </div>
+                  </script>
+                  <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+                </div>
+            </div>
             <div class='row'>
-                <div class='col-sm-12 col-md-4' ng-controller="EmergencyPhoneController as emergencyPhoneCtrl">
+                <div class='col-sm-12 col-md-4'>
                     <emergency-phone></emergency-phone>
                 </div>
                 <div class='col-sm-12 col-md-4' ng-controller="EmergencyInformationController as emergencyInfoCtrl">
