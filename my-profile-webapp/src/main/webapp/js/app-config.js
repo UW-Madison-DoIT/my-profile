@@ -3,14 +3,17 @@ define(['angular'], function(angular) {
     var config = angular.module('app-config', []);
     config
         .constant('APP_FLAGS', {
-            'welcome' : false
+            'features' : false,
+            'showSidebar' : true,
+            'showSearch' : true
         })
         .constant('SERVICE_LOC', {
             'sessionInfo' : '/portal/web/session.json',
-            'welcomeInfo' : 'samples/welcome.json',
             'sidebarInfo' : '/web/samples/sidebar.json',
-            'notificationsURL' : '/web/samples/notifications.json',
-            'groupURL' : '/portal/api/groups'
+            'featuresInfo' : 'samples/features.json',
+            'notificationsURL' : '/web/notification.json',
+            'kvURL' : null,
+            'groupURL' : null
         })
         .constant('NAMES', {
             'title' : 'MyUW',
@@ -25,13 +28,14 @@ define(['angular'], function(angular) {
         })
         .constant('NOTIFICATION', {
             'enabled' : false, 
-            'groupFiltering' : true,
+            'groupFiltering' : false,
             'notificationFullURL' : '/web/notifications'
         })
         .constant('MISC_URLS',{
             'feedbackURL' : 'https://my.wisc.edu/portal/p/feedback',
             'back2ClassicURL' : null,
-            'whatsNewURL' : null
+            'whatsNewURL' : null,
+            'loginURL' : '/portal/Login'
         });
 
     return config;
