@@ -32,27 +32,6 @@
                 <div class='col-sm-12 col-md-4'>
                     <emergency-phone></emergency-phone>
                 </div>
-                <div class='col-sm-12 col-md-4' ng-controller="EmergencyInformationController as emergencyInfoCtrl">
-                    <loading-gif data-object='emergencyInfo' data-empty='noContacts'></loading-gif>
-                    <div ng-if="emergencyInfo.length === 0" class='info-card'>
-                        <h1>Emergency Contact</h1>
-                        <div class="description-box">
-                          <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
-                        </div>
-                        <p><i class="fa fa-exclamation-triangle warn-icon"></i>No contact entered yet.</p>
-                        <button class='btn btn-primary' ng-click='addEdit()'>Add emergency contact</button>
-                    </div>
-                    <div ng-repeat="contact in emergencyInfo">
-                        <div class='info-card emergency-contact'>
-                            <h1>Emergency Contact</h1>
-                            <div class="description-box">
-                              <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
-                            </div>
-                            <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
-                            <emergency></emergency>
-                        </div>
-                    </div>
-                </div>
                 <div class='col-sm-12 col-md-4' ng-controller="LocalContactInformationController as localContactInfoCtrl">
                     <loading-gif data-object='contactInfo'></loading-gif>
                     <div ng-if="contactInfo.addresses.length === 0" class='info-card'>
@@ -71,6 +50,27 @@
                             </div>
                             <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
                             <lec-address></lec-address>
+                        </div>
+                    </div>
+                </div>
+                <div class='col-sm-12 col-md-4' ng-controller="EmergencyInformationController as emergencyInfoCtrl">
+                    <loading-gif data-object='emergencyInfo' data-empty='noContacts'></loading-gif>
+                    <div ng-if="emergencyInfo.length === 0" class='info-card'>
+                        <h1>Emergency Contact</h1>
+                        <div class="description-box">
+                          <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
+                        </div>
+                        <p><i class="fa fa-exclamation-triangle warn-icon"></i>No contact entered yet.</p>
+                        <button class='btn btn-primary' ng-click='addEdit()'>Add emergency contact</button>
+                    </div>
+                    <div ng-repeat="contact in emergencyInfo">
+                        <div class='info-card emergency-contact'>
+                            <h1>Emergency Contact</h1>
+                            <div class="description-box">
+                              <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
+                            </div>
+                            <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
+                            <emergency></emergency>
                         </div>
                     </div>
                 </div>
