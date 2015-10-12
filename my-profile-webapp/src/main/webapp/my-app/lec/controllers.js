@@ -53,6 +53,8 @@ define(['angular'], function(angular) {
             console.warn("Error looking up search term");
             if(data.status === 403) {
               $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
+            } else if(data.status === 503) {
+              $scope.error = "Service is temporarily unavailable, please try again later."  
             } else {
               $scope.error = "Issue looking up contact information, please try again later.";
             }
@@ -75,6 +77,8 @@ define(['angular'], function(angular) {
           console.warn("Error looking up person");
           if(data.status === 403) {
             $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
+          } else if(data.status === 503) {
+              $scope.error = "Service is temporarily unavailable, please try again later."  
           } else {
             $scope.error = "Issue looking up contact information, please try again later.";
           }

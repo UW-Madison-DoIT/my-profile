@@ -85,6 +85,9 @@ public class LocalContactAdminController {
       jsonToReturn.put("people", userList);
       response.setContentType("application/json");
       response.getWriter().write(jsonToReturn.toString());
+      } catch (org.springframework.dao.DataAccessException e){
+          logger.error("Issue happened during lookup", e);
+          response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
       } catch (Exception e) {
       logger.error("Issue happened during lookup", e);
       response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -112,6 +115,9 @@ public class LocalContactAdminController {
       response.getWriter().write("{\"emergency\":"+ emergencyContactInfoString +
               " , \"local\":"+localContactInfoString+
               " , \"emergencyPhoneNumbers\":"+emergencyPhoneNumbersString+"}");
+    } catch (org.springframework.dao.DataAccessException e){
+        logger.error("Issue happened during lookup", e);
+        response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
     } catch (Exception e) {
       logger.error("Issue happened during lookup", e);
       response.setStatus(HttpServletResponse.SC_FORBIDDEN);
