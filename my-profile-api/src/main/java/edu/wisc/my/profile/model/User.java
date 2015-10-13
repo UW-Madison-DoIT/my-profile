@@ -1,5 +1,7 @@
 package edu.wisc.my.profile.model;
 
+import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -15,6 +17,8 @@ public class User implements Comparable{
     public String pvi;
     @JsonProperty("middleName")
     public String middleName;
+    @JsonProperty("DOB")
+    public Date birthDate;
     
    
     /**
@@ -67,6 +71,18 @@ public class User implements Comparable{
         this.pvi = pvi;
     }
 
+    /**
+     * @return the birthDate
+     */
+    public Date getBirthDate() {
+        return birthDate;
+    }
+    /**
+     * @param birthDate the birthDate to set
+     */
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
     @Override
     public int compareTo(Object o) {
         if(o == null){
