@@ -80,6 +80,7 @@ public class LocalContactAdminController {
           user.put("firstName", u.getFirstName());
           user.put("pvi", u.getPvi());
           user.put("middleName", u.getMiddleName());
+          user.put("birthDate", u.getBirthDate());
           userList.put(user);
       }
       jsonToReturn.put("people", userList);

@@ -3,24 +3,28 @@
         "PVI":"admin",
         "lastName":"Administrator",
         "middleName":"Ashley",
-        "firstName":"Amy"
+        "firstName":"Amy",
+        "DOB" : "1988-04-16"
     },
     {
         "PVI":"staff",
         "lastName":"Staff",
         "middleName":"Flag",
-        "firstName":"Samuel"
+        "firstName":"Samuel",
+        "DOB" : "1991-09-24"
     },
     {
         "PVI":"student",
         "lastName":"Student",
         "middleName":"tooCoolForSchool",
-        "firstName":"Steven"
+        "firstName":"Steven",
+        "DOB" : "1987-10-31"
     },
     {
         "PVI":"student2",
         "lastName":"Student",
         "middleName":"notCoolEnoughForSchool",
-        "firstName":"Steve"
+        "firstName":"Steve",
+        "DOB" : "1987-11-09"
     }
 ]
