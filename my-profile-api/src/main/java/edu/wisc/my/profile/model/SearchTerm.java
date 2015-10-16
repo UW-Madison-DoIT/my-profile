@@ -1,5 +1,7 @@
 package edu.wisc.my.profile.model;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 public class SearchTerm{
     
     private String firstName;
@@ -44,5 +46,13 @@ public class SearchTerm{
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+            .append("firstName", this.firstName)
+            .append("lastName", this.lastName)
+            .toString();
     }
 }
