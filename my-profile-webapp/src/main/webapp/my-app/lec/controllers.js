@@ -111,13 +111,17 @@ define(['angular'], function(angular) {
       $scope.emergencyPhoneNumbers = [];
       $scope.edit = false;
       $scope.empty = false;
+      $rootScope.profileLoadingState = $rootScope.profileLoadingState || {};
+      $rootScope.profileLoadingState.ephone = true;
       lecService.getEmergencyPhoneNumber()
         .then(function(result){//success
+          $rootScope.profileLoadingState.ephone = false;
           $scope.emergencyPhoneNumbers = result.data;
           if ( $scope.emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 ) {
               $scope.empty = true;
           }
         }, function(result, status){//error
+          $rootScope.profileLoadingState.ephone = false;
           $scope.emergencyPhoneNumbers = {};
           $rootScope.alerts.push({ msg: "There was an issue getting your phone number information. Please try again later.", type: 'danger'});
         });
@@ -160,6 +164,8 @@ define(['angular'], function(angular) {
 
       //local functions
       var init = function() {
+          $rootScope.profileLoadingState = $rootScope.profileLoadingState || {};
+          $rootScope.profileLoadingState.lcontact = true;
           $scope.contactInfo = [];
           $scope.countries = COUNTRIES;
           $scope.states = STATES;
@@ -168,6 +174,7 @@ define(['angular'], function(angular) {
           lecService.getLocalContactInfo()
               .then(
                 function(result){//success
+                  $rootScope.profileLoadingState.lcontact = false;
                   $scope.contactInfo = result.data;
                   //clear out any editing that may have been saved
                   angular.forEach($scope.contactInfo.addresses, function(value, key, obj){
@@ -179,6 +186,7 @@ define(['angular'], function(angular) {
                   })
               }, function(result, status){//error
                 $scope.contactInfo = {};
+                $rootScope.profileLoadingState.lcontact = false;
                 $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
             });
           if ( $scope.contactInfo.length === 0 ) {
@@ -226,16 +234,19 @@ define(['angular'], function(angular) {
           $scope.emergencyInfo = [];
           $scope.error = "";
           $scope.notSaving = true;
-
+          $rootScope.profileLoadingState = $rootScope.profileLoadingState || {};
+          $rootScope.profileLoadingState.einfo = true;
           lecService.getEmergencyContactInfo()
               .then(
                 function(result){//success
                   $scope.emergencyInfo = result.data;
+                  $rootScope.profileLoadingState.einfo = false;
                   //clear out any editing that may have been saved
                   angular.forEach($scope.emergencyInfo, function(value, key, obj){
                       value.edit = false;
                   })
               }, function(result, status){//error
+                $rootScope.profileLoadingState.einfo = false;
                 $scope.emergencyInfo = {};
                 $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
             });

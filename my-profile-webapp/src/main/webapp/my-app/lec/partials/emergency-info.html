@@ -28,12 +28,14 @@
                   <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
                 </div>
             </div>
-            <div class='row'>
+            <div class='row col-sm-12 center' ng-show='profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo'>
+                <loading-gif data-object='{{[]}}'></loading-gif>
+            </div>
+            <div class='row' ng-hide='profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo'>
                 <div class='col-sm-12 col-md-4'>
                     <emergency-phone></emergency-phone>
                 </div>
                 <div class='col-sm-12 col-md-4' ng-controller="LocalContactInformationController as localContactInfoCtrl">
-                    <loading-gif data-object='contactInfo'></loading-gif>
                     <div ng-if="contactInfo.addresses.length === 0" class='info-card'>
                         <h1>My Local Address</h1>
                         <div class="description-box">
@@ -54,7 +56,6 @@
                     </div>
                 </div>
                 <div class='col-sm-12 col-md-4' ng-controller="EmergencyInformationController as emergencyInfoCtrl">
-                    <loading-gif data-object='emergencyInfo' data-empty='noContacts'></loading-gif>
                     <div ng-if="emergencyInfo.length === 0" class='info-card'>
                         <h1>Emergency Contact</h1>
                         <div class="description-box">
