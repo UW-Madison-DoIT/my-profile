@@ -8,9 +8,10 @@ define(['angular'], function(angular) {
             'showSearch' : true
         })
         .constant('SERVICE_LOC', {
+            'aboutURL' : null,
             'sessionInfo' : '/portal/web/session.json',
-            'sidebarInfo' : '/web/samples/sidebar.json',
-            'featuresInfo' : 'samples/features.json',
+            'sidebarInfo' : '/web/staticFeeds/sidebar.json',
+            'featuresInfo' : 'staticFeeds/features.json',
             'notificationsURL' : '/web/notification.json',
             'kvURL' : null,
             'groupURL' : null
@@ -35,7 +36,8 @@ define(['angular'], function(angular) {
             'feedbackURL' : 'https://my.wisc.edu/portal/p/feedback',
             'back2ClassicURL' : null,
             'whatsNewURL' : null,
-            'loginURL' : '/portal/Login'
+            'loginURL' : '/portal/Login',
+            'logoutURL' : '/portal/Logout'
         });
 
     return config;
