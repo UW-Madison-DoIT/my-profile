@@ -48,6 +48,7 @@
       <url-pattern>/main</url-pattern>
       <url-pattern>/settings</url-pattern>
       <url-pattern>/settings/profile</url-pattern>
+      <url-pattern>/about</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>
