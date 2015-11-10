@@ -48,7 +48,8 @@ public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao 
       //  return saved content
       return updatedContactInformation;
     } else {
-      throw new Exception("There was an issue saving the local contact information");
+      throw new Exception("Could not save contact info for netid '" + netId + "'; "
+          + "Contact information was " + updatedContactInformation + ".");
     }
     
     
