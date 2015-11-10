@@ -54,7 +54,8 @@ public class EmergencyPhoneNumberDaoImpl implements EmergencyPhoneNumberDao {
           //return saved content
           return phoneNumbers;
         } else {
-          throw new Exception("There was an issue saving the phone numbers.");
+          throw new Exception("Could not save phone numbers for netid '" + netId + "'; "
+              + "The phone numbers were " + phoneNumbers + "'");
         }
         
       }
