@@ -3,9 +3,13 @@ package edu.wisc.my.profile.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fatboyindustrial.gsonjodatime.Converters;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 @JsonIgnoreProperties("$$hashKey")
 public class ContactAddress {
@@ -78,5 +82,51 @@ public class ContactAddress {
   }
   public void setExpirationDate(DateTime expirationDate) {
     this.expirationDate = expirationDate;
+  }
+  
+  @Override
+  public String toString(){
+      Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
+      return gson.toJson(this);
+      
+  }
+  
+  /**
+   * Use for logging when masking values is needed.
+   * Data that is considered sensitive will be masked.  Fields that are masked are
+   * type, the address information, and user inputed comments
+   * @return a JSON representation with the value data masked, useful for logging
+   */
+  public String toStringForLogging(){
+      StringBuilder builder = new StringBuilder();
+      builder.append("{")
+      .append("\"type\":\""+this.type+"\",")
+      //Adress lines
+      .append("\"addressLines\":[");
+      int addressLineCount=0;
+      for(String addressLine: this.addressLines){
+          if(addressLineCount>0){
+              builder.append(",\"");
+          }
+          builder.append(StringUtils.repeat("X", 
+                  addressLine!=null?addressLine.length():0)+"\"");
+          addressLineCount++;
+      }
+      builder.append("],")
+      //end Address Lines
+      .append("\"city\":\""+StringUtils.repeat("X", 
+              this.city!=null?this.city.length():0)+"\",")
+      .append("\"country\":\""+StringUtils.repeat("X", 
+              this.country!=null?this.country.length():0)+"\",")
+      .append("\"state\":\""+StringUtils.repeat("X", 
+              this.state!=null?this.state.length():0)+"\",")
+      .append("\"postalCode\":\""+StringUtils.repeat("X", 
+              this.postalCode!=null?this.postalCode.length():0)+"\",")
+      .append("\"comment\":\""+StringUtils.repeat("X", 
+              this.comment!=null?this.comment.length():0)+"\",")
+      .append("\"edit\":"+this.edit+",")
+      .append("}");
+      String maskedString = builder.toString();
+      return maskedString;
   }
 }

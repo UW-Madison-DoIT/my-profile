@@ -45,15 +45,15 @@ public class LocalContactInformationController {
       try {
         ci = service.setContactInfo(uid, ci);
       } catch (Exception e) {
-        logger.error("Issue setting data", e);
+        logger.error("Issue while user {} attempted to save {}", uid, ci.toStringForLogging(), e);
         response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         return ci;
       }
-      logger.info("User {} saved local contact information {}", uid, ci);
-      return ci;
-    } else {
-      return ci;
+      logger.info("User {} saved Local Contact Information successfully", uid);
+    }else{
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
+    return ci;
   }
 
 }

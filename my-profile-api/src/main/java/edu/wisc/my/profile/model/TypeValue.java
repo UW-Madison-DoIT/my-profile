@@ -64,6 +64,22 @@ public class TypeValue {
       Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
       return gson.toJson(this);
   }
+  
+  /**
+   * Use for logging when masking values is needed.  Value information is masked.
+   * @return a JSON representation with the value data masked
+   */
+  public String toStringForLogging(){
+      StringBuilder builder = new StringBuilder()
+      .append("{\"type\":\"")
+      .append(this.type)
+      .append("\",\"value\":\"")
+      .append(StringUtils.repeat("X", this.value!=null?this.value.length():0))
+      .append("{\"lastModified\":\"")
+      .append(this.lastModified)
+      .append("\"}");
+      return builder.toString();
+  }
 
   @Override
   public boolean equals(Object obj) {
