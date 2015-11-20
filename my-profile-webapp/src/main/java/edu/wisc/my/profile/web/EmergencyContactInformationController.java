@@ -45,15 +45,27 @@ public class EmergencyContactInformationController {
       try {
         ci = service.setContactInfo(uid, ci);
       } catch (Exception e) {
-        logger.error("Issue setting data", e);
-        response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
-        return ci;
+          StringBuilder builder = new StringBuilder()
+          .append("[");
+          int ciCounter = 0;
+          for(ContactInformation contactInformation: ci){
+              if(ciCounter>0){
+                  builder.append(", ");
+              }
+              builder.append(contactInformation.toStringForLogging());
+              ciCounter++;
+          }
+          builder.append("]");
+          String maskedData = builder.toString();
+          logger.error("Issue while user {} attempted to save {}", uid, maskedData, e);
+          response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+          return ci;
       }
-      logger.info("User {} saved emergency contact information {}", uid, ci);
-      return ci;
-    } else {
-      return ci;
+      logger.info("User {} saved Emergency Contact Information successfully", uid);
+    }else{
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
     }
+    return ci;
   }
 
 }

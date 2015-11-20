@@ -48,17 +48,29 @@ public class EmergencyPhoneNumberController {
     
     @RequestMapping(method = RequestMethod.POST, value="/set")
     public @ResponseBody void setPhoneNumber(HttpServletRequest request, @RequestBody TypeValue[] phoneNumbers, HttpServletResponse response){
+        final String uid = request.getHeader("uid");
         try {
-            final String uid = request.getHeader("uid");
             if(StringUtils.isBlank(uid)){
                 logger.warn("User hit get emergency phone number service w/o username set");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             }
             emPhoneNumberService.setEmergencyPhoneNumbers(uid, (TypeValue[]) phoneNumbers);
-            logger.info("User {} saved phone numbers {}", uid, phoneNumbers);
+            logger.info("User {} saved phone numbers successfully", uid);
             response.setStatus(HttpServletResponse.SC_OK);
         } catch (Exception e) {
-            logger.error("Issue setting emergency phone number data", e);
+            StringBuilder builder = new StringBuilder()
+            .append("[");
+            int phoneNumberCounter = 0;
+            for(TypeValue phoneNumber: phoneNumbers){
+                if(phoneNumberCounter>0){
+                    builder.append(", ");
+                }
+                builder.append(phoneNumber.toStringForLogging());
+                phoneNumberCounter++;
+            }
+            builder.append("]");
+            String maskedData = builder.toString();
+            logger.error("Issue while user {} attempted to save {}", uid, maskedData, e);
             response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
         }
     }
