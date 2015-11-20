@@ -5,7 +5,8 @@ define(['angular'], function(angular) {
         .constant('APP_FLAGS', {
             'features' : false,
             'showSidebar' : true,
-            'showSearch' : true
+            'showSearch' : true,
+            'isWeb' : false
         })
         .constant('SERVICE_LOC', {
             'aboutURL' : null,
@@ -24,7 +25,6 @@ define(['angular'], function(angular) {
             'sublogo' : null
         })
         .constant('SEARCH',{
-            'isWeb' : false,
             'searchURL' : '/web/apps/search/'
         })
         .constant('NOTIFICATION', {
@@ -33,11 +33,11 @@ define(['angular'], function(angular) {
             'notificationFullURL' : '/web/notifications'
         })
         .constant('MISC_URLS',{
-            'feedbackURL' : 'https://my.wisc.edu/portal/p/feedback',
             'back2ClassicURL' : null,
-            'whatsNewURL' : null,
             'loginURL' : '/portal/Login',
-            'logoutURL' : '/portal/Logout'
+            'logoutURL' : '/portal/Logout',
+            'myuwHome' : 'https://my.wisc.edu',
+            'whatsNewURL' : null
         });
 
     return config;
