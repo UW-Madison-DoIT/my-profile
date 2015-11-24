@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <name>My Profile Parent</name>
     <modules>
+        <!-- When changing modules consider updating .travis.yml -->
         <module>my-profile-webapp</module>
         <module>my-profile-api</module>
         <module>my-profile-mock-impl</module>
