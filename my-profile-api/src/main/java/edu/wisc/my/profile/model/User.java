@@ -19,6 +19,8 @@ public class User implements Comparable{
     public String middleName;
     @JsonProperty("DOB")
     public Date birthDate;
+    @JsonProperty("CampusID")
+    public String CampusID;
     
    
     /**
@@ -82,6 +84,18 @@ public class User implements Comparable{
      */
     public void setBirthDate(Date birthDate) {
         this.birthDate = birthDate;
+    }
+    /**
+     * @return the campusID
+     */
+    public String getCampusID() {
+        return CampusID;
+    }
+    /**
+     * @param campusID the campusID to set
+     */
+    public void setCampusID(String campusID) {
+        CampusID = campusID;
     }
     @Override
     public int compareTo(Object o) {
