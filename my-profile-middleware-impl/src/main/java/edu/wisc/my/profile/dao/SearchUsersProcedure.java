@@ -29,6 +29,7 @@ public class SearchUsersProcedure extends StoredProcedure {
                 tempUser.setLastName(argResults.getString("LAST_NAME"));
                 tempUser.setMiddleName(argResults.getString("MIDDLE_NAME"));
                 tempUser.setBirthDate(argResults.getDate("BIRTHDATE"));
+                tempUser.setCampusID((argResults.getString("ISIS_CAMPUS_ID")));
                 return tempUser;
             } 
           }) 
