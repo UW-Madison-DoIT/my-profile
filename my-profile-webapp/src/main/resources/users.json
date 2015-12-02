@@ -4,7 +4,8 @@
         "lastName":"Administrator",
         "middleName":"Ashley",
         "firstName":"Amy",
-        "DOB" : "1988-04-16"
+        "DOB" : "1988-04-16",
+        "CampusID" : "t2vasd233"
     },
     {
         "PVI":"staff",
@@ -18,7 +19,8 @@
         "lastName":"Student",
         "middleName":"tooCoolForSchool",
         "firstName":"Steven",
-        "DOB" : "1987-10-31"
+        "DOB" : "1987-10-31",
+        "CampusID" : "8981123456"
     },
     {
         "PVI":"student2",
