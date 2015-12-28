@@ -37,6 +37,8 @@
         <spring.security.version>3.2.6.RELEASE</spring.security.version>
         <gson.version>1.7.1</gson.version>
         <gson-jodaTime-serializer.version>1.0.0</gson-jodaTime-serializer.version>
+        <mockito.version>1.9.5</mockito.version>
+        <junit.version>4.11</junit.version>
     </properties>
 
     <repositories>
@@ -92,7 +94,6 @@
                 <artifactId>jackson-databind</artifactId>
                 <version>${jackson.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>servlet-api</artifactId>
@@ -125,6 +126,21 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.5</version>
             </dependency>
+            
+            <!-- Testing dependencies -->
+            <dependency>
+              <groupId>org.mockito</groupId>
+              <artifactId>mockito-core</artifactId>
+              <version>${mockito.version}</version>
+              <scope>test</scope>
+            </dependency>
+            <dependency>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+              <version>${junit.version}</version>
+              <scope>test</scope>
+          </dependency>
+            
 
             <!-- Spring dependencies -->
             <dependency>
