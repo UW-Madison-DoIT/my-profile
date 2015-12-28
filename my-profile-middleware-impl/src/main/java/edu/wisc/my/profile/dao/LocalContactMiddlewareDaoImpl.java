@@ -45,6 +45,16 @@ public class LocalContactMiddlewareDaoImpl implements LocalContactMiddlewareDao 
     String result = jdbcTemplate.query("select PERSONPROFILE.PERSONPROFILE.SAVE_PERSON_PROFILE( ? ) from dual", new MiddlewareUpdateExtractor(), json.toString());
     
     if(MiddlewareUpdateExtractor.SUCCESS.equals(result)) {
+        //Fetch results from Middleware
+        ContactInformation savedContactInformation = this.getContactInfo(netId);
+        //Check to see if MW results are the same as were attempted to save
+        if(!updatedContactInformation.equals(savedContactInformation)){
+            throw new Exception("Local contact information was not successfully "
+                    + "saved.  Expected to save: "
+                    +updatedContactInformation.toStringForLogging()
+                    +" but actually saved: "
+                    +savedContactInformation.toStringForLogging());
+        }
       //  return saved content
       return updatedContactInformation;
     } else {

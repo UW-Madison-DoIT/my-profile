@@ -1,5 +1,7 @@
 package edu.wisc.my.profile.dao;
 
+import java.util.Arrays;
+
 import javax.sql.DataSource;
 
 import org.json.JSONObject;
@@ -45,6 +47,40 @@ public class EmergencyContactMiddlewareDaoImpl implements EmergencyContactMiddle
     String result = jdbcTemplate.query("select PERSONPROFILE.PERSONPROFILE.SAVE_PERSON_PROFILE( ? ) from dual", new MiddlewareUpdateExtractor(), json.toString());
     
     if(MiddlewareUpdateExtractor.SUCCESS.equals(result)) {
+        //Fetch results from Middleware
+        ContactInformation[] savedContactInformation = this.getData(netId);
+        //Check to see if MW results are the same as were attempted to save
+        if(!Arrays.equals(emergencyContacts, savedContactInformation)){
+            //Build userInputed emergencyContacts logging string
+            StringBuilder expectedBuilder = new StringBuilder()
+            .append("[");
+            int ciCounter = 0;
+            for(ContactInformation contactInformation: emergencyContacts){
+                if(ciCounter>0){
+                    expectedBuilder.append(", ");
+                }
+                expectedBuilder.append(contactInformation.toStringForLogging());
+                ciCounter++;
+            }
+            expectedBuilder.append("]");
+            //Build actually saved emergencyContacts logging string
+            StringBuilder actualSavedBuilder = new StringBuilder()
+            .append("[");
+            ciCounter = 0;
+            for(ContactInformation contactInformation: savedContactInformation){
+                if(ciCounter>0){
+                    actualSavedBuilder.append(", ");
+                }
+                actualSavedBuilder.append(contactInformation.toStringForLogging());
+                ciCounter++;
+            }
+            actualSavedBuilder.append("]");
+            throw new Exception("Emergency contact information was not "
+                    + "successfully saved.  Expected to save: "
+                    +expectedBuilder.toString()
+                    +" but actually saved: "
+                    +actualSavedBuilder.toString());
+        }
       //return saved content
       return emergencyContacts;
     } else {
