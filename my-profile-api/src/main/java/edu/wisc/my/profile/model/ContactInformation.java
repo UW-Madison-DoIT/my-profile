@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 
 import com.fatboyindustrial.gsonjodatime.Converters;
@@ -151,6 +153,46 @@ public class ContactInformation {
       .append("}");
       String maskedString = builder.toString();
       return maskedString;
+  }
+  
+  @Override
+  public int hashCode() {
+      return new HashCodeBuilder(17, 31).
+              append(this.id).
+              append(this.legalName).
+              append(this.preferredName).
+              append(this.relationship).
+              append(this.lastModified).
+              append(this.comments).
+              append(this.phoneNumbers).
+              append(this.emails).
+              append(this.addresses).
+          toHashCode();
+  }
+  
+  @Override
+  public boolean equals(Object obj) {
+      if (obj == null) {
+          return false;
+      }
+      if(obj == this){
+          return true;
+      }
+      if (!(obj instanceof ContactInformation)){
+          return false;
+      }
+
+      ContactInformation rhs = (ContactInformation) obj;
+      return new EqualsBuilder().
+              append(this.id, rhs.id).
+              append(this.legalName, rhs.legalName).
+              append(this.preferredName, rhs.preferredName).
+              append(this.relationship, rhs.relationship).
+              append(this.comments, rhs.comments).
+              append(this.phoneNumbers, rhs.phoneNumbers).
+              append(this.emails, rhs.emails).
+              append(this.addresses, rhs.addresses).
+          isEquals();
   }
   
   

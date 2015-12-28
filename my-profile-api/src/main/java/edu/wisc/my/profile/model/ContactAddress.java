@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -129,4 +131,44 @@ public class ContactAddress {
       String maskedString = builder.toString();
       return maskedString;
   }
+    
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 31).
+                append(this.type).
+                append(this.addressLines).
+                append(this.city).
+                append(this.country).
+                append(this.state).
+                append(this.postalCode).
+                append(this.comment).
+                append(this.effectiveDate).
+                append(this.expirationDate).
+            toHashCode();
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if(obj == this){
+            return true;
+        }
+        if (!(obj instanceof ContactAddress)){
+            return false;
+        }
+        ContactAddress rhs = (ContactAddress) obj;
+        return new EqualsBuilder().
+                append(this.type, rhs.type).
+                append(this.addressLines, rhs.addressLines).
+                append(this.city, rhs.city).
+                append(this.country, rhs.country).
+                append(this.state, rhs.state).
+                append(this.postalCode, rhs.postalCode).
+                append(this.comment, rhs.comment).
+                append(this.effectiveDate, rhs.effectiveDate).
+                append(this.expirationDate, rhs.expirationDate).
+            isEquals();
+    }
 }
