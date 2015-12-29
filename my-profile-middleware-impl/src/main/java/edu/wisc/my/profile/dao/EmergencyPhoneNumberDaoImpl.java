@@ -1,5 +1,7 @@
 package edu.wisc.my.profile.dao;
 
+import java.util.Arrays;
+
 import javax.sql.DataSource;
 
 import org.joda.time.DateTime;
@@ -51,6 +53,39 @@ public class EmergencyPhoneNumberDaoImpl implements EmergencyPhoneNumberDao {
         String result = jdbcTemplate.query("select PERSONPROFILE.PERSONPROFILE.SAVE_PERSON_PROFILE( ? ) from dual", new MiddlewareUpdateExtractor(), json.toString());
         
         if(MiddlewareUpdateExtractor.SUCCESS.equals(result)) {
+            //Fetch results from Middleware
+            TypeValue[] savedPhoneNumbers = this.getPhoneNumbers(netId);
+            //Check to see if MW results are the same as were attempted to saved
+            if(!Arrays.equals(savedPhoneNumbers, phoneNumbers)){
+                //Build user inputed phone number logging string
+                StringBuilder expectedBuilder = new StringBuilder()
+                .append("[");
+                int phoneNumberCounter = 0;
+                for(TypeValue phoneNumber: phoneNumbers){
+                    if(phoneNumberCounter>0){
+                        expectedBuilder.append(", ");
+                    }
+                    expectedBuilder.append(phoneNumber.toStringForLogging());
+                    phoneNumberCounter++;
+                }
+                expectedBuilder.append("]");
+                //Build actually saved phone numbers logging string
+                StringBuilder actualSavedBuilder = new StringBuilder()
+                .append("[");
+                phoneNumberCounter = 0;
+                for(TypeValue phoneNumber: savedPhoneNumbers){
+                    if(phoneNumberCounter>0){
+                        actualSavedBuilder.append(", ");
+                    }
+                    actualSavedBuilder.append(phoneNumber.toStringForLogging());
+                    phoneNumberCounter++;
+                }
+                actualSavedBuilder.append("]");
+                throw new Exception("Phone number information was not "
+                        + "successfully saved.  Expected to save: "
+                        +expectedBuilder+" but actually saved: "
+                        +actualSavedBuilder.toString());
+            }
           //return saved content
           return phoneNumbers;
         } else {

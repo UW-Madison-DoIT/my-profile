@@ -74,7 +74,7 @@ public class TypeValue {
       .append("{\"type\":\"")
       .append(this.type)
       .append("\",\"value\":\"")
-      .append(StringUtils.repeat("X", this.value!=null?this.value.length():0))
+      .append(StringUtils.repeat("X", this.value!=null?this.value.length():0)+"\",")
       .append("{\"lastModified\":\"")
       .append(this.lastModified)
       .append("\"}");
