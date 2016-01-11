@@ -1,5 +1,5 @@
 <div class="row portlet-frame">
-  <portlet-header app-title="Find Local Information" app-image="img/square.jpg"></portlet-header>
+  <app-header app-title="Find Local Information" app-icon='fa-lock' app-add-to-home='true' app-fname='local-contact-info-admin'></app-header>
   <div class="portlet-body">
     <div ng-controller="LocalContactAdminController as localContactAdminCtrl">
       <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
