@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import edu.wisc.my.profile.mapper.ContactInformationMapper;
+import edu.wisc.my.profile.model.ContactAddress;
 import edu.wisc.my.profile.model.ContactInformation;
 import edu.wisc.my.profile.model.TypeValue;
 
@@ -50,7 +52,32 @@ public class EmergencyContactMiddlewareDaoImpl implements EmergencyContactMiddle
         //Fetch results from Middleware
         ContactInformation[] savedContactInformation = this.getData(netId);
         //Check to see if MW results are the same as were attempted to save
-        if(!Arrays.equals(emergencyContacts, savedContactInformation)){
+        boolean unSuccessfulSave = false;
+        //If the lengths of the arrays are equal check contents for equals
+        if(emergencyContacts.length == savedContactInformation.length){
+            for(int i = 0; i<emergencyContacts.length; i++){
+                //MW doesn't save an empty address in this instance
+                //So if empty list, add a blank address for comparison
+                if(savedContactInformation[i].getAddresses().isEmpty() 
+                        && !emergencyContacts[i].getAddresses().isEmpty()){
+                    ContactAddress emptyAddress = new ContactAddress();
+                    emptyAddress.getAddressLines().add("");
+                    savedContactInformation[i].getAddresses().add(emptyAddress);
+                }
+                //MW saves null comments as empty Strings in this case
+                //Make sure that if we had null comments, put in empty space
+                if(emergencyContacts[i].getComments()==null){
+                    emergencyContacts[i].setComments(StringUtils.EMPTY);
+                }
+                if(!emergencyContacts[i].equals(savedContactInformation[i])){
+                    unSuccessfulSave = true;
+                }
+            }
+        }else{ //arrays not equal length.  Unsuccessful save
+            unSuccessfulSave = true;
+        }
+        
+        if(unSuccessfulSave){
             //Build userInputed emergencyContacts logging string
             StringBuilder expectedBuilder = new StringBuilder()
             .append("[");
