@@ -205,7 +205,9 @@ public class ContactInformationTest {
     
     @Test
     public void testEqualsAddresses(){
-        contact2.setAddresses(Arrays.asList(new ContactAddress()));
+        ContactAddress address = new ContactAddress();
+        address.setCity("Madison");
+        contact2.setAddresses(Arrays.asList(address));
         assertFalse(contact1.equals(contact2));
         assertFalse(contact2.equals(contact1));
     }

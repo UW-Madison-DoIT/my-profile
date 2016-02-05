@@ -1,6 +1,7 @@
 package edu.wisc.my.profile.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.sql.DataSource;
