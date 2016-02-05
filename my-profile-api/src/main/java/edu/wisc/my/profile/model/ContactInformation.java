@@ -1,6 +1,7 @@
 package edu.wisc.my.profile.model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -166,7 +167,7 @@ public class ContactInformation {
               append(this.comments).
               append(this.phoneNumbers).
               append(this.emails).
-              append(this.addresses).
+              append(this.addresses!=null? new HashSet<ContactAddress>(this.addresses):this.addresses).
           toHashCode();
   }
   
@@ -183,6 +184,7 @@ public class ContactInformation {
       }
 
       ContactInformation rhs = (ContactInformation) obj;
+      
       return new EqualsBuilder().
               append(this.id, rhs.id).
               append(this.legalName, rhs.legalName).
@@ -191,7 +193,7 @@ public class ContactInformation {
               append(this.comments, rhs.comments).
               append(this.phoneNumbers, rhs.phoneNumbers).
               append(this.emails, rhs.emails).
-              append(this.addresses, rhs.addresses).
+              append(this.addresses!=null? new HashSet<ContactAddress>(this.addresses):this.addresses, rhs.addresses!=null? new HashSet<ContactAddress>(rhs.addresses):rhs.addresses).
           isEquals();
   }
   
