@@ -1,6 +1,0 @@
-language: java
-
-install: true
-
-# Alas, build only modules that do not require the Oracle jar
-script: "mvn --projects my-profile-api,my-profile-mock-impl,my-profile-local-contact-impl package"
