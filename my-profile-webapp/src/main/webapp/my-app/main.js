@@ -22,7 +22,7 @@ define([
     'require',
     './lec/routes',
     './profile/routes',
-    'portal/settings/route',
+    'portal/settings/routes',
     'portal',
     'app-config',
     'ngRoute',
@@ -35,7 +35,7 @@ define([
     './profile/controllers',
     './profile/services',
     './profile/directives',
-], function(angular, require, lecRoutes, profileRoutes, settingsRoute) {
+], function(angular, require, lecRoutes, profileRoutes, settingsRoutes) {
 
     var app = angular.module('my-app', [
         'app-config',
@@ -60,7 +60,7 @@ define([
         when('/contact-info', profileRoutes.contactInfo).
         when('/local/adminLookup', lecRoutes.adminLookup).
         when('/emergencyInfo', lecRoutes.emegencyInfo).
-        when('/settings', settingsRoute).
+        when('/settings', settingsRoutes.betaSettings).
         when('/settings/profile', profileRoutes.profileSettings).
         otherwise({
             redirectTo: '/emergencyInfo'
