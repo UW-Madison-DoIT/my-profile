@@ -3,7 +3,7 @@
   <parent>
     <groupId>edu.wisc.my.profile</groupId>
     <artifactId>my-profile-parent</artifactId>
-    <version>1.0.5</version>
+    <version>1.0.6-SNAPSHOT</version>
   </parent>
   <artifactId>my-profile-webapp</artifactId>
   <packaging>war</packaging>
