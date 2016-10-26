@@ -20,6 +20,6 @@
 define(['require'], function(require){
   return {
       adminLookup : {templateUrl: require.toUrl('./partials/admin-lookup.html')},
-      emegencyInfo: {templateUrl: require.toUrl('./partials/emergency-info.html')}
+      emergencyInfo: {templateUrl: require.toUrl('./partials/emergency-info.html')}
   } 
 });

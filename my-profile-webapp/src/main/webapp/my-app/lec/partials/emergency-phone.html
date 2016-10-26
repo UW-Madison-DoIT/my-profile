@@ -1,44 +1,44 @@
 <div ng-controller="EmergencyPhoneController as EmergencyPhoneCtrl">
-<loading-gif data-object='emergencyPhoneNumbers' data-reuse="true"></loading-gif>
-<div class='info-card' ng-show="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0">
-  <h1>My Phone Number</h1>
-  <div class="description-box">
-    <p>A number where you can be reached in an emergency.</p>
-  </div>
-  <div ng-if="emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 && !edit" >
-    <p>
-      <i class="fa fa-exclamation-triangle warn-icon"></i>No phone number entered yet.
+<loading-gif data-object="emergencyPhoneNumbers" data-reuse="true"></loading-gif>
+<md-card ng-show="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0">
+  <md-card-title>
+    <md-card-title-text>
+      <h2 class="md-headline">My phone number</h2>
+    </md-card-title-text>
+  </md-card-title>
+  <md-card-content>
+    <div class="description-box">
+      <p>A number where you can be reached in an emergency.</p>
+    </div>
+    <p ng-if="emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 && !edit" >
+      <md-icon>warning</md-icon> No phone number entered yet.
     </p>
-  </div>
-  <div>
     <p ng-if="!edit && emergencyPhoneNumbers.emergencyPhoneNumbers.length">
       {{emergencyPhoneNumbers.emergencyPhoneNumbers[0].value}} ({{emergencyPhoneNumbers.emergencyPhoneNumbers[0].type}})
     </p>
     <div ng-hide="!edit">
       <form novalidate name="emergencyPhoneNumberForm">
-        <div class="row form-group">
-          <div class="col-xs-6">
-            <label id="emergencyPhoneNumberLabel" for="emergencyPhoneNumber" >Phone Number*</label>
-            <input type="tel" id="emergencyPhoneNumber" name="emergencyPhoneNumber" class="form-control" required aria-required="true" aria-labelledby="emergencyPhoneNumberLabel" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
-          </div>
-          <div class="col-xs-6 phone-type">
-            <label id="emergencyPhoneTypeLabel" for="emergencyPhoneType">Type*</label>
-            <select id="emergencyPhoneType" name="emergencyPhoneType" class="form-control" required aria-required="true" aria-labelledby="emergencyPhoneTypeLabel" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
-              <option value="mobile">Mobile</option>
-              <option value="home">Home</option>
-              <option value="work">Work</option>
-            </select>
-          </div>
-        </div>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Phone number*</label>
+          <input type="tel" required aria-required="true" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label>Type*</label>
+          <md-select required aria-required="true" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
+            <md-option value="mobile">Mobile</md-option>
+            <md-option value="home">Home</md-option>
+            <md-option value="work">Work</md-option>
+          </md-select>
+        </md-input-container>
         <p>*Required</p>
-        <button class='btn btn-primary' aria-label="Save phone number" style='margin-right: 10px;' ng-click="save()" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</button>
-        <button class='btn btn-default' aria-label="Cancel" ng-click='cancel()'>Cancel</button>
+        <md-button class="md-accent md-raised" aria-label="Save phone number" ng-click="save()" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</md-button>
+        <md-button class="md-default" aria-label="Cancel" ng-click='cancel()'>Cancel</md-button>
       </form>
     </div>
     <div ng-show="!edit" ng-click="edit = true" ng-switch="emergencyPhoneNumbers.emergencyPhoneNumbers.length">
-      <button aria-label="Add phone number" class='btn btn-primary' ng-switch-when="0">Add phone number</button>
-      <button aria-label="Update phone number" class='btn btn-default' ng-switch-default>Update phone number</button>
+      <md-button aria-label="Add phone number" class="md-accent md-raised" ng-switch-when="0">Add phone number</md-button>
+      <md-button aria-label="Update phone number" class="md-default" ng-switch-default>Update phone number</md-button>
     </div>
-  </div>
-</div>
+  </md-card-content>
+</md-card>
 </div>

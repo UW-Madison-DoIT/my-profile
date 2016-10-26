@@ -1,3 +1,61 @@
+p.list-item-heading {
+  font-weight: 600;
+  color: #666;
+  width: 30%;
+  min-width: 120px;
+  max-width: 200px;
+}
+.info-list {
+  md-list-item.md-no-proxy {
+    padding-top: 10px;
+  }
+}
+.md-button.active {
+  color: #c5050c;
+}
+h2.md-headline {
+  font-weight: 400;
+}
+.top-info {
+  color: #222;
+  font-size: 12px;
+  margin-top: 10px;
+  p {
+    margin-bottom: 0;
+  }
+}
+.alert {
+  background-color: lighten(#E28332, 35%);
+  color: darken(#E28332, 20%);
+  border-radius: 3px;
+  font-weight: 400;
+  border: 1px solid darken(#E28332, 10%);
+  margin: 12px 16px;
+  text-align: center;
+}
+.alert-dismissable {
+  .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+  }
+}
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .2;
+  filter: alpha(opacity=20);
+}
+md-card-title-text {
+  h2.md-headline {
+    margin: 0;
+  }
+}
 
 .housing-notice {
   font-style: italic;
@@ -50,15 +108,7 @@
 }
 
 
-.top-info {
-  text-align:center;
-  font-size:18px;
-  font-weight:400;
-  margin-top:10px;
-  a {
-    color:#b70101;
-  }
-}
+
 
 @demo-color : #B70101;
 @demo-color-darker : darken(@demo-color, 10%);
@@ -183,9 +233,6 @@ form .form-help {
   border-radius:4px;
   font-size:1.2em;
   border:1px solid #ddd;
-}
-.alert {
-  margin:15px;
 }
 .disclaimer {
   margin-top:10px;

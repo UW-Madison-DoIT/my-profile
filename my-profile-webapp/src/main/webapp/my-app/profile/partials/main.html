@@ -1,20 +1,20 @@
 <div class="row portlet-frame">
-    <app-header app-title="My Profile" app-icon="fa-user" app-add-to-home="true"></app-header>
+  <app-header app-title="My Profile" app-icon="fa-user" app-add-to-home="true"></app-header>
 
-    <div class="portlet-body md-padding" ng-controller="MainController as mainCtrl">
-      <!-- app navigation -- replace with md-nav-bar when angular 1.1.1 is available frame -->
-      <div layout="row" layout-align="start center">
-        <md-button ng-class="{ 'active': activePage === 'main' }" ng-href="main" aria-label="go to my profile">My profile</md-button>
-        <md-button ng-class="{ 'active': activePage === 'emergencyInfo' }" ng-href="emergencyInfo" aria-label="go to emergency info">Emergency info</md-button>
+  <div class="portlet-body md-padding">
+    <!-- app navigation -- replace with md-nav-bar when angular 1.1.1 is available frame -->
+    <div layout="row" layout-align="start center">
+      <md-button class="active" ng-href="main" aria-label="go to my profile">My profile</md-button>
+      <md-button ng-href="emergencyInfo" aria-label="go to emergency info">Emergency info</md-button>
+    </div>
+    <!-- main content -->
+    <div layout-xs="column" layout-gt-xs="row" layout-align-gt-xs="space-around start">
+      <div flex-gt-xs="50" layout="column">
+        <contact-info></contact-info>
       </div>
-      <!-- main content -->
-      <div layout-xs="column" layout-gt-xs="row" layout-align-gt-xs="space-around start">
-        <div flex-gt-xs="50" layout="column">
-          <contact-info></contact-info>
-        </div>
-        <div flex-gt-xs="50" layout="column">
-          <basic-info></basic-info>
-        </div>
+      <div flex-gt-xs="50" layout="column">
+        <basic-info></basic-info>
       </div>
     </div>
+  </div>
 </div>
