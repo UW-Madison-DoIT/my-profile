@@ -1,76 +1,69 @@
-<div ng-if='!contact.edit || contact.edit == false'>
-    <p>{{ contact.preferredName }}</p>
-    <div ng-repeat="phone in contact.phoneNumbers">
-        <p ng-if='phone.value && phone.type'>
-          <span ng-if="$index === 0">Primary phone: </span>
-          <span>{{ phone.value }} ({{ phone.type }})</span>
-        </p>
-    </div>
-    <p>{{ contact.emails[0].value }}</p>
-    <br>
-    <p ng-if="contact.relationship">Relationship: {{ contact.relationship }}</p>
-    <p ng-if="contact.comments">Comments: {{ contact.comments }}</p>
-    <span ng-hide='contact.readOnly'>
-        <button class='btn btn-primary' ng-click='addEdit()'>Add another</button>
-        <button class='btn btn-default' ng-click='contact.edit = true'>Edit</button>
-        <button class='btn btn-default' ng-click='deleteContact($index)'>Delete</button>
-    </span>
+<!-- display emergency contacts -->
+<div ng-if="!contact.edit || contact.edit == false">
+  <p>{{ contact.preferredName }}</p>
+  <div ng-repeat="phone in contact.phoneNumbers">
+    <p ng-if="phone.value && phone.type">
+      <span ng-if="$index === 0">Primary phone: </span>
+      <span>{{ phone.value }} ({{ phone.type }})</span>
+    </p>
+  </div>
+  <p>{{ contact.emails[0].value }}</p>
+  <br>
+  <p ng-if="contact.relationship">Relationship: {{ contact.relationship }}</p>
+  <p ng-if="contact.comments">Comments: {{ contact.comments }}</p>
+  <div layout="row" ng-hide="contact.readOnly">
+    <md-button class="md-accent md-raised" ng-click="addEdit()">Add another</md-button>
+    <md-button class="md-default" ng-click="contact.edit = true">Edit</md-button>
+    <md-button class="md-warn" ng-click="deleteContact($index)">Delete</md-button>
+  </div>
 </div>
-<div ng-if='contact.edit'>
-    <form name="emergencyForm" novalidate class="emergency-info">
-        <div class="form-group">
-            <label for="name">Name*</label>
-            <input class="form-control" id='name' name="name" type='text' required ng-model="contact.preferredName" ng-class="{ 'has-error' : emergencyForm.name.$invalid && emergencyForm.name.$touched }">
-            <p class="form-help" ng-show="emergencyForm.name.$invalid && emergencyForm.name.$touched">Name is required</p>
-        </div>
-        <div ng-repeat="phone in contact.phoneNumbers | limitTo:3 track by $index" class="form-group phone-number">
-            <div class="col-xs-5 no-padding">
-                <label for="phone{{$index}}" ng-if="$index === 0">Primary phone*</label>
-                <input type="tel" id="phone{{$index}}" name="phone{{$index}}" ng-required='$index === 0'  class="form-control" ng-model="contact.phoneNumbers[$index].value" ng-if="$index === 0" ng-class="{ 'has-error' : emergencyForm.phone0.$invalid && emergencyForm.phone0.$touched }">
-                <label for="phone{{$index}}" ng-if="$index !== 0">Other phone</label>
-                <input type="tel" id="phone{{$index}}" class="form-control" ng-model="contact.phoneNumbers[$index].value" ng-if="$index !== 0">
-            </div>
-            <div class="col-xs-5 no-padding phone-type">
-                <label for="phoneType{{$index}}" ng-if="$index === 0">Type*</label>
-                <label for="phoneType{{$index}}" ng-if="$index !== 0">Type</label>
-                <select id="phoneType{{$index}}" name="phoneType{{$index}}" class="form-control" ng-required='$index === 0' ng-model="contact.phoneNumbers[$index].type" ng-class="{ 'has-error' : emergencyForm.phoneType0.$invalid && emergencyForm.phoneType0.$touched }">
-                    <option value="mobile" selected="selected">Mobile</option>
-                    <option value="home">Home</option>
-                    <option value="work">Work</option>
-                    <option value="other">Other</option>
-                </select>
-                
-            </div>
-            <div class='col-xs-2 no-padding'><button aria-label="Delete Phone Number" class='btn btn-default' style='top : 25px; margin-left: 10px;' ng-click='contact.phoneNumbers.splice($index, 1)' ng-if="$index !== 0"><i class='fa fa-trash'></i></a></div>
-            <div class='col-xs-12'>
-              <p class="form-help" ng-show="emergencyForm.phone0.$invalid && emergencyForm.phone0.$touched && $index === 0">Phone number is required</p>
-              <p class="form-help" ng-show="emergencyForm.phoneType0.$invalid && emergencyForm.phoneType0.$touched && $index === 0">Phone type is required</p>
-            </div>
-        </div>
-        <button class="btn btn-default" type="text" ng-click='contact.phoneNumbers.push({"type" : "", value : ""})' ng-if='contact.phoneNumbers.length < 3'>Add another phone number</button>
-        <div class="form-group col-xs-12 no-padding">
-            <label for="email">Email*</label>
-            <input class="form-control" id='email' name="email" type='text' required ng-model="contact.emails[0].value" ng-class="{ 'has-error' : emergencyForm.email.$invalid && emergencyForm.email.$touched }">
-            <p class="form-help" ng-show="emergencyForm.email.$invalid && emergencyForm.email.$touched">Email is required</p>
-        </div>
-        <div class="form-group">
-            <label for="relationship">Relationship*</label>
-            <select id='relationship' 
-                    name="relationship" 
-                    class="form-control" 
-                    required 
-                    ng-model="contact.relationship" 
-                    ng-class="{ 'has-error' : emergencyForm.relationship.$invalid && emergencyForm.relationship.$touched }">
-                    <option ng-repeat='item in relationshipOptions' value='{{item.key}}' ng-attr-selected="{{isSelection(contact.relationship, item.key)}}">{{item.value}}</option>
-            </select>
-            <p class="form-help" ng-show="emergencyForm.relationship.$invalid && emergencyForm.relationship.$touched">Relationship is required</p>
-        </div>
-        <div class="form-group">
-            <label for="comments">Comments <small>({{50 - contact.comments.length}} characters left)</small></label>
-            <textarea class="form-control" id='comments' type='text' ng-model="contact.comments" maxlength='50' placeholder="For example, languages spoken or best times to contact"></textarea>
-        </div>
-        <p>*Required</p>
-        <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save()" ng-disabled="emergencyForm.$invalid">Save</button>
-        <button class='btn btn-default' ng-click='cancel()'>Cancel</button>
+<!-- edit emergency contacts -->
+<div ng-if="contact.edit">
+  <form name="emergencyForm" novalidate class="emergency-info">
+    <md-input-container class="md-block">
+      <label>Name*</label>
+      <input ng-model="contact.preferredName" required aria-required="true" name="name">
+    </md-input-container>
+    <div ng-repeat="phone in contact.phoneNumbers | limitTo:3 track by $index" layout-gt-xs="row">
+      <div flex="90">
+        <md-input-container class="md-block" flex-gt-sm>
+          <label ng-if="$index === 0">Primary phone*</label>
+          <input ng-if="$index === 0" type="tel" name="phone{{$index}}" ng-required="$index === 0" ng-model="contact.phoneNumbers[$index].value">
+          <label ng-if="$index !== 0">Other phone</label>
+          <input ng-if="$index !== 0" type="tel" name="phone{{$index}}" ng-model="contact.phoneNumbers[$index].value">
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-sm>
+          <label ng-if="$index === 0">Type*</label>
+          <label ng-if="$index !== 0">Type</label>
+          <md-select name="phoneType{{$index}}" ng-required="$index === 0" ng-model="contact.phoneNumbers[$index].type">
+            <md-option value="mobile">Mobile</md-option>
+            <md-option value="home">Home</md-option>
+            <md-option value="work">Work</md-option>
+            <md-option value="other">Other</md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div flex="10">
+        <md-button aria-label="delete phone number" class="md-icon-button" ng-click="contact.phoneNumbers.splice($index, 1)" ng-if="$index !== 0"></md-button>
+      </div>
+    </div>
+    <md-button class="md-raised md-default" ng-click="contact.phoneNumbers.push({ 'type' : '', value : ''})" ng-if="contact.phoneNumbers.length < 3">Add another phone number</md-button>
+    <md-input-container class="md-block">
+      <label>Email*</label>
+      <input name="email" required ng-model="contact.emails[0].value">
+    </md-input-container>
+    <md-input-container class="md-block">
+      <label>Relationship*</label>
+      <md-select ng-model="contact.relationship" name="relationship" required>
+        <md-option ng-repeat="item in relationshipOptions" ng-value="item.key" ng-attr-selected="{{isSelection(contact.relationship, item.key)}}">{{ item.value }}</md-option>
+      </md-select>
+    </md-input-container>
+    <md-input-container class="md-block">
+      <label>Comments</label>
+      <textarea ng-model="contact.comments" md-maxlength="50" placeholder="Ex. First language is Spanish"></textarea>
+    </md-input-container>
+    <p>*Required</p>
+    <md-button class="md-accent md-raised" ng-click="save()" ng-disabled="emergencyForm.$invalid">Save</md-button>
+    <md-button class="md-default" ng-click='cancel()'>Cancel</md-button>
     </form>
 </div>
