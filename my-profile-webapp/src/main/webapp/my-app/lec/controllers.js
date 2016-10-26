@@ -22,6 +22,10 @@
 define(['angular'], function(angular) {
   var app = angular.module('my-app.lec.controllers', []);
 
+  app.controller('MainController', ['$scope', '$location', function($scope, $location) {
+    $scope.currentNavItem = $location.path();
+  }]);
+
   app.controller('LocalContactAdminController', ['$scope', '$q', 'lecService', function($scope, $q, lecService){
       //init function
       var init = function() {

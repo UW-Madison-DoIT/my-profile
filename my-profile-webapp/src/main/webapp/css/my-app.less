@@ -10,9 +10,6 @@ p.list-item-heading {
     padding-top: 10px;
   }
 }
-.md-button.active {
-  color: #c5050c;
-}
 h2.md-headline {
   font-weight: 400;
 }
@@ -63,217 +60,22 @@ md-card-title-text {
   font-weight: bold;
 }
 
-.info-card {
-  padding: 15px;
-  border-radius: 4px; 
-  background-color : #f3f3f3;
-  margin : 15px;
-  h1 {
-    padding:0px;
-    margin:0px 0px 10px 0px;
-    font-size:24px;
-  }
-}
-.emergency-contact,
-.local-address {
-  p {
-    margin:0px;
-  }
-  label {
-    padding-top:10px;
-  }
-  .btn-default {
-    background-color:#fff;
-  }
+address {
+  margin-bottom: 0;
 }
 
-.emergency-info {
-  max-width:350px;
-  #name,
-  .phone-number,
-  #comments
-  {
-    width:100%;
-    display:block;
-  }
-  #email {
-    max-width:250px;
-  }
-  #relationship {
-    max-width:150px;
-  }
-  .phone-type {
-    padding-left:15px;
-  }
-}
-
-
-
-
-@demo-color : #B70101;
-@demo-color-darker : darken(@demo-color, 10%);
-
-.wrapper {
-  position: relative;
-  z-index: 90;
-}
-
-address{
-    margin-bottom:0px;
-}
-
-.profileHorizontalRule{
-    margin-bottom:0px;
-    margin-top:0px;
-}
-
-.userAttributesRow{
-  margin-left:0px;
-  margin-right:0px;
-}
-.userAttributesRow:hover, .userAttributesRow:hover span{
-  text-decoration:underline;
-  cursor: pointer; cursor: hand;
-}
-.oddRow{
-  background-color:#E0E0E0;
-}
-.detailsLink{
-  color: #600;
-  float:right;
-  margin-right:20px;
-}
-.userSearchResultName{
-  margin-left:20px;
-}
-.userSearchResultName, .detailsLink{
-  min-height:50px;
-  display:table;
-}
-.userSearchResultName span, .detailsLink span{
-  display:table-cell;
-  vertical-align:middle;
-  float:none;
-}
-.noContactInfoFound{
-  text-align:center;
-}
-.searchResultsLimitInformation{
-  margin-left:20px;
-}
-
-.ribbon-wrapper {
-  width: 85px;
-  height: 88px;
-  overflow: hidden;
-  position: absolute;
-  top: -3px;
-  right: -3px;
-}
-
-.ribbon {
-  font: bold 15px Sans-Serif;
-  color: white;
-  text-align: center;
-  text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
-  -webkit-transform: rotate(45deg);
-  -moz-transform:    rotate(45deg);
-  -ms-transform:     rotate(45deg);
-  -o-transform:      rotate(45deg);
-  position: relative;
-  padding: 7px 0;
-  left: -5px;
-  top: 15px;
-  width: 120px;
-  background-color: @demo-color;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(@demo-color), to(@demo-color-darker)); 
-  background-image: -webkit-linear-gradient(top, @demo-color, @demo-color-darker); 
-  background-image:    -moz-linear-gradient(top, @demo-color, @demo-color-darker); 
-  background-image:     -ms-linear-gradient(top, @demo-color, @demo-color-darker); 
-  background-image:      -o-linear-gradient(top, @demo-color, @demo-color-darker); 
-  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
-  -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
-  box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
-}
-
-.ribbon:before, .ribbon:after {
-  content: "";
-  border-top:   3px solid @demo-color-darker;   
-  border-left:  3px solid transparent;
-  border-right: 3px solid transparent;
-  position:absolute;
-  bottom: -3px;
-}
-
-.ribbon:before {
-  left: 0;
-}
-.ribbon:after {
-  right: 0;
-}
 
 form .ng-invalid,
 form .has-error {
-  border-color : #b70101;
+  border-color : #c5050c;
 }
 form .ng-valid {
   border-color : #5cb85c;
 }
-form .ng-pristine {
-  border-color : #ccc;
-}
-form .form-help {
-  color:#b70101;
-  padding:3px 10px;
-  font-size:12px;
-}
-.admin-lookup-form input {
-  padding:4px 10px;
-  margin-top:5px;
-  border-radius:4px;
-  font-size:1.2em;
-  border:1px solid #ddd;
-}
-.disclaimer {
-  margin-top:10px;
-  color:#999;
-}
-.description-box {
-  background-color:#ddd;
-  border-radius: 4px;
-  padding:5px 10px;
-  margin-bottom:10px;
-  p {
-    margin:0px;
-  }
-}
-.warn-icon {
-  padding:5px;
-}
 
-.name-form {
-  width:80%;
-  margin:0 auto;
-  .firstname {
-    width:49%;
-    display: inline-block;
-    label {
-      display:block;
-    }
-    input {
-      display:block;
-      margin:0 auto;
-    }
-  }
-  .lastname {
-    width:49%;
-    display: inline-block;
-    label {
-      display:block;
-    }
-    input {
-      display:block;
-      margin:0 auto;
-    }
+.description-box {
+  p {
+    margin: 0;
+    color: #888;
   }
 }
