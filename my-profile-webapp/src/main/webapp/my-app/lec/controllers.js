@@ -21,6 +21,7 @@
 
 define(['angular'], function(angular) {
   var app = angular.module('my-app.lec.controllers', []);
+
   app.controller('LocalContactAdminController', ['$scope', '$q', 'lecService', function($scope, $q, lecService){
       //init function
       var init = function() {
