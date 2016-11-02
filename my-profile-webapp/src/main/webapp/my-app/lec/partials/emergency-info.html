@@ -46,7 +46,7 @@
     <!-- local address -->
     <div layout-xs="row" layout-gt-xs="column" flex-xs="100" flex-gt-xs="33" ng-controller="LocalContactInformationController as localContactInfoCtrl">
       <!-- if no addresses entered -->
-      <md-card ng-if="contactInfo.addresses.length === 0">
+      <md-card ng-if="contactInfo.addresses.length === 0" class="contact-info-card">
         <md-card-title>
           <md-card-title-text>
             <h2 class="md-headline">My local address</h2>
@@ -80,7 +80,7 @@
     <!-- emergency contact -->
     <div layout-xs="row" layout-gt-xs="column" flex-xs="100" flex-gt-xs="33" ng-controller="EmergencyInformationController as emergencyInfoCtrl">
       <!-- if no emergency contact -->
-      <md-card ng-if="emergencyInfo.length === 0">
+      <md-card ng-if="emergencyInfo.length === 0" class="contact-info-card">
         <md-card-title>
           <md-card-title-text>
             <h2 class="md-headline">Emergency contact</h2>
@@ -95,7 +95,7 @@
         </md-card-content>
       </md-card>
       <!-- repeat for each emergency contact -->
-      <md-card ng-repeat="contact in emergencyInfo">
+      <md-card ng-repeat="contact in emergencyInfo" class="contact-info-card">
         <md-card-title>
           <md-card-title-text>
             <h2 class="md-headline">Emergency contact</h2>
