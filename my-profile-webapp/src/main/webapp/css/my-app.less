@@ -108,7 +108,7 @@ address {
   text-decoration:underline;
   cursor: pointer;
 }
-.oddRow{
+.odd-row {
   background-color:#E0E0E0;
 }
 .detailsLink{
@@ -134,12 +134,13 @@ address {
 .searchResultsLimitInformation{
   margin-left:20px;
 }
-.admin-lookup-form input {
-  padding:4px 10px;
-  margin-top:5px;
-  border-radius:4px;
-  font-size:1.2em;
-  border:1px solid #ddd;
+.admin-lookup-form {
+  margin: 18px 8px 8px 8px;
+  > div {
+    > md-input-container:first-child {
+      margin-right: 18px;
+    }
+  }
 }
 .disclaimer {
   margin-top:10px;

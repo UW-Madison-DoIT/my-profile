@@ -1,83 +1,64 @@
-<div class="row portlet-frame">
+<div class="portlet-frame">
   <app-header app-title="Find Local Information" app-icon='fa-lock' app-add-to-home='true' app-fname='local-contact-info-admin'></app-header>
   <div class="white-page portlet-body">
     <div ng-controller="LocalContactAdminController as localContactAdminCtrl">
-      <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
+
+      <!-- ALERT -->
+      <div class="alert" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
+
       <!-- User Lookup Form -->
-      <div class="col-xs-12">
-        <div class='fluid-container'>
-          <div class='row'>
-            <div class='col-sm-8 col-sm-offset-2'>
-              <div class='info-card center'>
-                <div class='admin-lookup-form'>
-                  <form name='form' novalidate>
-                    <div class="name-form">
-                      <div class="firstname">
-                        <label for='firstName'>First Name (optional)</label>
-                        <input type='text' id='firstName' ng-model='firstName' class='center' placeholder="e.g. John">
-                      </div>
-                      <div class="lastname">
-                        <label for='lastName'>Last Name (required)</label>
-                        <input type='text' required id='lastName' ng-model='lastName' class='center' placeholder="e.g. Johnson">
-                      </div>
-                    </div>
-                    <div>
-                      <button class='btn btn-primary' ng-click="search()" ng-show='form.$valid'>Search</button>
-                      <button class='btn btn-primary disabled' ng-hide='form.$valid'>Search</button>
-                      <button class='btn btn-default' ng-click="reset()">Clear</button>
-                    </div>
-                  </form>
-                  <p class="disclaimer"><i class="fa fa-exclamation-triangle"></i> For use only in case of emergency. All searches will be logged.</p>
-                </div>
-              </div>
-            </div>
+      <div layout="column" layout-align="start center" class="contact-info-card">
+        <form name="form" class="admin-lookup-form" novalidate>
+          <div layout-gt-sm="row" layout="column" layout-align-gt-sm="center start" layout-align="start center">
+            <md-input-container class="md-block no-margin-bottom">
+              <label>First name (optional)</label>
+              <input type="text" ng-model="firstName">
+            </md-input-container>
+            <md-input-container class="md-block no-margin-bottom">
+              <label>Last name (required)</label>
+              <input type="text" required ng-model="lastName">
+            </md-input-container>
           </div>
-        </div>
-        <!-- Search Results -->
-        <div class='fluid-container'>
+          <div class="buttons-small" layout="row">
+            <md-button class="md-raised md-accent" ng-click="search()" ng-show="form.$valid">Search</md-button>
+            <md-button class="md-raised md-accent disabled" ng-hide="form.$valid">Search</md-button>
+            <md-button class="md-default" ng-click="reset()">Clear</md-button>
+          </div>
+        </form>
+        <p class="disclaimer"><i class="fa fa-exclamation-triangle"></i> For use only in case of emergency. All searches will be logged.</p>
+      </div>
+
+      <md-content>
+          <!-- if loading -->
           <div ng-if="searching&&!(result.people&&result.people.length)&&!empty">
             <loading-gif></loading-gif>
           </div>
           <div ng-if="result && result.people">
-            <!-- If Results found -->
+            <!-- if results found -->
             <div ng-show="result.people.length>0">
-              <div class="row">
-                <div class="col-sm-3">
-                  <span>Showing {{searchResultLimit>result.people.length ? result.people.length:searchResultLimit}} of {{result.people.length}} results.</span>
-                </div>
-              </div>
-              <div class='row'>
-                <hr class="profileHorizontalRule">
+              <div layout="column">
+                <md-divider></md-divider>
                 <div ng-repeat="people in result.people | limitTo:searchResultLimit">
                   <user></user>
                 </div>
               </div>
-              <div class="row">
-                <hr class="profileHorizontalRule">
-                <div class="col-sm-3">
-                  <span>Showing {{searchResultLimit>result.people.length ? result.people.length:searchResultLimit}} of {{result.people.length}} results.</span>
-                </div>
-                <div class='col-sm-6 center' ng-show="result.people.length > 0">
-                  <button class="btn btn-primary" 
-                    ng-click="searchResultLimit = searchResultLimit + searchResultLimitIncrementor"
-                    ng-show="result.people.length > searchResultLimit">
-                    Load More
-                  </button>
-                  <button class='btn btn-default' ng-click="reset()">Search Again</button>
+              <div layout="row" layout-padding>
+                <p flex="25">Showing {{searchResultLimit>result.people.length ? result.people.length:searchResultLimit}} of {{result.people.length}} results.</p>
+                <div flex="50" ng-show="result.people.length > 0">
+                  <md-button class="md-default md-raised" ng-click="searchResultLimit = searchResultLimit + searchResultLimitIncrementor" ng-show="result.people.length > searchResultLimit" aria-label="load more results">
+                    Load more
+                  </md-button>
+                  <md-button class="md-default" ng-click="reset()" aria-label="clear and search again">Search again</md-button>
                 </div>
               </div>
             </div>
-            <!-- If no results found -->
-            <div  ng-show="result.people.length === 0">
-              <div class="row">
-                <div class='col-sm-8 col-sm-offset-2 center'>
-                  <p>No search results found.</p>
-                </div>
-              </div>
+
+            <!-- if no results found -->
+            <div ng-show="result.people.length === 0" class="center">
+              <p>No search results found.</p>
             </div>
           </div>
-        </div>
-      </div>
+        </md-content>
     </div>
   </div>
 </div>
