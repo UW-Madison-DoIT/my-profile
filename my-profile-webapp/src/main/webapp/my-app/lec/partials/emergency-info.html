@@ -36,15 +36,15 @@
   </div>
 
   <!-- profile information -->
-  <div layout="row" layout-align="center center" ng-hide="profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo">
+  <div layout="column" layout-gt-sm="row" layout-align-gt-sm="center start" ng-hide="profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo">
 
     <!-- emergency phone -->
-    <div layout-xs="row" layout-gt-xs="column" flex-xs="100" flex-gt-xs="33">
+    <div layout-gt-sm="column" flex-gt-sm="33">
       <emergency-phone></emergency-phone>
     </div>
 
     <!-- local address -->
-    <div layout-xs="row" layout-gt-xs="column" flex-xs="100" flex-gt-xs="33" ng-controller="LocalContactInformationController as localContactInfoCtrl">
+    <div layout-gt-sm="column" flex-gt-sm="33" ng-controller="LocalContactInformationController as localContactInfoCtrl">
       <!-- if no addresses entered -->
       <md-card ng-if="contactInfo.addresses.length === 0" class="contact-info-card">
         <md-card-title>
@@ -78,9 +78,9 @@
     </div>
 
     <!-- emergency contact -->
-    <div layout-xs="row" layout-gt-xs="column" flex-xs="100" flex-gt-xs="33" ng-controller="EmergencyInformationController as emergencyInfoCtrl">
+    <div layout-gt-sm="column" flex-gt-xs="33" ng-controller="EmergencyInformationController as emergencyInfoCtrl">
       <!-- if no emergency contact -->
-      <md-card ng-if="emergencyInfo.length === 0" class="contact-info-card">
+      <md-card ng-if="emergencyInfo.length === 0" class="contact-info-card" flex>
         <md-card-title>
           <md-card-title-text>
             <h2 class="md-headline">Emergency contact</h2>
@@ -95,7 +95,7 @@
         </md-card-content>
       </md-card>
       <!-- repeat for each emergency contact -->
-      <md-card ng-repeat="contact in emergencyInfo" class="contact-info-card">
+      <md-card ng-repeat="contact in emergencyInfo" class="contact-info-card" flex>
         <md-card-title>
           <md-card-title-text>
             <h2 class="md-headline">Emergency contact</h2>
@@ -111,8 +111,5 @@
       </md-card>
     </div>
   </div>
-
-
-
 
 </frame-page>

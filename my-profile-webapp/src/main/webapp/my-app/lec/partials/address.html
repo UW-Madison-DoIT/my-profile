@@ -11,29 +11,30 @@
   </div>
   <p>{{ address.comment }}</p>
   <p ng-if="address.housing" class="housing-notice">Provided by UW Housing</p>
-  <div layout="row">
+  <div layout="row" class="buttons-small">
     <md-button class="md-accent md-raised" ng-click="addEdit()" ng-hide="address.readOnly && !address.housing" aria-label="add another address">Add another</md-button>
-    <md-button class="md-default md-raised" ng-click="address.edit = true" ng-hide="address.readOnly">Edit</md-button>
+    <md-button class="md-default" ng-click="address.edit = true" ng-hide="address.readOnly">Edit</md-button>
     <md-button class="md-warn" ng-click="deleteAddress($index)" ng-hide="address.readOnly">Delete</md-button>
   </div>
 </div>
 <!-- edit/update address form -->
 <div ng-if="address.edit">
   <form novalidate name="addressForm">
+    <br>
     <!-- input address -->
-    <md-input-container class="md-block" ng-repeat="line in address.addressLines | limitTo:5 track by $index">
+    <md-input-container class="md-block no-margin-bottom" ng-repeat="line in address.addressLines | limitTo:5 track by $index">
       <label>Address Line {{$index + 1}}<span ng-if="$index === 0">*</span></label>
       <input ng-if="$index == 0" required ng-model="address.addressLines[$index]" maxlength="100">
       <input ng-if="$index != 0" ng-model="address.addressLines[$index]" maxlength="100">
     </md-input-container>
-    <md-button class="md-default" ng-click="address.addressLines.push('')" ng-if="address.addressLines.length <= 4" aria-label="add another line">Add line</md-button>
+    <md-button class="md-default" ng-click="address.addressLines.push('')" ng-if="address.addressLines.length <= 4" aria-label="add another line"><md-icon>add</md-icon> Add line</md-button>
     <!-- input city -->
-    <md-input-container class="md-block">
+    <md-input-container class="md-block no-margin-bottom">
       <label>City*</label>
       <input ng-model="address.city" required maxlength="100">
     </md-input-container>
     <!-- select country -->
-    <md-input-container class="md-block">
+    <md-input-container class="md-block no-margin-top">
       <label>Country*</label>
       <md-select ng-model="address.country" required aria-required="true" ng-change="address.state = ''">
         <md-option ng-repeat="country in countries" ng-value="country.key">{{ country.value }}</md-option>

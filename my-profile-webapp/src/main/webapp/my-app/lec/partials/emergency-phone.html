@@ -1,6 +1,6 @@
 <div ng-controller="EmergencyPhoneController as EmergencyPhoneCtrl">
 <loading-gif data-object="emergencyPhoneNumbers" data-reuse="true"></loading-gif>
-<md-card ng-show="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0">
+<md-card ng-show="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0" class="contact-info-card" flex>
   <md-card-title>
     <md-card-title-text>
       <h2 class="md-headline">My phone number</h2>
@@ -18,11 +18,12 @@
     </p>
     <div ng-hide="!edit">
       <form novalidate name="emergencyPhoneNumberForm">
-        <md-input-container class="md-block" flex-gt-sm>
+        <br>
+        <md-input-container class="md-block no-margin-bottom" flex-gt-sm>
           <label>Phone number*</label>
           <input type="tel" required aria-required="true" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
         </md-input-container>
-        <md-input-container class="md-block" flex-gt-sm>
+        <md-input-container class="md-block no-margin-top" flex-gt-sm>
           <label>Type*</label>
           <md-select required aria-required="true" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
             <md-option value="mobile">Mobile</md-option>
