@@ -1,27 +1,26 @@
-
+<div class="user-row" ng-class="($index % 2 ===0) ? 'even-row':'odd-row'">
   <!-- Show Search Results -->
-  <div ng-class="($index % 2 ===0) ? 'even-row':'odd-row'" ng-click="showingDetails || lookupUser(people.pvi, $index); showingDetails=!showingDetails" layout="row">
-    <div flex="50" flex-gt-sm="75">
-      <p><strong>
+  <div ng-click="showingDetails || lookupUser(people.pvi, $index); showingDetails=!showingDetails" layout="row">
+    <div flex="65" flex-gt-sm="75">
+      <h2 class="md-title">
         {{people.firstName}} {{people.middleName}} {{people.lastName}}
-      </strong></p>
+      </h2>
       <div layout="row">
-        <span flex-gt-sm="33">Campus ID:  {{people.campusID}}</span>
+        <span flex-gt-sm="33">Campus ID: {{people.campusID}}</span>
         <span flex-gt-sm="66">Date of Birth: {{people.birthDate | date:'shortDate'}}</span>
       </div>
     </div>
-    <div flex="50" flex-gt-sm="25">
-      <div ng-switch on="showingDetails">
-        <span ng-switch-when="false">Details <i class="fa fa-caret-right"></i></span>
-        <span ng-switch-when="true">Hide <i class="fa fa-caret-down"></i></span>
-        <span ng-switch-default>Details <i class="fa fa-caret-right"></i></span>
+    <div flex="35" flex-gt-sm="25">
+      <div layout="row" layout-align="end center">
+        <md-button class="md-accent" ng-if="!showingDetails" ng-click="showingDetails">Details <md-icon>arrow_drop_down</md-icon></md-button>
+        <md-button class="md-default" ng-if="showingDetails" ng-click="showingDetails">Hide <md-icon>arrow_drop_up</md-icon></i></md-button>
       </div>
     </div>
   </div>
   <!-- Show the users local contact information or display if not found -->
   <div layout="column" layout-gt-sm="row" ng-show="showingDetails">
     <!-- Address -->
-    <div flex-gt-sm="33">
+    <div flex-gt-sm="33" class="details-section">
       <div ng-repeat="address in people.contactInformation.local.addresses">
         <div class="info-card">
           <p><strong>Local Address</strong></p>
@@ -34,9 +33,10 @@
           <span>No local contact addresses available for {{people.firstName}} {{people.middleName}} {{people.lastName}}</span>
         </div>
       </div>
+      <md-divider hide-gt-sm></md-divider>
     </div>
     <!-- Phone -->
-    <div flex-gt-sm="33">
+    <div flex-gt-sm="33" class="details-section">
       <div class="info-card">
         <p><strong>Local Phone Numbers</strong></p>
         <div ng-repeat="phone in people.contactInformation.emergencyPhoneNumbers">{{phone.type}}: {{phone.value}}</div>
@@ -44,22 +44,22 @@
           No local phone numbers available for {{people.firstName}} {{people.middleName}} {{people.lastName}}
         </div>
       </div>
+      <br>
+      <md-divider hide-gt-sm></md-divider>
     </div>
     <!-- Emergency contact -->
-    <div flex-gt-sm="33">
+    <div flex-gt-sm="33" class="details-section">
       <div ng-repeat="contact in people.contactInformation.emergency">
         <div class="info-card">
           <p><strong>Emergency Contact</strong></p>
           <emergency></emergency>
         </div>
       </div>
-
       <div class="center" flex ng-show="!people.contactInformation.emergency.length || people.contactInformation.emergency.length === 0">
         <div class="info-card">
           <span>No emergency contacts available for {{people.firstName}} {{people.middleName}} {{people.lastName}}</span>
         </div>
       </div>
-      <md-divider></md-divider>
     </div>
   </div>
-
+</div>

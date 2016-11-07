@@ -9,7 +9,7 @@
       <!-- User Lookup Form -->
       <div layout="column" layout-align="start center" class="contact-info-card">
         <form name="form" class="admin-lookup-form" novalidate>
-          <div layout-gt-sm="row" layout="column" layout-align-gt-sm="center start" layout-align="start center">
+          <div layout-gt-xs="row" layout="column" layout-align-gt-xs="center start" layout-align="start center">
             <md-input-container class="md-block no-margin-bottom">
               <label>First name (optional)</label>
               <input type="text" ng-model="firstName">
@@ -33,11 +33,10 @@
           <div ng-if="searching&&!(result.people&&result.people.length)&&!empty">
             <loading-gif></loading-gif>
           </div>
-          <div ng-if="result && result.people">
+          <div  ng-if="result && result.people">
             <!-- if results found -->
-            <div ng-show="result.people.length>0">
+            <div  ng-show="result.people.length>0" >
               <div layout="column">
-                <md-divider></md-divider>
                 <div ng-repeat="people in result.people | limitTo:searchResultLimit">
                   <user></user>
                 </div>
