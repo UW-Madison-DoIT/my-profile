@@ -1,68 +1,67 @@
-<div ng-if='!address.edit || address.edit == false'>
-    <div ng-repeat="line in address.addressLines">
-        {{line}}
-    </div>
-    <div>
-        {{address.city}}, {{address.state}} {{address.postalCode}}
-    </div>
-    <div>
-        {{address.country}}
-    </div>
-
-    <p>{{address.comment}}</p>
-    <p ng-if='address.housing' class='housing-notice'>Provided by UW Housing</p>
-    <span>
-        <button class='btn btn-primary' ng-click='addEdit()' ng-hide='address.readOnly && !address.housing'>Add another</button>
-        <button class='btn btn-default' ng-click='address.edit = true' ng-hide='address.readOnly'>Edit</button>
-        <button class='btn btn-default' ng-click='deleteAddress($index)' ng-hide='address.readOnly'>Delete</button>
-    </span>
+<!-- when simply displaying addresses -->
+<div ng-if="!address.edit || address.edit == false">
+  <div ng-repeat="line in address.addressLines">
+    {{ line }}
+  </div>
+  <div>
+    {{ address.city }}, {{ address.state }} {{ address.postalCode }}
+  </div>
+  <div>
+    {{ address.country }}
+  </div>
+  <p>{{ address.comment }}</p>
+  <p ng-if="address.housing" class="housing-notice">Provided by UW Housing</p>
+  <div layout="row" class="buttons-small">
+    <md-button class="md-accent md-raised" ng-click="addEdit()" ng-hide="address.readOnly && !address.housing" aria-label="add another address">Add another</md-button>
+    <md-button class="md-default" ng-click="address.edit = true" ng-hide="address.readOnly">Edit</md-button>
+    <md-button class="md-warn" ng-click="deleteAddress($index)" ng-hide="address.readOnly">Delete</md-button>
+  </div>
 </div>
-<div ng-if='address.edit'>
-    <form novalidate name="addressForm">
-        <div ng-repeat="line in address.addressLines | limitTo:5 track by $index" class="form-group">
-            <label for="addressLine{{$index}}">Address Line {{$index + 1}}<span ng-if="$index === 0">*</span></label>
-            <input id='addressLine{{$index}}' name="addressLine{{$index}}" type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index == 0' required  maxlength='100' ng-class="{ 'has-error' : addressForm.addressLine0.$invalid && addressForm.name.$touched }">
-            <input id='addressLine{{$index}}' type='text' class="form-control" ng-model='address.addressLines[$index]' ng-if='$index != 0' maxlength='100'>
-            <p class="form-help" ng-show="addressForm.addressLine0.$invalid && addressForm.addressLine0.$touched">At least one address is required</p>
-        </div>
-        <button class='btn btn-default' type='text' ng-click='address.addressLines.push("")' ng-if='address.addressLines.length <= 4'>Add line</button>
-        <div class='form-group'>
-            <label for="city">City*</label>
-            <input class="form-control" type='text' name="city" ng-model='address.city' required maxlength='100'>
-            <p class="form-help" ng-show="addressForm.city.$invalid && addressForm.city.$touched">City is required</p>
-        </div>
-        <div class='form-group'>
-            <label for="country">Country*</label>
-            <select id='country' name="country"
-                    class="form-control"
-                    required
-                    ng-model='address.country'
-                    ng-options="country.key as country.value for country in countries | orderBy:'value'"
-                    ng-change="address.state = ''">
-            </select>
-            <p class="form-help" ng-show="addressForm.country.$invalid && addressForm.country.$touched">Country is required</p>
-        </div>
-        <div class='form-group'>
-            <label for="state">State/Province/Region*</label>
-            <select id='state' name="state"
-                    class="form-control"
-                    ng-model='address.state' ng-disabled='!address.country || (states | filter:{country: address.country}).length === 0'>
-                    <option  ng-if='!address.country' value=''>Select country first</option>
-                    <option  ng-if='address.country && (states | filter:{country: address.country}).length === 0' value=''>No states/provinces/regions for this country</option>
-                    <option  ng-if='address.country' ng-repeat="item in states | filter:{country: address.country} | orderBy:'value'" value='{{item.key}}' ng-attr-selected="{{isSelection(address.state, item.key)}}">{{item.value}}</option>
-            </select>
-        </div>
-        <div class='form-group'>
-            <label for="postalCode">Zip*</label>
-            <input class="form-control" id="postalCode" name="postalCode" type='text' ng-model='address.postalCode' required maxlength='10'>
-            <p class="form-help" ng-show="addressForm.postalCode.$invalid && addressForm.postalCode.$touched">ZIP code is required</p>
-        </div>
-        <div class='form-group'>
-            <label for="comment">More Information <small>({{50 - address.comment.length}} characters left)</small></label>
-            <textarea class="form-control" rows="3" id='comment' ng-model='address.comment' maxlength='50' placeholder="For example, if you are only here on certain days."></textarea>
-        </div>
-        <p>*Required</p>
-        <button class='btn btn-primary' style='margin-right: 10px;' ng-click="save()" ng-disabled="addressForm.$invalid">Save</button>
-        <button class='btn btn-default' ng-click='cancel()'>Cancel</button>
+<!-- edit/update address form -->
+<div ng-if="address.edit">
+  <form novalidate name="addressForm">
+    <br>
+    <!-- input address -->
+    <md-input-container class="md-block no-margin-bottom" ng-repeat="line in address.addressLines | limitTo:5 track by $index">
+      <label>Address Line {{$index + 1}}<span ng-if="$index === 0">*</span></label>
+      <input ng-if="$index == 0" required ng-model="address.addressLines[$index]" maxlength="100">
+      <input ng-if="$index != 0" ng-model="address.addressLines[$index]" maxlength="100">
+    </md-input-container>
+    <md-button class="md-default" ng-click="address.addressLines.push('')" ng-if="address.addressLines.length <= 4" aria-label="add another line"><md-icon>add</md-icon> Add line</md-button>
+    <!-- input city -->
+    <md-input-container class="md-block no-margin-bottom">
+      <label>City*</label>
+      <input ng-model="address.city" required maxlength="100">
+    </md-input-container>
+    <!-- select country -->
+    <md-input-container class="md-block no-margin-top">
+      <label>Country*</label>
+      <md-select ng-model="address.country" required aria-required="true" ng-change="address.state = ''">
+        <md-option ng-repeat="country in countries" ng-value="country.key">{{ country.value }}</md-option>
+      </md-select>
+    </md-input-container>
+    <!-- select state -->
+    <md-input-container class="md-block">
+      <label>State/province/region*</label>
+      <md-select ng-model="address.state" ng-disabled="!address.country || (states | filter:{ counter: address.country }).length === 0">
+        <md-option ng-if="!address.country" value="">Select country first</md-option>
+        <md-option ng-if="address.country && (states | filter:{country: address.country}).length === 0" value="">No states/provinces/regions for this country</md-option>
+        <md-option ng-if="address.country" ng-repeat="item in states | filter:{country: address.country} | orderBy:'value'" ng-value="item.key" ng-attr-selected="{{isSelection(address.state, item.key)}}">{{ item.value }}</md-option>
+      </md-select>
+    </md-input-container>
+    <!-- input zip -->
+    <md-input-container class="md-block">
+      <label>Zip*</label>
+      <input ng-model="address.postalCode" required maxlength="10">
+    </md-input-container>
+    <!-- input comments -->
+    <md-input-container class="md-block">
+      <label>Mode information</label>
+      <textarea ng-model="address.comment" md-maxlength="50" rows="3" md-select-on-focus placeholder="Ex. I am only here Monday and Wednesday"></textarea>
+    </md-input-container>
+
+    <p>*Required</p>
+    <md-button class="md-raised md-accent" ng-click="save()" ng-disabled="addressForm.$invalid">Save</md-button>
+    <md-button class="md-default" ng-click="cancel()">Cancel</md-button>
     </form>
 </div>

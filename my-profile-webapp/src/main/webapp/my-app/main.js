@@ -59,7 +59,7 @@ define([
         when('/main', profileRoutes.main).
         when('/contact-info', profileRoutes.contactInfo).
         when('/local/adminLookup', lecRoutes.adminLookup).
-        when('/emergencyInfo', lecRoutes.emegencyInfo).
+        when('/emergencyInfo', lecRoutes.emergencyInfo).
         when('/settings', settingsRoutes.betaSettings).
         when('/settings/profile', profileRoutes.profileSettings).
         otherwise({

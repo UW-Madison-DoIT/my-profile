@@ -1,32 +1,30 @@
-<div ng-controller="BasicInformationController as basicInfoCtrl" class='wrapper info-card'>
-    <div class="ribbon-wrapper"><div class="ribbon">Demo</div></div>
-    <h2>Basic Information <button class='btn btn-primary pull-right'><i class='fa fa-edit'></i> Edit</button></h2>
-    <div style='padding-top: 1em;'>
-    <table class='table table-hover'>
-        <tr>
-            <td>Roles</td> 
-            <td>
-                <ul style='padding: 0;'>
-                  <li ng-repeat='role in basicInfo.roles'>{{role}}</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>Departments</td> 
-            <td>
-                <ul style='padding: 0;'>
-                  <li ng-repeat='department in basicInfo.departments'>{{department}}</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>Titles</td> 
-            <td>
-                <ul style='padding: 0;'>
-                  <li ng-repeat='title in basicInfo.titles'>{{title}}</li>
-                </ul>
-            </td>
-        </tr>
-    </table>
-    </div>
-</div>
+<md-card ng-controller="BasicInformationController as basicInfoCtrl">
+  <div layout="row" layout-align="space-between center" class="md-padding">
+    <h2 class="md-headline">Basic information</h2>
+    <md-button class="md-accent md-raised md-icon-button" aria-label="edit basic info">
+      <md-icon>create</md-icon>
+    </md-button>
+  </div>
+  <md-list class="info-list">
+    <md-list-item layout="row" layout-align="start start">
+      <p class="list-item-heading">Roles</p>
+      <div flex>
+        <p ng-repeat="role in basicInfo.roles">{{ role }}</p>
+      </div>
+    </md-list-item>
+    <md-divider></md-divider>
+    <md-list-item layout="row" layout-align="start start">
+      <p class="list-item-heading">Departments</p>
+      <div flex>
+        <p ng-repeat="department in basicInfo.departments">{{ department }}</p>
+      </div>
+    </md-list-item>
+    <md-divider></md-divider>
+    <md-list-item layout="row" layout-align="start start">
+      <p class="list-item-heading">Titles</p>
+      <div flex>
+        <p ng-repeat="title in basicInfo.titles">{{ title }}</p>
+      </div>
+    </md-list-item>
+  </md-list>
+</md-card>

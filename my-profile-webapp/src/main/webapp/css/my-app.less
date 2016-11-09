@@ -1,3 +1,58 @@
+p.list-item-heading {
+  font-weight: 600;
+  color: #666;
+  width: 30%;
+  min-width: 120px;
+  max-width: 200px;
+}
+.info-list {
+  md-list-item.md-no-proxy {
+    padding-top: 10px;
+  }
+}
+h2.md-headline {
+  font-weight: 400;
+}
+.top-info {
+  color: #222;
+  font-size: 12px;
+  margin-top: 10px;
+  p {
+    margin-bottom: 0;
+  }
+}
+.alert {
+  background-color: lighten(#E28332, 35%);
+  color: darken(#E28332, 20%);
+  border-radius: 3px;
+  font-weight: 400;
+  border: 1px solid darken(#E28332, 10%);
+  margin: 12px 16px;
+  text-align: center;
+}
+.alert-dismissable {
+  .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+  }
+}
+.close {
+  float: right;
+  font-size: 21px;
+  font-weight: bold;
+  line-height: 1;
+  color: #000;
+  text-shadow: 0 1px 0 #fff;
+  opacity: .2;
+  filter: alpha(opacity=20);
+}
+md-card-title-text {
+  h2.md-headline {
+    margin: 0;
+  }
+}
 
 .housing-notice {
   font-style: italic;
@@ -5,228 +60,79 @@
   font-weight: bold;
 }
 
-.info-card {
-  padding: 15px;
-  border-radius: 4px; 
-  background-color : #f3f3f3;
-  margin : 15px;
-  h1 {
-    padding:0px;
-    margin:0px 0px 10px 0px;
-    font-size:24px;
-  }
+address {
+  margin-bottom: 0;
 }
-.emergency-contact,
-.local-address {
+
+.description-box {
   p {
-    margin:0px;
-  }
-  label {
-    padding-top:10px;
-  }
-  .btn-default {
-    background-color:#fff;
+    margin: 0;
+    color: #888;
   }
 }
 
-.emergency-info {
-  max-width:350px;
-  #name,
-  .phone-number,
-  #comments
-  {
-    width:100%;
-    display:block;
+/* ------------------------------------ */
+/* SHOULD BE BROKEN OUT INTO forms.less */
+/* ------------------------------------ */
+.contact-info-card {
+  .md-button {
+    margin-top: 0;
   }
-  #email {
-    max-width:250px;
+  .buttons-small {
+    .md-button {
+      min-width: 46px;
+    }
   }
-  #relationship {
-    max-width:150px;
-  }
-  .phone-type {
-    padding-left:15px;
-  }
-}
-
-
-.top-info {
-  text-align:center;
-  font-size:18px;
-  font-weight:400;
-  margin-top:10px;
-  a {
-    color:#b70101;
+  md-input-container {
+    &.no-margin-bottom {
+      margin-bottom: 0;
+    }
+    &.no-margin-top {
+      margin-top: 0;
+    }
   }
 }
 
-@demo-color : #B70101;
-@demo-color-darker : darken(@demo-color, 10%);
-
-.wrapper {
-  position: relative;
-  z-index: 90;
+/* ------------------------------------ */
+/* SHOULD BE BROKEN OUT INTO admin.less */
+/* ------------------------------------ */
+.admin-lookup-form {
+  margin: 18px 8px 8px 8px;
+  > div {
+    > md-input-container:first-child {
+      @media screen and (min-width: 599px) {
+        margin-right: 18px;
+      }
+    }
+  }
 }
-
-address{
-    margin-bottom:0px;
-}
-
-.profileHorizontalRule{
-    margin-bottom:0px;
-    margin-top:0px;
-}
-
-.userAttributesRow{
-  margin-left:0px;
-  margin-right:0px;
-}
-.userAttributesRow:hover, .userAttributesRow:hover span{
-  text-decoration:underline;
-  cursor: pointer; cursor: hand;
-}
-.oddRow{
-  background-color:#E0E0E0;
-}
-.detailsLink{
-  color: #600;
-  float:right;
-  margin-right:20px;
-}
-.userSearchResultName{
-  margin-left:20px;
-}
-.userSearchResultName, .detailsLink{
-  min-height:50px;
-  display:table;
-}
-.userSearchResultName span, .detailsLink span{
-  display:table-cell;
-  vertical-align:middle;
-  float:none;
-}
-.noContactInfoFound{
-  text-align:center;
-}
-.searchResultsLimitInformation{
-  margin-left:20px;
-}
-
-.ribbon-wrapper {
-  width: 85px;
-  height: 88px;
-  overflow: hidden;
-  position: absolute;
-  top: -3px;
-  right: -3px;
-}
-
-.ribbon {
-  font: bold 15px Sans-Serif;
-  color: white;
-  text-align: center;
-  text-shadow: rgba(255,255,255,0.5) 0px 1px 0px;
-  -webkit-transform: rotate(45deg);
-  -moz-transform:    rotate(45deg);
-  -ms-transform:     rotate(45deg);
-  -o-transform:      rotate(45deg);
-  position: relative;
-  padding: 7px 0;
-  left: -5px;
-  top: 15px;
-  width: 120px;
-  background-color: @demo-color;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(@demo-color), to(@demo-color-darker)); 
-  background-image: -webkit-linear-gradient(top, @demo-color, @demo-color-darker); 
-  background-image:    -moz-linear-gradient(top, @demo-color, @demo-color-darker); 
-  background-image:     -ms-linear-gradient(top, @demo-color, @demo-color-darker); 
-  background-image:      -o-linear-gradient(top, @demo-color, @demo-color-darker); 
-  -webkit-box-shadow: 0px 0px 3px rgba(0,0,0,0.3);
-  -moz-box-shadow:    0px 0px 3px rgba(0,0,0,0.3);
-  box-shadow:         0px 0px 3px rgba(0,0,0,0.3);
-}
-
-.ribbon:before, .ribbon:after {
-  content: "";
-  border-top:   3px solid @demo-color-darker;   
-  border-left:  3px solid transparent;
-  border-right: 3px solid transparent;
-  position:absolute;
-  bottom: -3px;
-}
-
-.ribbon:before {
-  left: 0;
-}
-.ribbon:after {
-  right: 0;
-}
-
-form .ng-invalid,
-form .has-error {
-  border-color : #b70101;
-}
-form .ng-valid {
-  border-color : #5cb85c;
-}
-form .ng-pristine {
-  border-color : #ccc;
-}
-form .form-help {
-  color:#b70101;
-  padding:3px 10px;
-  font-size:12px;
-}
-.admin-lookup-form input {
-  padding:4px 10px;
-  margin-top:5px;
-  border-radius:4px;
-  font-size:1.2em;
-  border:1px solid #ddd;
-}
-.alert {
-  margin:15px;
+.user-row {
+  padding: 12px 16px;
+  border-radius: 3px;
+  &.odd-row {
+    background-color:#efefef;
+    .user-details {
+      background-color: #fff;
+    }
+  }
+  &.even-row {
+    .user-details {
+      background-color: #efefef;
+    }
+  }
+  .user-details {
+    padding: 12px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    border-radius: 3px;
+    .details-section {
+      @media screen and (max-width: 959px) {
+        margin-bottom: 12px;
+      }
+    }
+  }
 }
 .disclaimer {
   margin-top:10px;
   color:#999;
-}
-.description-box {
-  background-color:#ddd;
-  border-radius: 4px;
-  padding:5px 10px;
-  margin-bottom:10px;
-  p {
-    margin:0px;
-  }
-}
-.warn-icon {
-  padding:5px;
-}
-
-.name-form {
-  width:80%;
-  margin:0 auto;
-  .firstname {
-    width:49%;
-    display: inline-block;
-    label {
-      display:block;
-    }
-    input {
-      display:block;
-      margin:0 auto;
-    }
-  }
-  .lastname {
-    width:49%;
-    display: inline-block;
-    label {
-      display:block;
-    }
-    input {
-      display:block;
-      margin:0 auto;
-    }
-  }
 }

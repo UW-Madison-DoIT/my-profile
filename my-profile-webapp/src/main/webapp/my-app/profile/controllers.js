@@ -21,6 +21,11 @@
 
 define(['angular'], function(angular) {
   var app = angular.module('my-app.profile.controllers', []);
+
+  app.controller('MainController', ['$scope', '$location', function($scope, $location) {
+    $scope.activePage = $location.path().slice(1);
+  }]);
+
   app.controller('ContactInformationController', ['$localStorage','$scope', 'profileService', function($localStorage, $scope, profileService) {
       $scope.contactInfo = [];
       profileService.getContactInfo().then(function(result){

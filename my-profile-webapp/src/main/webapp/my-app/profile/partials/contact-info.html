@@ -1,42 +1,49 @@
-<div ng-controller="ContactInformationController as contactInfoCtrl" class='info-card'>
-    <h2>Contact Information <a class='btn btn-primary pull-right' href='contact-info'><i class='fa fa-edit'></i> Edit</a></h2>
-    <div style='padding-top: 1em;'>
-    <table class='table table-hover'>
-        <tr>
-            <td>Name</td> <td>{{contactInfo.legalName}}</td>
-        </tr>
-        <tr>
-            <td>Preferred Name</td> <td>{{contactInfo.preferredName}}</td>
-        </tr>
-        <tr>
-            <td>Email Addresses</td> 
-            <td>
-                <ul style='padding: 0;'>
-                  <li ng-repeat='email in contactInfo.emails'>{{email.value}}</li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>Addresses</td> 
-            <td>
-                <ul style='padding: 0;'>
-                  <li ng-repeat='addr in contactInfo.addresses' style='padding-top: 1em;'>
-                  <span>
-                      <span ng-repeat="line in addr.addressLines">{{line}}<br/></span>
-                      {{addr.city}}, {{addr.stateCode}} {{addr.postalCode}}
-                  </span>
-                  </li>
-                </ul>
-            </td>
-        </tr>
-        <tr>
-            <td>Phone Numbers</td> 
-            <td>
-                <ul style='padding: 0;'>
-                  <li ng-repeat='phone in contactInfo.phoneNumbers'>{{phone.type}} {{phone.value}}</li>
-                </ul>
-            </td>
-        </tr>
-    </table>
-    </div>
-</div>
+<md-card ng-controller="ContactInformationController as contactInfoCtrl">
+  <div layout="row" layout-align="space-between center" class="md-padding">
+    <!-- heading and edit button -->
+    <h2 class="md-headline">Contact information</h2>
+    <md-button class="md-accent md-raised md-icon-button" ng-href="contact-info" aria-label="edit contact information">
+      <md-icon>create</md-icon>
+    </md-button>
+  </div>
+  <!-- contact info content -->
+  <md-list class="info-list">
+    <md-list-item layout="row" layout-align="start start">
+      <p class="list-item-heading">Name</p>
+      <div flex>
+        <p>{{ contactInfo.legalName }}</p>
+      </div>
+    </md-list-item>
+    <md-divider></md-divider>
+    <md-list-item layout="row" layout-align="start start">
+      <p class="list-item-heading">Preferred name</p>
+      <div flex>
+        <p>{{ contactInfo.preferredName }}</p>
+      </div>
+    </md-list-item>
+    <md-divider></md-divider>
+    <md-list-item layout="row" layout-align="start start">
+      <p class="list-item-heading">Email addresses</p>
+      <div flex>
+        <p ng-repeat="email in contactInfo.emails">{{ email.value }}</p>
+      </div>
+    </md-list-item>
+    <md-divider></md-divider>
+    <md-list-item layout="row" layout-align="start start">
+      <p class="list-item-heading">Addresses</p>
+      <div flex>
+        <p ng-repeat="address in contactInfo.addresses">
+          <span ng-repeat="line in address.addressLines">{{ line }}<br></span>
+          <span>{{ address.city }}, {{ address.stateCode }} {{ address.postalCode }}</span>
+        </p>
+      </div>
+    </md-list-item>
+    <md-divider></md-divider>
+    <md-list-item layout="row" layout-align="start start">
+      <p class="list-item-heading">Phone numbers</p>
+      <div flex>
+        <p ng-repeat="phone in contactInfo.phoneNumbers">{{ phone.type }} {{ phone.value }}</p>
+      </div>
+    </md-list-item>
+  </md-list>
+</md-card>

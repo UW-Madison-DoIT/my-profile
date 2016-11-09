@@ -1,82 +1,115 @@
 <frame-page  app-title="My Profile - Emergency Info"
-             app-icon='fa-user'
-             app-add-to-home='true'
-             app-action-link-text='Add to home'
-             app-fname="'contact-info'"
-             white-background='true'>
-  <!-- App Navigation if Needed -->
-  <div class="inner-nav-container" ng-if='$storage.showMyProfile'>
-      <ul class="inner-nav">
-          <li ><a href="main">My Profile</a></li>
-          <li class="active"><a href="emergencyInfo">Emergency Info</a></li>
-      </ul>
+             app-icon="fa-user"
+             app-add-to-home="true"
+             app-action-link-text="Add to home"
+             app-fname="'contact-info'">
+
+  <!-- app navigation -- replace with md-nav-bar when angular 1.1.1 is available frame -->
+  <div ng-if="$storage.showMyProfile">
+    <div layout="row" layout-align="start center">
+      <md-button ng-href="main" aria-label="go to my profile">My profile</md-button>
+      <md-button class="md-primary" ng-href="emergencyInfo" aria-label="go to emergency info">Emergency info</md-button>
+    </div>
   </div>
-  <div class="col-xs-12 no-padding">
-      <div class="row">
-          <div class="col-xs-12">
-              <div class="top-info">
-                  <p>State and federal laws require the university to collect emergency contact information for every student. Learn more in the <a target='_blank' href="https://kb.wisc.edu/page.php?id=54484">KnowledgeBase</a>.</p>
-                  <p>This information is being collected for the safety of our students. Only authorized UW personnel will be able to access it.</p>
-              </div>
-          </div>
-      </div>
-      <div class="row" ng-controller='ErrorController as errorCtrl'>
-          <div class="col-xs-12">
-            <script type="text/ng-template" id="alert.html">
-              <div class="alert" role="alert">
-                <div ng-transclude></div>
-              </div>
-            </script>
-            <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
-          </div>
-      </div>
-      <div class='row col-sm-12 center' ng-show='profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo'>
-          <loading-gif data-object='{{[]}}'></loading-gif>
-      </div>
-      <div class='row' ng-hide='profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo'>
-          <div class='col-sm-12 col-md-4'>
-              <emergency-phone></emergency-phone>
-          </div>
-          <div class='col-sm-12 col-md-4' ng-controller="LocalContactInformationController as localContactInfoCtrl">
-              <div ng-if="contactInfo.addresses.length === 0" class='info-card'>
-                  <h1>My Local Address</h1>
-                  <div class="description-box">
-                    <p>A physical address where you live or frequently stay during the school year.</p>
-                  </div>
-                  <p><i class="fa fa-exclamation-triangle warn-icon"></i>No address entered yet.</p>
-                  <button class='btn btn-primary' ng-click='addEdit()'>Add local address</button>
-              </div>
-              <div ng-repeat="address in contactInfo.addresses">
-                  <div class='info-card local-address'>
-                      <h1>My Local Address</h1>
-                      <div class="description-box">
-                        <p>A physical address where you live or frequently stay during the school year.</p>
-                      </div>
-                      <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
-                      <lec-address></lec-address>
-                  </div>
-              </div>
-          </div>
-          <div class='col-sm-12 col-md-4' ng-controller="EmergencyInformationController as emergencyInfoCtrl">
-              <div ng-if="emergencyInfo.length === 0" class='info-card'>
-                  <h1>Emergency Contact</h1>
-                  <div class="description-box">
-                    <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
-                  </div>
-                  <p><i class="fa fa-exclamation-triangle warn-icon"></i>No contact entered yet.</p>
-                  <button class='btn btn-primary' ng-click='addEdit()'>Add emergency contact</button>
-              </div>
-              <div ng-repeat="contact in emergencyInfo">
-                  <div class='info-card emergency-contact'>
-                      <h1>Emergency Contact</h1>
-                      <div class="description-box">
-                        <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
-                      </div>
-                      <div class="alert alert-danger" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
-                      <emergency></emergency>
-                  </div>
-              </div>
-          </div>
-      </div>
+
+  <!-- disclaimer text -->
+  <div layout="column" layout-align="start center" class="top-info">
+    <p>State and federal laws require the university to collect emergency contact information for every student. Learn more in the <a target="_blank" href="https://kb.wisc.edu/page.php?id=54484">KnowledgeBase</a>.</p>
+    <p>This information is being collected for the safety of our students. Only authorized UW personnel will be able to access it.</p>
   </div>
+
+  <!-- error state -->
+  <div layout="row" ng-controller='ErrorController as errorCtrl'>
+    <div flex="100">
+      <script type="text/ng-template" id="alert.html">
+        <div class="alert" role="alert">
+          <div ng-transclude></div>
+        </div>
+      </script>
+      <alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{ alert.msg }}</alert>
+    </div>
+  </div>
+
+  <!-- loading state -->
+  <div layout="row" layout-align="center center" ng-show="profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo">
+    <loading-gif data-object="{{[]}}"></loading-gif>
+  </div>
+
+  <!-- profile information -->
+  <div layout="column" layout-gt-sm="row" layout-align-gt-sm="center start" ng-hide="profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo">
+
+    <!-- emergency phone -->
+    <div layout-gt-sm="column" flex-gt-sm="33">
+      <emergency-phone></emergency-phone>
+    </div>
+
+    <!-- local address -->
+    <div layout-gt-sm="column" flex-gt-sm="33" ng-controller="LocalContactInformationController as localContactInfoCtrl">
+      <!-- if no addresses entered -->
+      <md-card ng-if="contactInfo.addresses.length === 0" class="contact-info-card">
+        <md-card-title>
+          <md-card-title-text>
+            <h2 class="md-headline">My local address</h2>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <div class="description-box">
+            <p>A physical address where you live or frequently stay during the school year.</p>
+          </div>
+          <p><md-icon class="md-warn">warning</md-icon> No address entered yet.</p>
+          <md-button class="md-accent md-raised" ng-click="addEdit()">Add local address</md-button>
+        </md-card-content>
+      </md-card>
+      <!-- repeat for each address -->
+      <md-card ng-repeat="address in contactInfo.addresses" class="contact-info-card">
+        <md-card-title>
+          <md-card-title-text>
+            <h2 class="md-headline">My local address</h2>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <div class="description-box">
+            <p>A physical address where you live or frequently stay during the school year.</p>
+          </div>
+          <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
+          <lec-address></lec-address>
+        </md-card-content>
+      </md-card>
+    </div>
+
+    <!-- emergency contact -->
+    <div layout-gt-sm="column" flex-gt-xs="33" ng-controller="EmergencyInformationController as emergencyInfoCtrl">
+      <!-- if no emergency contact -->
+      <md-card ng-if="emergencyInfo.length === 0" class="contact-info-card" flex>
+        <md-card-title>
+          <md-card-title-text>
+            <h2 class="md-headline">Emergency contact</h2>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <div class="description-box">
+            <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
+          </div>
+          <p><md-icon class="md-warn">warning</md-icon> No contact entered yet.</p>
+          <md-button class="md-accent md-raised" ng-click="addEdit()">Add emergency contact</md-button>
+        </md-card-content>
+      </md-card>
+      <!-- repeat for each emergency contact -->
+      <md-card ng-repeat="contact in emergencyInfo" class="contact-info-card" flex>
+        <md-card-title>
+          <md-card-title-text>
+            <h2 class="md-headline">Emergency contact</h2>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-content>
+          <div class="description-box">
+            <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
+          </div>
+          <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
+          <emergency></emergency>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+
 </frame-page>

@@ -1,27 +1,20 @@
 <div class="row portlet-frame">
-    <app-header app-title="My Profile" app-icon='fa-user' app-add-to-home='true'></app-header>
+  <app-header app-title="My Profile" app-icon="fa-user" app-add-to-home="true"></app-header>
 
-    <div class="portlet-body">
-        <!-- App Navigation if Needed -->
-        <div class="inner-nav-container">
-            <ul class="inner-nav">
-                <li class="active"><a href="main">My Profile</a></li>
-                <li><a href="emergencyInfo">Emergency Info</a></li>
-            </ul>
-        </div>
-        <div>
-            <div class="col-xs-12 no-padding">
-                <div class='fluid-container'>
-                    <div class='row'>
-                        <div class='col-sm-6'>
-                            <contact-info></contact-info>
-                        </div>
-                        <div class='col-sm-6'>
-                            <basic-info></<basic-info>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <div class="portlet-body md-padding">
+    <!-- app navigation -- replace with md-nav-bar when angular 1.1.1 is available frame -->
+    <div layout="row" layout-align="start center">
+      <md-button class="md-primary" ng-href="main" aria-label="go to my profile">My profile</md-button>
+      <md-button ng-href="emergencyInfo" aria-label="go to emergency info">Emergency info</md-button>
     </div>
+    <!-- main content -->
+    <div layout-xs="column" layout-gt-xs="row" layout-align-gt-xs="space-around start">
+      <div flex-gt-xs="50" layout="column">
+        <contact-info></contact-info>
+      </div>
+      <div flex-gt-xs="50" layout="column">
+        <basic-info></basic-info>
+      </div>
+    </div>
+  </div>
 </div>

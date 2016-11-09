@@ -1,91 +1,65 @@
-<div>
+<div class="user-row" ng-class="($index % 2 ===0) ? 'even-row':'odd-row'">
   <!-- Show Search Results -->
-  <div class="userAttributesRow row display-table"  ng-class="($index % 2 ===0) ? 'evenRow':'oddRow'" 
-    ng-click="showingDetails || lookupUser(people.pvi, $index); showingDetails=!showingDetails">
-    <div class="col-xs-6 col-sm-9">
-      <div class="userSearchResultName">
-        <span><strong>
-          <div class="row">
-              <div class="col-xs-12">
-                {{people.firstName}} {{people.middleName}} {{people.lastName}}
-              </div>
-              <div class="col-xs-12">
-                <div class="row">
-                  <div class="col-sm-12 col-md-4">
-                    Campus ID:  {{people.campusID}}
-                  </div>
-                  <div class="col-sm-12 col-md-8">
-                    Date of Birth: {{people.birthDate | date:'shortDate'}}
-                  </div>
-                </div>
-              </div>
-          </div>
-        </strong></span>
+  <div ng-click="showingDetails || lookupUser(people.pvi, $index); showingDetails=!showingDetails" layout="row">
+    <div flex="65" flex-gt-sm="75">
+      <h2 class="md-title">
+        {{people.firstName}} {{people.middleName}} {{people.lastName}}
+      </h2>
+      <div layout="row">
+        <span flex-gt-sm="33">Campus ID: {{people.campusID}}</span>
+        <span flex-gt-sm="66">Date of Birth: {{people.birthDate | date:'shortDate'}}</span>
       </div>
     </div>
-    <div class="col-xs-6 col-sm-3">
-      <div class="detailsLink" ng-switch on="showingDetails">
-        <span ng-switch-when="false">Details <i class="fa fa-caret-right"></i></span>
-        <span ng-switch-when="true">Hide <i class="fa fa-caret-down"></i></span>
-        <span ng-switch-default>Details <i class="fa fa-caret-right"></i></span>
+    <div flex="35" flex-gt-sm="25">
+      <div layout="row" layout-align="end center">
+        <md-button class="md-accent" ng-if="!showingDetails" ng-click="showingDetails">Details <md-icon>arrow_drop_down</md-icon></md-button>
+        <md-button class="md-default" ng-if="showingDetails" ng-click="showingDetails">Hide <md-icon>arrow_drop_up</md-icon></i></md-button>
       </div>
     </div>
   </div>
   <!-- Show the users local contact information or display if not found -->
-  <div class="row" ng-show="showingDetails">
-    <div ng-class="{'col-sm-offset-2' : (people.contactInformation.local.addresses.length === 1),
-                    'col-sm-8' : (people.contactInformation.local.addresses.length  === 1),
-                    'col-sm-6' : (people.contactInformation.local.addresses.length > 1)}" 
-         ng-repeat="address in people.contactInformation.local.addresses">
-      <div class='info-card'>
-        <p><strong>Local Address</strong></p>
-        <address></address>
+  <div layout="column" layout-gt-sm="row" ng-show="showingDetails">
+    <!-- Address -->
+    <div flex-gt-sm="33" class="details-section">
+      <div ng-repeat="address in people.contactInformation.local.addresses">
+        <div class="info-card">
+          <p><strong>Local Address</strong></p>
+          <address></address>
+        </div>
       </div>
-    </div>
-    
-    <div class="noContactInfoFound col-sm-offset-2 col-sm-8" ng-show="!people.contactInformation.local.addresses.length || 
+      <div flex ng-show="!people.contactInformation.local.addresses.length ||
                 people.contactInformation.local.addresses.length === 0">
-      <div class="info-card">
-        <span>
-          No local contact addresses available for {{people.firstName}} {{people.middleName}} {{people.lastName}}
-        </span>
+        <div class="info-card">
+          <span>No local contact addresses available for {{people.firstName}} {{people.middleName}} {{people.lastName}}</span>
+        </div>
       </div>
+      <md-divider hide-gt-sm></md-divider>
     </div>
-  </div>
-  
-  <div class="row" ng-show="showingDetails">
-    <div class='col-sm-offset-2 col-sm-8'>
-      <div class='info-card'>
+    <!-- Phone -->
+    <div flex-gt-sm="33" class="details-section">
+      <div class="info-card">
         <p><strong>Local Phone Numbers</strong></p>
-        <div ng-repeat="phone in people.contactInformation.emergencyPhoneNumbers">{{phone.type}} : {{phone.value}}</div>
-        <div ng-if='people.contactInformation.emergencyPhoneNumbers && people.contactInformation.emergencyPhoneNumbers.length === 0'>
+        <div ng-repeat="phone in people.contactInformation.emergencyPhoneNumbers">{{phone.type}}: {{phone.value}}</div>
+        <div ng-if="people.contactInformation.emergencyPhoneNumbers && people.contactInformation.emergencyPhoneNumbers.length === 0">
           No local phone numbers available for {{people.firstName}} {{people.middleName}} {{people.lastName}}
         </div>
       </div>
+      <br>
+      <md-divider hide-gt-sm></md-divider>
     </div>
-  </div>
-  
-  <div class="row" ng-show="showingDetails">
-    <div ng-class="{'col-sm-offset-2' : (people.contactInformation.emergency.length === 1),
-                    'col-sm-8' : (people.contactInformation.emergency.length  === 1),
-                    'col-sm-6' : (people.contactInformation.emergency.length > 1)}" 
-         ng-repeat="contact in people.contactInformation.emergency">
-      <div class='info-card'>
-        <p><strong>Emergency Contact</strong></p>
-        <emergency></emergency>
+    <!-- Emergency contact -->
+    <div flex-gt-sm="33" class="details-section">
+      <div ng-repeat="contact in people.contactInformation.emergency">
+        <div class="info-card">
+          <p><strong>Emergency Contact</strong></p>
+          <emergency></emergency>
+        </div>
       </div>
-    </div>
-    
-    <div class="noContactInfoFound col-sm-offset-2 col-sm-8" ng-show="!people.contactInformation.emergency.length || 
-                people.contactInformation.emergency.length === 0">
-      <div class="info-card">
-        <span>
-          No emergency contacts available for {{people.firstName}} {{people.middleName}} {{people.lastName}}
-        </span>
+      <div class="center" flex ng-show="!people.contactInformation.emergency.length || people.contactInformation.emergency.length === 0">
+        <div class="info-card">
+          <span>No emergency contacts available for {{people.firstName}} {{people.middleName}} {{people.lastName}}</span>
+        </div>
       </div>
-    </div>
-    <div class="col-xs-12" >
-      <hr class="profileHorizontalRule">
     </div>
   </div>
 </div>

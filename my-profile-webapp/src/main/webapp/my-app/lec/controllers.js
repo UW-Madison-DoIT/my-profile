@@ -21,6 +21,11 @@
 
 define(['angular'], function(angular) {
   var app = angular.module('my-app.lec.controllers', []);
+
+  app.controller('MainController', ['$scope', '$location', function($scope, $location) {
+    $scope.currentNavItem = $location.path();
+  }]);
+
   app.controller('LocalContactAdminController', ['$scope', '$q', 'lecService', function($scope, $q, lecService){
       //init function
       var init = function() {
@@ -200,8 +205,16 @@ define(['angular'], function(angular) {
 
     app.controller('EmergencyInformationController', ['$localStorage','$rootScope','$scope', 'lecService', 'RELATIONSHIPS', function($localStorage, $rootScope, $scope, lecService, RELATIONSHIPS) {
       $scope.addEdit = function() {
-          $scope.emergencyInfo.push({ preferredName : "", addresses : [{addressLines:[""]}], emails:[{"type":"primary"}], phoneNumbers : [""], edit : true});
-      }
+          $scope.emergencyInfo.push({
+            preferredName : "",
+            addresses : [{
+              addressLines:[""]
+            }],
+            emails: [{"type":"primary"}],
+            phoneNumbers : [""],
+            edit : true
+          });
+      };
 
       $scope.save = function() {
           $scope.notSaving = false;
@@ -239,7 +252,11 @@ define(['angular'], function(angular) {
           lecService.getEmergencyContactInfo()
               .then(
                 function(result){//success
-                  $scope.emergencyInfo = result.data;
+                  if (result.data === '' ) {
+                    $scope.emergencyInfo = [];
+                  } else {
+                    $scope.emergencyInfo = result.data;
+                  }
                   $rootScope.profileLoadingState.einfo = false;
                   //clear out any editing that may have been saved
                   angular.forEach($scope.emergencyInfo, function(value, key, obj){
@@ -249,11 +266,12 @@ define(['angular'], function(angular) {
                 $rootScope.profileLoadingState.einfo = false;
                 $scope.emergencyInfo = {};
                 $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
+                  console.log('inside getEmergencyContactInfo error state: ' + typeof $scope.emergencyInfo);
             });
           if ( $scope.emergencyInfo.length === 0 ) {
             $scope.noContacts = true;
           }
-      }
+      };
 
       //run init
       init();
