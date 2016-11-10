@@ -33,12 +33,16 @@
         </md-input-container>
         <p>*Required</p>
         <md-button class="md-accent md-raised" aria-label="Save phone number" ng-click="save()" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</md-button>
-        <md-button class="md-default" aria-label="Cancel" ng-click='cancel()'>Cancel</md-button>
+        <md-button class="md-default md-raised" aria-label="Cancel" ng-click='cancel()'>Cancel</md-button>
       </form>
     </div>
     <div ng-show="!edit" ng-click="edit = true" ng-switch="emergencyPhoneNumbers.emergencyPhoneNumbers.length">
-      <md-button aria-label="Add phone number" class="md-accent md-raised" ng-switch-when="0">Add phone number</md-button>
-      <md-button aria-label="Update phone number" class="md-default" ng-switch-default>Update phone number</md-button>
+      <div ng-switch-when="0">
+        <md-button aria-label="Add phone number" class="md-accent md-raised">Add phone number</md-button>
+      </div>
+      <div ng-switch-default>
+        <md-button aria-label="Update phone number" class="md-default md-raised">Update phone number</md-button>
+      </div>
     </div>
   </md-card-content>
 </md-card>

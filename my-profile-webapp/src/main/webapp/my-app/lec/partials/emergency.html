@@ -12,8 +12,8 @@
   <p ng-if="contact.comments">Comments: {{ contact.comments }}</p>
   <div layout="row" ng-hide="contact.readOnly" class="buttons-small">
     <md-button class="md-accent md-raised" ng-click="addEdit()" aria-label="add another emergency contact">Add another</md-button>
-    <md-button class="md-default" ng-click="contact.edit = true" aria-label="edit emergency contact">Edit</md-button>
-    <md-button class="md-warn" ng-click="deleteContact($index)" aria-label="delete emergency contact">Delete</md-button>
+    <md-button class="md-default md-raised" ng-click="contact.edit = true" aria-label="edit emergency contact">Edit</md-button>
+    <md-button class="md-warn md-raised" ng-click="deleteContact($index)" aria-label="delete emergency contact">Delete</md-button>
   </div>
 </div>
 <!-- edit emergency contacts -->
@@ -47,7 +47,7 @@
         <md-button aria-label="delete phone number" class="md-icon-button" ng-click="contact.phoneNumbers.splice($index, 1)" ng-if="$index !== 0"></md-button>
       </div>
     </div>
-    <md-button class="md-default" ng-click="contact.phoneNumbers.push({ 'type' : '', value : ''})" ng-if="contact.phoneNumbers.length < 3" aria-label="add another phone number"><md-icon>add</md-icon> Add another phone</md-button>
+    <md-button class="md-default md-raised" ng-click="contact.phoneNumbers.push({ 'type' : '', value : ''})" ng-if="contact.phoneNumbers.length < 3" aria-label="add another phone number"><md-icon>add</md-icon> Add another phone</md-button>
     <md-input-container class="md-block no-margin-bottom">
       <label>Email*</label>
       <input name="email" required ng-model="contact.emails[0].value">
@@ -65,6 +65,6 @@
     </md-input-container>
     <p>*Required</p>
     <md-button class="md-accent md-raised" ng-click="save()" ng-disabled="emergencyForm.$invalid">Save</md-button>
-    <md-button class="md-default" ng-click='cancel()'>Cancel</md-button>
+    <md-button class="md-default md-raised" ng-click='cancel()'>Cancel</md-button>
     </form>
 </div>

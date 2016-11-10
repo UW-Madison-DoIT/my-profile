@@ -13,8 +13,8 @@
   <p ng-if="address.housing" class="housing-notice">Provided by UW Housing</p>
   <div layout="row" class="buttons-small">
     <md-button class="md-accent md-raised" ng-click="addEdit()" ng-hide="address.readOnly && !address.housing" aria-label="add another address">Add another</md-button>
-    <md-button class="md-default" ng-click="address.edit = true" ng-hide="address.readOnly">Edit</md-button>
-    <md-button class="md-warn" ng-click="deleteAddress($index)" ng-hide="address.readOnly">Delete</md-button>
+    <md-button class="md-default md-raised" ng-click="address.edit = true" ng-hide="address.readOnly">Edit</md-button>
+    <md-button class="md-warn md-raised" ng-click="deleteAddress($index)" ng-hide="address.readOnly">Delete</md-button>
   </div>
 </div>
 <!-- edit/update address form -->
@@ -62,6 +62,6 @@
 
     <p>*Required</p>
     <md-button class="md-raised md-accent" ng-click="save()" ng-disabled="addressForm.$invalid">Save</md-button>
-    <md-button class="md-default" ng-click="cancel()">Cancel</md-button>
+    <md-button class="md-default md-raised" ng-click="cancel()">Cancel</md-button>
     </form>
 </div>
