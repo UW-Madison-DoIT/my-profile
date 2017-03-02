@@ -7,13 +7,6 @@
   </parent>
   <artifactId>my-profile-middleware-impl</artifactId>
   
-  <repositories>
-    <repository>
-      <id>code.doit-uw-3rd-party</id>
-      <url>https://code.doit.wisc.edu/maven/content/repositories/uw-3rd-party/</url>
-    </repository>
-  </repositories>
-  
   <dependencies>
     <dependency>
         <groupId>${project.groupId}</groupId>
