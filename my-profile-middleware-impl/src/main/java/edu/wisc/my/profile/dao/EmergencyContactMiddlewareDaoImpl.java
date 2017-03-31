@@ -111,7 +111,8 @@ public class EmergencyContactMiddlewareDaoImpl implements EmergencyContactMiddle
       //return saved content
       return emergencyContacts;
     } else {
-      throw new Exception("There was an issue saving the emergency contacts");
+      throw new Exception("Error saving contacts for netid '" + netId + "'; "
+          + "Contacts that failed to save were " + emergencyContacts + ".");
     }
     
   }
