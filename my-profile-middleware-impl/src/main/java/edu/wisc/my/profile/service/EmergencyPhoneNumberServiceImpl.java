@@ -32,6 +32,10 @@ public class EmergencyPhoneNumberServiceImpl implements EmergencyPhoneNumberServ
 
     @Override
     public TypeValue[] setEmergencyPhoneNumbers(String netId, TypeValue[] phoneNumbers) throws Exception{
+        //Limit the characters going to uw-middleware to 25
+        for(TypeValue phoneNumber : phoneNumbers){
+            phoneNumber.setValue(StringUtils.left(phoneNumber.getValue(), 25));
+        }
         return dao.setPhoneNumbers(netId, phoneNumbers);
     }
 
