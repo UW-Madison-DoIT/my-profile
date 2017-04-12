@@ -21,7 +21,7 @@
         <br>
         <md-input-container class="md-block no-margin-bottom" flex-gt-sm>
           <label>Phone number*</label>
-          <input type="tel" required aria-required="true" ng-maxlength="30" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
+          <input type="tel" required aria-required="true" ng-pattern=/^(.*[a-zA-Z0-9\s!-.]){1,30}$/ ng-maxlength="30" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
         </md-input-container>
         <md-input-container class="md-block no-margin-top" flex-gt-sm>
           <label>Type*</label>
