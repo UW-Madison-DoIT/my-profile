@@ -28,9 +28,9 @@
       <div flex="90">
         <md-input-container class="md-block no-margin-bottom no-margin-top" flex-gt-sm>
           <label ng-if="$index === 0">Primary phone*</label>
-          <input ng-if="$index === 0" type="tel" name="phone{{$index}}" ng-required="$index === 0" ng-model="contact.phoneNumbers[$index].value">
+          <input ng-if="$index === 0" type="tel" name="phone{{$index}}" ng-required="$index === 0" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-model="contact.phoneNumbers[$index].value">
           <label ng-if="$index !== 0">Other phone</label>
-          <input ng-if="$index !== 0" type="tel" name="phone{{$index}}" ng-model="contact.phoneNumbers[$index].value">
+          <input ng-if="$index !== 0" type="tel" name="phone{{$index}}" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-model="contact.phoneNumbers[$index].value">
         </md-input-container>
         <md-input-container class="md-block no-margin-top" flex-gt-sm>
           <label ng-if="$index === 0">Type*</label>
