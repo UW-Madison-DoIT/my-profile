@@ -49,7 +49,7 @@
       <md-card ng-if="contactInfo.addresses.length === 0" class="contact-info-card">
         <md-card-title>
           <md-card-title-text>
-            <h2 class="md-headline">My local address</h2>
+            <h2 class="md-headline">Local address</h2>
           </md-card-title-text>
         </md-card-title>
         <md-card-content>
@@ -60,11 +60,11 @@
           <md-button class="md-accent md-raised" ng-click="addEdit()">Add local address</md-button>
         </md-card-content>
       </md-card>
-      <!-- repeat for each address -->
-      <md-card ng-repeat="address in contactInfo.addresses" class="contact-info-card">
+      <!-- addresses exist -->
+      <md-card ng-if="contactInfo.addresses.length != 0" class="contact-info-card">
         <md-card-title>
           <md-card-title-text>
-            <h2 class="md-headline">My local address</h2>
+            <h2 class="md-headline">Local address</h2>
           </md-card-title-text>
         </md-card-title>
         <md-card-content>
@@ -72,7 +72,13 @@
             <p>A physical address where you live or frequently stay during the school year.</p>
           </div>
           <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
-          <lec-address></lec-address>
+          <!-- repeat for each address -->
+          <div class="repeat-info" ng-repeat="address in contactInfo.addresses">
+            <lec-address></lec-address>
+          </div>
+          <div layout="row">
+            <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()" aria-label="add another address">Add another</md-button>
+          </div>
         </md-card-content>
       </md-card>
     </div>
@@ -91,11 +97,11 @@
             <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
           </div>
           <p><md-icon class="md-warn">warning</md-icon> No contact entered yet.</p>
-          <md-button class="md-accent md-raised" ng-click="addEdit()">Add emergency contact</md-button>
+          <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()">Add emergency contact</md-button>
         </md-card-content>
       </md-card>
-      <!-- repeat for each emergency contact -->
-      <md-card ng-repeat="contact in emergencyInfo" class="contact-info-card" flex>
+      <!-- entries exist -->
+      <md-card ng-if="emergencyInfo.length != 0" class="contact-info-card" flex>
         <md-card-title>
           <md-card-title-text>
             <h2 class="md-headline">Emergency contact</h2>
@@ -106,7 +112,13 @@
             <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
           </div>
           <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
-          <emergency></emergency>
+          <!-- repeat for each emergency contact -->
+          <div class="repeat-info" ng-repeat="contact in emergencyInfo">
+            <emergency></emergency>
+          </div>
+          <div layout="row">
+            <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()" aria-label="add another emergency contact">Add another</md-button>
+          </div>
         </md-card-content>
       </md-card>
     </div>
