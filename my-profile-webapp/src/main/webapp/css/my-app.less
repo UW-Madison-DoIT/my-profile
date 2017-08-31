@@ -67,6 +67,7 @@ address {
 .description-box {
   p {
     color: #888;
+    margin-bottom: 0;
   }
 }
 
@@ -91,10 +92,23 @@ address {
   margin-left: 0;
 }
 
-.repeat-info {
+
+
+md-list.list-info {
   margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #cecece;
+
+  md-list-item.list-item-with-controls {
+    padding: 10px 0;
+
+    .list-item-contact {
+      .md-subhead {
+        font-weight: 500;
+      }
+      span {
+        color: #666;
+      }
+    }
+  }
 }
 
 .notice-container {

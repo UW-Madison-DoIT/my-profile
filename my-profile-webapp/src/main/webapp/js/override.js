@@ -7,14 +7,20 @@ define(['angular'], function(angular) {
         //see configuration.md for howto
         .constant('OVERRIDE', {
           'APP_FLAGS' : {
-            'defaultTheme' : 0
+            'defaultTheme' : 1
+          },
+          'APP_OPTIONS' : {
+            'optionsTemplateURL' : null
           },
           'SERVICE_LOC' : {
             'sessionInfo' : '/portal/web/session.json',
-            'featuresInfo' : '/web/staticFeeds/features.json',
-            'notificationsURL' : '/web/staticFeeds/notifications.json'
+            'messagesURL' : '/web/staticFeeds/messages.json'
+          },
+          'MESSAGES' : {
+            'notificationsPageURL' : '/web/notifications'
           },
           'NAMES' : {
+            'title' : 'My Profile',
             'fname' : 'contact-info'
           },
           'SEARCH' : {
@@ -30,7 +36,7 @@ define(['angular'], function(angular) {
               "description" : "In LEC, enable profile navigation to the other parts of My Profile that is hidden right now"
             }
           ]
-        })
+        });
 
     return config;
 

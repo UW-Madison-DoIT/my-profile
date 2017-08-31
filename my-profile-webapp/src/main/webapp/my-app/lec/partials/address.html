@@ -1,25 +1,22 @@
 <!-- when simply displaying addresses -->
-<div ng-if="!address.edit || address.edit == false">
-  <div layout="row">
-    <div flex="80" layout="column" layout-align="center start">
-      <span ng-repeat="line in address.addressLines">{{ line }}</span>
-      <span>{{ address.city }}, {{ address.state }} {{ address.postalCode }}</span>
-      <span>{{ address.country }}</span>
-      <p ng-if="address.comment">{{ address.comment }}</p>
-      <p ng-if="address.housing" class="housing-notice">Provided by UW Housing</p>
-    </div>
-    <div flex="20" layout="row" layout-align="end start" class="address-buttons">
-      <md-button class="md-icon-button edit" ng-click="address.edit = true" ng-hide="address.readOnly" aria-label="Edit this address">
-        <md-icon>mode_edit</md-icon>
-        <md-tooltip md-delay="500">Edit</md-tooltip>
-      </md-button>
-      <md-button class="md-icon-button delete" ng-click="deleteAddress($index)" ng-hide="address.readOnly" aria-label="Delete this address">
-        <md-icon>delete</md-icon>
-        <md-tooltip md-delay="500">Delete</md-tooltip>
-      </md-button>
-    </div>
+<md-list-item class="list-item-with-controls" ng-if="!address.edit || address.edit == false">
+  <div class="md-list-item-text" layout="column" layout-align="center start">
+    <span ng-repeat="line in address.addressLines">{{ line }}</span>
+    <span>{{ address.city }}, {{ address.state }} {{ address.postalCode }}</span>
+    <span>{{ address.country }}</span>
+    <p ng-if="address.comment">{{ address.comment }}</p>
+    <p ng-if="address.housing" class="housing-notice">Provided by UW Housing</p>
   </div>
-</div>
+  <md-button class="md-icon-button edit md-secondary" ng-click="address.edit = true" ng-hide="address.readOnly" aria-label="Edit this address">
+    <md-icon>mode_edit</md-icon>
+    <md-tooltip md-delay="500">Edit</md-tooltip>
+  </md-button>
+  <md-button class="md-icon-button delete md-secondary" ng-click="deleteAddress($index)" ng-hide="address.readOnly" aria-label="Delete this address">
+    <md-icon>delete</md-icon>
+    <md-tooltip md-delay="500">Delete</md-tooltip>
+  </md-button>
+</md-list-item>
+<md-divider ng-if="contactInfo.addresses.length > 1 && (!address.edit || address.edit == false)"></md-divider>
 <!-- edit/update address form -->
 <div ng-if="address.edit">
   <form novalidate name="addressForm">
