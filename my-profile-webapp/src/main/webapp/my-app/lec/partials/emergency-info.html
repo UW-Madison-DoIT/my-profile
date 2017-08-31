@@ -12,12 +12,6 @@
     </div>
   </div>
 
-  <!-- disclaimer text -->
-  <div layout="column" layout-align="start center" class="top-info">
-    <p>State and federal laws require the university to collect emergency contact information for every student. Learn more in the <a target="_blank" href="https://kb.wisc.edu/page.php?id=54484">KnowledgeBase</a>.</p>
-    <p>This information is being collected for the safety of our students. Only authorized UW personnel will be able to access it.</p>
-  </div>
-
   <!-- error state -->
   <div layout="row" ng-controller='ErrorController as errorCtrl'>
     <div flex="100">
@@ -72,10 +66,10 @@
             <p>A physical address where you live or frequently stay during the school year.</p>
           </div>
           <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
-          <!-- repeat for each address -->
-          <div class="repeat-info" ng-repeat="address in contactInfo.addresses">
-            <lec-address></lec-address>
-          </div>
+          <md-list class="list-info">
+            <!-- repeat for each address -->
+            <lec-address ng-repeat="address in contactInfo.addresses"></lec-address>
+          </md-list>
           <div layout="row">
             <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()" aria-label="add another address">Add another</md-button>
           </div>
@@ -112,16 +106,22 @@
             <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
           </div>
           <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
-          <!-- repeat for each emergency contact -->
-          <div class="repeat-info" ng-repeat="contact in emergencyInfo">
-            <emergency></emergency>
-          </div>
+          <md-list class="list-info">
+            <!-- repeat for each emergency contact -->
+            <emergency ng-repeat="contact in emergencyInfo"></emergency>
+          </md-list>
           <div layout="row">
             <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()" aria-label="add another emergency contact">Add another</md-button>
           </div>
         </md-card-content>
       </md-card>
     </div>
+  </div>
+
+  <!-- disclaimer text -->
+  <div layout="column" layout-align="start center" class="top-info">
+    <p>State and federal laws require the university to collect emergency contact information for every student. Learn more in the <a target="_blank" href="https://kb.wisc.edu/page.php?id=54484">KnowledgeBase</a>.</p>
+    <p>This information is being collected for the safety of our students. Only authorized UW personnel will be able to access it.</p>
   </div>
 
 </frame-page>

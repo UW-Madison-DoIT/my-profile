@@ -9,6 +9,9 @@ define(['angular'], function(angular) {
           'APP_FLAGS' : {
             'defaultTheme' : 1
           },
+          'APP_OPTIONS' : {
+            'optionsTemplateURL' : null
+          },
           'SERVICE_LOC' : {
             'sessionInfo' : '/portal/web/session.json',
             'messagesURL' : '/web/staticFeeds/messages.json'
