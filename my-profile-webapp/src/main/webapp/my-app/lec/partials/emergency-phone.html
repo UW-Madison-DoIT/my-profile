@@ -1,49 +1,65 @@
 <div ng-controller="EmergencyPhoneController as EmergencyPhoneCtrl">
-<loading-gif data-object="emergencyPhoneNumbers" data-reuse="true"></loading-gif>
-<md-card ng-show="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0" class="contact-info-card" flex>
-  <md-card-title>
-    <md-card-title-text>
-      <h2 class="md-headline">My phone number</h2>
-    </md-card-title-text>
-  </md-card-title>
-  <md-card-content>
-    <div class="description-box">
-      <p>A number where you can be reached in an emergency.</p>
-    </div>
-    <p ng-if="emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 && !edit" >
-      <md-icon>warning</md-icon> No phone number entered yet.
-    </p>
-    <p ng-if="!edit && emergencyPhoneNumbers.emergencyPhoneNumbers.length">
-      {{emergencyPhoneNumbers.emergencyPhoneNumbers[0].value}} ({{emergencyPhoneNumbers.emergencyPhoneNumbers[0].type}})
-    </p>
-    <div ng-hide="!edit">
-      <form novalidate name="emergencyPhoneNumberForm">
-        <br>
-        <md-input-container class="md-block no-margin-bottom" flex-gt-sm>
-          <label>Phone number*</label>
-          <input type="tel" required aria-required="true" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-maxlength="30" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
-        </md-input-container>
-        <md-input-container class="md-block no-margin-top" flex-gt-sm>
-          <label>Type*</label>
-          <md-select required aria-required="true" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
-            <md-option value="mobile">Mobile</md-option>
-            <md-option value="home">Home</md-option>
-            <md-option value="work">Work</md-option>
-          </md-select>
-        </md-input-container>
-        <p>*Required</p>
-        <md-button class="md-accent md-raised" aria-label="Save phone number" ng-click="save()" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</md-button>
-        <md-button class="md-default md-raised" aria-label="Cancel" ng-click='cancel()'>Cancel</md-button>
-      </form>
-    </div>
-    <div ng-show="!edit" ng-click="edit = true" ng-switch="emergencyPhoneNumbers.emergencyPhoneNumbers.length">
-      <div ng-switch-when="0">
-        <md-button aria-label="Add phone number" class="md-accent md-raised">Add phone number</md-button>
+  <loading-gif data-object="emergencyPhoneNumbers" data-reuse="true"></loading-gif>
+  <md-card ng-show="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length>0" class="contact-info-card" flex>
+    <md-card-title>
+      <md-card-title-text>
+        <h2 class="md-headline">Phone number</h2>
+      </md-card-title-text>
+    </md-card-title>
+    <md-card-content>
+      <div class="description-box">
+        <p>A number where you can be reached in an emergency.</p>
       </div>
-      <div ng-switch-default>
-        <md-button aria-label="Update phone number" class="md-default md-raised">Update phone number</md-button>
+      <!-- Empty state -->
+      <div ng-if="emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 && !editMode" >
+        <p><md-icon>warning</md-icon> No phone number entered yet.</p>
+        <md-button aria-label="Add phone number" class="md-accent md-raised no-margin-left" ng-click="edit()">Add phone number</md-button>
       </div>
-    </div>
-  </md-card-content>
-</md-card>
+      <!-- Non-empty -->
+      <div ng-if="!editMode && emergencyPhoneNumbers.emergencyPhoneNumbers.length" layout="row" layout-align="space-between center">
+        <span class="md-subhead" flex="80">
+          {{ emergencyPhoneNumbers.emergencyPhoneNumbers[0].value}} ({{emergencyPhoneNumbers.emergencyPhoneNumbers[0].type }})
+        </span>
+        <md-button class="md-icon-button" aria-label="edit phone number" ng-click="edit()">
+          <md-icon>mode_edit</md-icon>
+          <md-tooltip md-delay="500">Edit</md-tooltip>
+        </md-button>
+      </div>
+      <!-- Phone number form -->
+      <div ng-hide="!editMode">
+        <form novalidate name="emergencyPhoneNumberForm">
+          <br>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Phone number*</label>
+            <input type="tel" required aria-required="true" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-maxlength="30" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
+          </md-input-container>
+          <md-input-container class="md-block" flex-gt-sm>
+            <label>Type*</label>
+            <md-select required aria-required="true" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
+              <md-option value="mobile">Mobile</md-option>
+              <md-option value="home">Home</md-option>
+              <md-option value="work">Work</md-option>
+            </md-select>
+          </md-input-container>
+          <p>*Required</p>
+          <md-button class="md-accent md-raised no-margin-left" aria-label="Save phone number" ng-click="save()" ng-disabled="emergencyPhoneNumberForm.$invalid">Save</md-button>
+          <md-button class="md-default md-raised" aria-label="Cancel" ng-click='cancel()'>Cancel</md-button>
+        </form>
+      </div>
+      <!-- WiscAlert notice -->
+      <div class="notice-container" layout="row" layout-align="start center">
+        <div class="notice-icon" flex-gt-xs="20" hide-xs>
+          <md-icon>info</md-icon>
+        </div>
+        <div class="notice-description" flex-gt-xs="80">
+          <a class="md-subhead" href="https://my.wisc.edu/portal/p/wisc-alerts-text-messaging/render.uP" rel="nofollow noreferrer" target="_blank">WiscAlerts</a>
+          <p>This phone number will be automatically registered to receive WiscAlerts, UW-Madison's emergency notifications.</p>
+          <p>
+            For more information, see the <a href="https://kb.wisc.edu/page.php?id=13839" target="_blank" rel="noreferrer nofollow">WiscAlerts FAQ</a>.
+            You can op-out of receiving emergency alerts in the <a href="https://my.wisc.edu/portal/p/wisc-alerts-text-messaging/render.uP" target="_blank" rel="noreferrer nofollow">WiscAlerts app</a>.
+          </p>
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
 </div>

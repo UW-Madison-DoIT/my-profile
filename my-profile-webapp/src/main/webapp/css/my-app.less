@@ -66,9 +66,68 @@ address {
 
 .description-box {
   p {
-    margin: 0;
     color: #888;
   }
+}
+
+.md-button {
+  &.button-compact {
+    text-transform: none;
+    line-height: 28px;
+    min-width: 60px;
+    min-height: 28px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-left: 0;
+    height: 28px;
+
+    .material-icons {
+      font-size: 20px;
+    }
+  }
+}
+
+.md-button.no-margin-left {
+  margin-left: 0;
+}
+
+.repeat-info {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #cecece;
+}
+
+.notice-container {
+  border: #cecece 1px solid;
+  border-radius: 6px;
+  margin: 16px 0 6px;
+
+  .notice-description {
+    padding: 8px 16px;
+
+    a.md-subhead {
+      display: block;
+      margin-bottom: 10px
+    }
+
+    p {
+      font-size: 12px;
+      color: #666;
+    }
+  }
+
+  .notice-icon {
+    .material-icons {
+      font-size: 50px;
+      height: 100%;
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+.select-state {
+  margin-bottom: 40px;
 }
 
 /* ------------------------------------ */
@@ -78,17 +137,13 @@ address {
   .md-button {
     margin-top: 0;
   }
-  .buttons-small {
-    .md-button {
-      min-width: 46px;
-    }
-  }
   md-input-container {
-    &.no-margin-bottom {
-      margin-bottom: 0;
-    }
-    &.no-margin-top {
-      margin-top: 0;
+    &.no-spacer:last-child {
+      margin-bottom: 6px;
+
+      div.md-errors-spacer {
+        min-height: 0;
+      }
     }
   }
 }

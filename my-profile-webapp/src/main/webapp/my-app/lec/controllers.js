@@ -97,15 +97,19 @@ define(['angular'], function(angular) {
   
   app.controller('EmergencyPhoneController', ['$localStorage','$rootScope','$scope', 'lecService', function($localStorage, $rootScope, $scope, lecService) {
     //scope functions
-    
+
     $scope.cancel = function() {
       init();
+    };
+
+    $scope.edit = function() {
+      $scope.editMode = true;
     };
     
     $scope.save = function() {
       lecService.saveEmergencyPhoneNumber($scope.emergencyPhoneNumbers.emergencyPhoneNumbers)
         .then(function(result){//success
-           $scope.edit = false;
+          $scope.editMode = false;
         },function(data, status){//error
           $rootScope.alerts.push({ msg: "There was an issue saving your emergency phone, please try again later.", type: 'danger'});
         });
@@ -114,7 +118,7 @@ define(['angular'], function(angular) {
     //local functions
     var init = function() {
       $scope.emergencyPhoneNumbers = [];
-      $scope.edit = false;
+      $scope.editMode = false;
       $scope.empty = false;
       $rootScope.profileLoadingState = $rootScope.profileLoadingState || {};
       $rootScope.profileLoadingState.ephone = true;
