@@ -41,8 +41,7 @@
           <input ng-if="$index !== 0" type="tel" name="phone{{$index}}" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-model="contact.phoneNumbers[$index].value">
         </md-input-container>
         <md-input-container class="md-block no-spacer" flex-gt-sm>
-          <label ng-if="$index === 0">Type</label>
-          <label ng-if="$index !== 0">Type</label>
+          <label>Type</label>
           <md-select name="phoneType{{$index}}" ng-required="$index === 0" ng-model="contact.phoneNumbers[$index].type" aria-label="phone type">
             <md-option value="mobile">Mobile</md-option>
             <md-option value="home">Home</md-option>
