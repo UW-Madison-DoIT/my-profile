@@ -107,7 +107,7 @@ define(['angular'], function(angular) {
     };
     
     $scope.save = function() {
-      lecService.saveEmergencyPhoneNumber($scope.emergencyPhoneNumbers.emergencyPhoneNumbers)
+      lecService.saveEmergencyPhoneNumber($scope.emergencyPhoneNumbers)
         .then(function(result){//success
           $scope.editMode = false;
         },function(data, status){//error
@@ -126,12 +126,12 @@ define(['angular'], function(angular) {
         .then(function(result){//success
           $rootScope.profileLoadingState.ephone = false;
           $scope.emergencyPhoneNumbers = result.data;
-          if ( $scope.emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 ) {
+          if ( $scope.emergencyPhoneNumbers.length === 0 ) {
               $scope.empty = true;
           }
         }, function(result, status){//error
           $rootScope.profileLoadingState.ephone = false;
-          $scope.emergencyPhoneNumbers = {};
+          $scope.emergencyPhoneNumbers = [];
           $rootScope.alerts.push({ msg: "There was an issue getting your phone number information. Please try again later.", type: 'danger'});
         });
     };

@@ -7,9 +7,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.wisc.my.profile.log.MaskedLoggable;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class TypeValue {
+public class TypeValue implements MaskedLoggable {
   
   public TypeValue() {
     
@@ -69,6 +70,7 @@ public class TypeValue {
    * Use for logging when masking values is needed.  Value information is masked.
    * @return a JSON representation with the value data masked
    */
+  @Override
   public String toStringForLogging(){
       StringBuilder builder = new StringBuilder()
       .append("{\"type\":\"")
