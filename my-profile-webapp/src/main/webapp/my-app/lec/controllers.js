@@ -111,7 +111,7 @@ define(['angular'], function(angular) {
         .then(function(result){//success
           $scope.editMode = false;
         },function(data, status){//error
-          $rootScope.alerts.push({ msg: "There was an issue saving your emergency phone, please try again later.", type: 'danger'});
+          $rootScope.$emit('alert', { msg: "There was an issue saving your emergency phone, please try again later.", type: 'danger'});
         });
     };
 
@@ -132,7 +132,7 @@ define(['angular'], function(angular) {
         }, function(result, status){//error
           $rootScope.profileLoadingState.ephone = false;
           $scope.emergencyPhoneNumbers = [];
-          $rootScope.alerts.push({ msg: "There was an issue getting your phone number information. Please try again later.", type: 'danger'});
+          $rootScope.$emit('alert', { msg: "There was an issue getting your phone number information. Please try again later.", type: 'danger'});
         });
     };
 
@@ -158,7 +158,7 @@ define(['angular'], function(angular) {
                   $scope.notSaving = true;
               },function(data, status){//error
                   $scope.notSaving = true;
-                  $rootScope.alerts.push({ msg: "There was an issue saving your address, please try again later.", type: 'danger'});
+                  $rootScope.$emit('alert', { msg: "There was an issue saving your address, please try again later.", type: 'danger'});
               });
       }
 
@@ -196,7 +196,7 @@ define(['angular'], function(angular) {
               }, function(result, status){//error
                 $scope.contactInfo = {};
                 $rootScope.profileLoadingState.lcontact = false;
-                $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
+                $rootScope.$emit('alert', { msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
             });
           if ( $scope.contactInfo.length === 0 ) {
             $scope.noAddresses = true;
@@ -232,7 +232,7 @@ define(['angular'], function(angular) {
                   $scope.notSaving = true;
               },function(data, status){//error
                   $scope.notSaving = true;
-                  $rootScope.alerts.push({ msg: "There was an issue saving your emergency contact, please try again later.", type: 'danger'});
+                  $rootScope.$emit('alert', { msg: "There was an issue saving your emergency contact, please try again later.", type: 'danger'});
               });
       }
 
@@ -269,8 +269,8 @@ define(['angular'], function(angular) {
               }, function(result, status){//error
                 $rootScope.profileLoadingState.einfo = false;
                 $scope.emergencyInfo = {};
-                $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
-                  console.log('inside getEmergencyContactInfo error state: ' + typeof $scope.emergencyInfo);
+                $rootScope.$emit('alert', { msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
+                console.log('inside getEmergencyContactInfo error state: ' + typeof $scope.emergencyInfo);
             });
           if ( $scope.emergencyInfo.length === 0 ) {
             $scope.noContacts = true;
@@ -282,11 +282,24 @@ define(['angular'], function(angular) {
 
     }]);
     
-    app.controller('ErrorController', ['$scope','$rootScope', function($scope, $rootScope) {
-      $rootScope.alerts = [];
+    app.controller('ErrorController', ['$scope','$rootScope','$mdDialog', function($scope, $rootScope, $mdDialog) {
+      $scope.alert = {
+        title: 'Error!',
+        msg: ''
+      };
       
-      $scope.closeAlert = function(index) {
-        $rootScope.alerts.splice(index, 1);
+      $rootScope.$on('alert', function(event, data) {
+        $scope.alert.msg = data.msg;
+        $mdDialog.show({
+          templateUrl: 'alert.html',
+          parent: angular.element(document).find('div.my-uw')[0],
+          clickOutsideToClose: true,
+          preserveScope: true,
+          scope: $scope
+        })
+      });
+      $scope.close = function() {
+        $mdDialog.hide();
       };
     }]);
 });
