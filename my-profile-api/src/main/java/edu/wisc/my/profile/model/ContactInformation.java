@@ -12,8 +12,9 @@ import org.joda.time.DateTime;
 import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.wisc.my.profile.log.MaskedLoggable;
 
-public class ContactInformation {
+public class ContactInformation implements MaskedLoggable {
   private DateTime lastModified;
   private boolean edit;
   private String id;
@@ -95,14 +96,14 @@ public class ContactInformation {
       Gson gson = Converters.registerDateTime(new GsonBuilder()).create();
       return gson.toJson(this);
   }
-  
-  
+
   /**
    * Use for logging when masking values is needed.
    * Data that is considered sensitive will be masked.  Fields that are masked are
    * preferredName, relationship, user inputed comments, phone numbers, emails, and address information
    * @return a JSON representation with the value data masked, useful for logging
    */
+  @Override
   public String toStringForLogging(){
       StringBuilder builder = new StringBuilder();
       builder.append("{")
