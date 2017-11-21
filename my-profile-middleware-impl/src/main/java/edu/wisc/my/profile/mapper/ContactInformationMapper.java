@@ -21,6 +21,26 @@ public final class ContactInformationMapper {
   
   protected static final Logger logger = LoggerFactory.getLogger(ContactInformationMapper.class);
   
+  public static String getCleanString(String dirty) {
+    return StringEscapeUtils.escapeJson(dirty);
+  }
+  
+  public static String getDirtyString(JSONObject obj, String key) {
+    String result = null;
+    if (null != obj) {
+//      try {
+        result = obj.getString(key);
+//      } catch (JSONException e) {
+//        // We should really be catching these here.
+//      }
+    }
+    
+    if (null != result) {
+      result = StringEscapeUtils.unescapeJson(StringEscapeUtils.unescapeJson(result));
+    }
+    return result;
+  }
+  
   public static ContactInformation[] convertToEmergencyContactInformation(JSONObject json) {
     List <ContactInformation> eci = new ArrayList<ContactInformation>();
     
@@ -29,19 +49,19 @@ public final class ContactInformationMapper {
         JSONObject jcontact = json.getJSONObject("EMERGENCY COUNT " + i);
         if(jcontact != null) {
           ContactInformation ci = new ContactInformation();
-          ci.setPreferredName(jcontact.getString("EMERGENCY NAME"));
-          ci.setRelationship(jcontact.getString("RELATION"));
-          ci.setComments(StringEscapeUtils.unescapeJson(jcontact.getString("RELATION COMMENT")));
+          ci.setPreferredName(getDirtyString(jcontact, "EMERGENCY NAME"));
+          ci.setRelationship(getDirtyString(jcontact, "RELATION"));
+          ci.setComments(getDirtyString(jcontact, "RELATION COMMENT"));
           //le emailz
           try {
             for(int j = 1; j <=3; j++) {
               JSONObject jemail = jcontact.getJSONObject("EMERGENCY EMAIL COUNT "+ j);
-              String email = jemail.getString("EMERGENCY EMAIL ADDRESS");
-              String value = jemail.getString("EMERGENCY EMAIL COMMENT");
+              String email = getDirtyString(jemail, "EMERGENCY EMAIL ADDRESS");
+              String value = getDirtyString(jemail, "EMERGENCY EMAIL COMMENT");
               ci.getEmails().add(new TypeValue(value, email));
             }
           } catch (JSONException ex) {
-            logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
+//            logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
             //nothing to see here, move along
           }
           
@@ -49,12 +69,12 @@ public final class ContactInformationMapper {
           try {
             for(int j = 1; j <=3; j++) {
               JSONObject jphone = jcontact.getJSONObject("EMERGENCY PHONE COUNT "+ j);
-              String phone = jphone.getString("EMERGENCY PHONE NUMBER");
-              String comment = jphone.getString("EMERGENCY PHONE COMMENT");
+              String phone = getDirtyString(jphone, "EMERGENCY PHONE NUMBER");
+              String comment = getDirtyString(jphone, "EMERGENCY PHONE COMMENT");
               ci.getPhoneNumbers().add(new TypeValue(comment, phone));
             }
           } catch (JSONException ex) {
-            logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
+//            logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
           }
           
           //add to parent
@@ -63,7 +83,7 @@ public final class ContactInformationMapper {
         
       }
     } catch (JSONException ex) {
-      logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
+//      logger.trace("Error parsing, probably just someone who doesn't have the max",ex);
     }
     
     return eci.toArray(new ContactInformation[0]);
@@ -81,25 +101,25 @@ public final class ContactInformationMapper {
             ContactAddress ca = new ContactAddress () ;
             for (int j = 1; j <= 4; j++) {
               try {
-                String addressLine = address.getString("ADDRESS LINE " + j);
+                String addressLine = getDirtyString(address, "ADDRESS LINE " + j);
                 if(StringUtils.isNotBlank(addressLine)) {
                   ca.getAddressLines().add(addressLine);
                 }
               } catch(JSONException ex) {
-                logger.trace(ex.getMessage());
+//                logger.trace(ex.getMessage());
                 //eat exception as its probably that they just didn't have 4 address lines
               }
             }
-            ca.setCity(address.getString("CITY"));
-            ca.setState(address.getString("STATE"));
-            ca.setPostalCode(address.getString("ZIP"));
-            ca.setCountry(address.getString("COUNTRY"));
-            ca.setComment(StringEscapeUtils.unescapeJson(address.getString("ADDRESS COMMENT")));
-            ca.setType(address.getString("ADDRESS TYPE"));
+            ca.setCity(getDirtyString(address, "CITY"));
+            ca.setState(getDirtyString(address, "STATE"));
+            ca.setPostalCode(getDirtyString(address, "ZIP"));
+            ca.setCountry(getDirtyString(address, "COUNTRY"));
+            ca.setComment(getDirtyString(address, "ADDRESS COMMENT"));
+            ca.setType(getDirtyString(address, "ADDRESS TYPE"));
             ci.getAddresses().add(ca);
           }
         } catch (JSONException ex) {
-          logger.trace(ex.getMessage());
+//          logger.trace(ex.getMessage());
           //eat exception as its probably that they just didn't have 3 addresses
         }
       }
@@ -124,13 +144,13 @@ public final class ContactInformationMapper {
               JSONObject phoneNumberLine = json.getJSONObject("PHONE COUNT " + i);
               if(phoneNumberLine != null){
                   TypeValue phoneNumber = new TypeValue();
-                  phoneNumber.setValue(phoneNumberLine.getString("PHONE NUMBER"));
-                  phoneNumber.setType(phoneNumberLine.getString("PHONE COMMENT"));
+                  phoneNumber.setValue(getDirtyString(phoneNumberLine, "PHONE NUMBER"));
+                  phoneNumber.setType(getDirtyString(phoneNumberLine, "PHONE COMMENT"));
                   phoneNumbers.add(phoneNumber);
               }
           }catch(JSONException ex){
               //Probably safe.  Will throw exception if PHONE COUNT +i does not return object
-              logger.trace(ex.getMessage());
+//              logger.trace(ex.getMessage());
           }
       }
       return phoneNumbers.toArray(new TypeValue[phoneNumbers.size()]);
@@ -145,21 +165,21 @@ public final class ContactInformationMapper {
       JSONObject address = new JSONObject();
       int alcount = 1;
       for(String al : ca.getAddressLines()) {
-        address.put("ADDRESS LINE " + alcount++, al);
+        address.put("ADDRESS LINE " + alcount++, getCleanString(al));
       }
-      address.put("CITY", ca.getCity());
-      address.put("STATE", ca.getState());
-      address.put("ZIP", ca.getPostalCode());
-      address.put("COUNTRY", ca.getCountry());
+      address.put("CITY", getCleanString(ca.getCity()));
+      address.put("STATE", getCleanString(ca.getState()));
+      address.put("ZIP", getCleanString(ca.getPostalCode()));
+      address.put("COUNTRY", getCleanString(ca.getCountry()));
       
       if(ca.getComment()!=null && !ca.getComment().isEmpty()){
           StringBuilder addressComment = new StringBuilder(ca.getComment());
           if(addressComment.toString().endsWith("\"")){
               addressComment.append(" ");
           }
-          address.put("ADDRESS COMMENT", addressComment.toString());
+          address.put("ADDRESS COMMENT", getCleanString(addressComment.toString()));
       }else{
-          address.put("ADDRESS COMMENT", ca.getComment());
+          address.put("ADDRESS COMMENT", getCleanString(ca.getComment()));
       }
       
       address.put("ADDRESS PRIORITY", count);
@@ -173,8 +193,8 @@ public final class ContactInformationMapper {
         if(phoneNumber.getType()!=null && phoneNumber.getValue()!=null){
             JSONObject emergencyPhoneNumber = new JSONObject();
             emergencyPhoneNumber.put("PHONE PRIORITY", count);
-            emergencyPhoneNumber.put("PHONE NUMBER", phoneNumber.getValue());
-            emergencyPhoneNumber.put("PHONE COMMENT", phoneNumber.getType());
+            emergencyPhoneNumber.put("PHONE NUMBER", getCleanString(phoneNumber.getValue()));
+            emergencyPhoneNumber.put("PHONE COMMENT", getCleanString(phoneNumber.getType()));
             emergencyPhoneNumber.put("PHONE DTTM", formatter.print(phoneNumber.getLastModified()));
             json.put("PHONE COUNT "+count, emergencyPhoneNumber);
         }
@@ -193,17 +213,17 @@ public final class ContactInformationMapper {
   
   private static JSONObject jsonifyEmergencyContact(ContactInformation eci) {
     JSONObject emergencyContact = new JSONObject();
-    emergencyContact.put("EMERGENCY NAME", eci.getPreferredName());
-    emergencyContact.put("RELATION", eci.getRelationship());
+    emergencyContact.put("EMERGENCY NAME", getCleanString(eci.getPreferredName()));
+    emergencyContact.put("RELATION", getCleanString(eci.getRelationship()));
     
     if(eci.getComments()!=null && !eci.getComments().isEmpty()){
         StringBuilder relationComment = new StringBuilder(eci.getComments());
         if(relationComment.toString().endsWith("\"")){
             relationComment.append(" ");
         }
-        emergencyContact.put("RELATION COMMENT", relationComment.toString());
+        emergencyContact.put("RELATION COMMENT", getCleanString(relationComment.toString()));
     }else{
-        emergencyContact.put("RELATION COMMENT", eci.getComments());
+        emergencyContact.put("RELATION COMMENT", getCleanString(eci.getComments()));
     }
     
     //TODO: Get language from eci 
@@ -218,8 +238,8 @@ public final class ContactInformationMapper {
       if(!phone.isEmpty()) {
         JSONObject jphone = new JSONObject();
         jphone.put("EMERGENCY PHONE PRIORITY", pcount);
-        jphone.put("EMERGENCY PHONE NUMBER", phone.getValue());
-        jphone.put("EMERGENCY PHONE COMMENT", phone.getType());
+        jphone.put("EMERGENCY PHONE NUMBER", getCleanString(phone.getValue()));
+        jphone.put("EMERGENCY PHONE COMMENT", getCleanString(phone.getType()));
         jphone.put("EMERGENCY PHONE DTTM", formatter.print(DateTime.now()));
         emergencyContact.put("EMERGENCY PHONE COUNT " + pcount++, jphone);
       }
@@ -229,14 +249,12 @@ public final class ContactInformationMapper {
     for(TypeValue email : eci.getEmails()) {
       JSONObject jemail = new JSONObject();
       jemail.put("EMERGENCY EMAIL PRIORITY", 1);
-      jemail.put("EMERGENCY EMAIL ADDRESS", email.getValue());
-      jemail.put("EMERGENCY EMAIL COMMENT", email.getType());
+      jemail.put("EMERGENCY EMAIL ADDRESS", getCleanString(email.getValue()));
+      jemail.put("EMERGENCY EMAIL COMMENT", getCleanString(email.getType()));
       jemail.put("EMERGENCY EMAIL DTTM", formatter.print(DateTime.now()));
       emergencyContact.put("EMERGENCY EMAIL COUNT " + ecount++, jemail);
     }
-      
-    
-    
+
     return emergencyContact;
   }
   
