@@ -27,7 +27,17 @@
         </md-toolbar>
         <md-dialog-content>
           <div class="md-dialog-content" layout="column" layout-align="center center">
-            <p id="alertContent">{{ alert.msg }}</p>
+            <div>
+              <p ng-bind-html="alert.msg"></p>
+            </div>
+            <div ng-if="alert.note" class="notice-container" layout="row" layout-align="start center">
+              <div class="notice-icon" flex-gt-xs="20" hide-xs>
+                <md-icon>info</md-icon>
+              </div>
+              <div class="notice-description" flex-gt-xs="80">
+                <p>{{ alert.note }}</p>
+              </div>
+            </div>
           </div>
         </md-dialog-content>
         <md-dialog-actions>
