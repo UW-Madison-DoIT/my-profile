@@ -28,7 +28,7 @@
         <md-dialog-content>
           <div class="md-dialog-content" layout="column" layout-align="center center">
             <div>
-              <p>{{ alert.msg }}</p>
+              <p ng-bind-html="alert.msg"></p>
             </div>
             <div ng-if="alert.note" class="notice-container" layout="row" layout-align="start center">
               <div class="notice-icon" flex-gt-xs="20" hide-xs>

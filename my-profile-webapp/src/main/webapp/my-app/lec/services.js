@@ -8,15 +8,16 @@ define(['angular'], function(angular) {
         var title = 'Sorry!';
         var message = '';
         var note = '';
+        var _contactHelpdesk = '<a href="https://it.wisc.edu/help" target="_blank" rel="noopener noreferrer">contact the Help Desk</a>';
         if (status === 403) {
-          message = 'You do not have access to this module. If this is incorrect please contact your supervisor.';
+          message = 'You do not have access to this module. If this is incorrect please ' + _contactHelpdesk + '.';
         } else if (status === 503) {
-          message = 'The service is temporarily unavailable. If this problem persists, please contact the Help Desk.';
+          message = 'The service is temporarily unavailable. If this problem persists, please ' + _contactHelpdesk + '.';
         } else {
           message = 'There was a problem ' +
             ((isWrite) ? 'saving' : 'looking up') +
             ' the ' + ((section) ? section : '') +
-            ' information. If this problem persists, please contact the Help Desk.';
+            ' information. If this problem persists, please ' + _contactHelpdesk + '.';
 
           if (isWrite) {
             note = 'If your address contains any non-English characters (accented letters or umlauts), please re-enter it with the closest English equivalent.';
