@@ -1,27 +1,26 @@
-<div class="row portlet-frame">
-  <div class="portlet-header">
-    <img src="img/stand-back.jpg" alt="Science" height="180px" style="left: 30%; width: inherit;">
-    <h1>My Profile Beta Settings</h1>
-    <p>Opting in/out of beta features</p>
+<frame-page  app-title="My Profile - Settings"
+             app-icon="fa-user"
+             app-add-to-home="false">
+  <div layout="row" layout-align="start center">
+    <md-button ng-href="main" aria-label="go to my profile">My profile</md-button>
+    <md-button ng-href="emergencyInfo" aria-label="go to emergency info">Emergency info</md-button>
   </div>
-  <div class="col-xs-12 no-padding portlet-body">
-    <h3 class="home-section-header">Your Options</h3>
-    <ul class='col-sm-6' style='padding-top: 1em;'>
-       <li class="portlet-container-home beta-card-style">
-           <h4>
-               <span class="btn-group">
-                   <label class="btn" ng-class="{'btn-success' : $storage.showMyProfile, 'btn-default' : !$storage.showMyProfile }" ng-model="$storage.showMyProfile" btn-radio="true">On</label>
-                   <label class="btn" ng-class="{'btn-success' : $storage.showMyProfile, 'btn-default' : !$storage.showMyProfile }" ng-model="$storage.showMyProfile" btn-radio="false">Off</label>
-               </span>
-               Show My Profile
-           </h4>
-           <small>Toggles Display of my profile and subnavigation</small>
-       </li>
-    </ul>
-    <ul class="col-sm-6" style='padding-top: 1em;'>
-        <li class="no-padding portlet-container-home  beta-card-style" style='text-align : center;'>
-          <div>no more options at this time</div>
-       </li>
-    </ul>
+  <div layout="column">
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>
+          <h3 class="md-headline">Settings</h3>
+        </md-card-title-text>
+      </md-card-title>
+      <md-card-content>
+        <md-list>
+          <md-list-item layout="row" layout-align="start start">
+            <md-switch ng-model="$storage.showMyProfile">
+              Show My Profile subnavigation
+            </md-switch>
+          </md-list-item>
+        </md-list>
+      </md-card-content>
+   </md-card>
   </div>
-</div>
+</frame-page>
