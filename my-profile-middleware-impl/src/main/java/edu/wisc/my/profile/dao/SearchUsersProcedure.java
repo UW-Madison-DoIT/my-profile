@@ -44,7 +44,7 @@ public class SearchUsersProcedure extends StoredProcedure {
      * Searches are returns users based on inputs
      * @param firstName search will append wild cards before and after input.  Can be null
      * @param lastName search will append wild cards before and after input.  Can be null
-     * @return Map of users in <"output", ListOfUsers> format
+     * @return Map of users in &lt;"output", ListOfUsers&gt; format
      */
     public Map<String, Object> searchUsers(String firstName, String lastName){
         final Map<String, String> args = new LinkedHashMap<String, String>();
