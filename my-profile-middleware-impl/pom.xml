@@ -3,7 +3,7 @@
   <parent>
     <groupId>edu.wisc.my.profile</groupId>
     <artifactId>my-profile-parent</artifactId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>1.1.2</version>
   </parent>
   <artifactId>my-profile-middleware-impl</artifactId>
   
