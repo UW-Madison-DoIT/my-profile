@@ -133,7 +133,7 @@
             <!-- repeat for each emergency contact -->
             <emergency ng-repeat="contact in emergencyInfo"></emergency>
           </md-list>
-          <div layout="row">
+          <div ng-hide="emergencyInfo.length > 2" layout="row">
             <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()" aria-label="add another emergency contact">Add another</md-button>
           </div>
         </md-card-content>
