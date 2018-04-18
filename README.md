@@ -1,9 +1,5 @@
 Master branch build status: [![Build Status](https://travis-ci.org/UW-Madison-DoIT/my-profile.svg?branch=master)](https://travis-ci.org/UW-Madison-DoIT/my-profile)
 
-### Running locally
-
-Run `./run_local.sh` from the project root.
-
 #### First-time setup
 
 Follow these steps before attempting to run locally:
@@ -18,6 +14,13 @@ uportal.username=sa
 uportal.password=
 uportal.validationQuery=select 1 from INFORMATION_SCHEMA.SYSTEM_USERS
 ```
+
+### Running locally
+
+Run `./run_local.sh` from the project root.
+
+View the app at: http://localhost:8080/profile
+
 
 
 
