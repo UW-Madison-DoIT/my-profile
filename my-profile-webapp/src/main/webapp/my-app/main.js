@@ -28,6 +28,8 @@ define([
     'ngRoute',
     'ngSanitize',
     'ngStorage',
+    './dialog/controllers',
+    './menu/controllers',
     './lec/controllers',
     './lec/constants',
     './lec/services',
@@ -39,6 +41,8 @@ define([
 
     var app = angular.module('my-app', [
         'app-config',
+        'my-app.dialog.controllers',
+        'my-app.menu.controllers',
         'my-app.profile.controllers',
         'my-app.profile.services',
         'my-app.profile.directives',

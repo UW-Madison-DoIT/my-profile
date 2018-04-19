@@ -1,0 +1,27 @@
+<div ng-controller="AppMenuController as vm">
+    <!-- GENERAL NAVIGATION -->
+    <md-menu-item ng-if="$storage.showMyProfile">
+        <md-button href="main" ng-click="vm.closeAppMenu();" layout="row" layout-align="start center">
+      <span>
+        <md-icon>user</md-icon>
+      </span>
+            <span>Profile</span>
+        </md-button>
+    </md-menu-item>
+    <md-menu-item>
+        <md-button ng-href="emergencyInfo" ng-click="vm.closeAppMenu();" layout="row" layout-align="start center">
+      <span>
+        <md-icon>info</md-icon>
+      </span>
+            <span>Emergency Info</span>
+        </md-button>
+    </md-menu-item>
+    <md-menu-item>
+        <md-button ng-click="vm.showHelpDialog($event);" layout="row" layout-align="start center" aria-label="Show help dialog">
+      <span>
+        <md-icon>help</md-icon>
+      </span>
+            <span>Help</span>
+        </md-button>
+    </md-menu-item>
+</div>
