@@ -14,6 +14,7 @@
             <groupId>org.apereo.uportal</groupId>
             <artifactId>uportal-app-framework</artifactId>
             <type>war</type>
+            <version>9.0.1</version>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
