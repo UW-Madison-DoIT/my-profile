@@ -1,50 +1,19 @@
 <frame-page  app-title="My Profile - Emergency Info"
-             app-icon="fa-user"
              app-add-to-home="true"
-             app-action-link-text="Add to home"
-             app-fname="contact-info">
-
-  <!-- app navigation -- replace with md-nav-bar when angular 1.1.1 is available frame -->
-  <div ng-if="$storage.showMyProfile">
-    <div layout="row" layout-align="start center">
-      <md-button ng-href="main" aria-label="go to my profile">My profile</md-button>
-      <md-button class="md-primary" ng-href="emergencyInfo" aria-label="go to emergency info">Emergency info</md-button>
-    </div>
-  </div>
+             app-fname="'contact-info'"
+             page-title="Emergency Info"
+             white-background="true">
 
   <!-- error state -->
-  <div layout="row" ng-controller='ErrorController as errorCtrl'>
-    <script type="text/ng-template" id="alert.html">
-      <md-dialog aria-label="error notification">
-        <md-toolbar class="md-accent">
-          <div class="md-toolbar-tools">
-            <h1>{{ alert.title }}</h1>
-            <span flex></span>
-            <md-button class="md-icon-button" ng-click="close()" aria-label="close features dialog">
-              <md-icon>close</md-icon>
-            </md-button>
-          </div>
-        </md-toolbar>
-        <md-dialog-content>
-          <div class="md-dialog-content" layout="column" layout-align="center center">
-            <div>
-              <p ng-bind-html="alert.msg"></p>
-            </div>
-            <div ng-if="alert.note" class="notice-container" layout="row" layout-align="start center">
-              <div class="notice-icon" flex-gt-xs="20" hide-xs>
-                <md-icon>info</md-icon>
-              </div>
-              <div class="notice-description" flex-gt-xs="80">
-                <p>{{ alert.note }}</p>
-              </div>
-            </div>
-          </div>
-        </md-dialog-content>
-        <md-dialog-actions>
-          <md-button class="md-accent md-raised" ng-click="close()">Close</md-button>
-        </md-dialog-actions>
-      </md-dialog>
-    </script>
+  <div layout="row" ng-controller="ErrorController as errorCtrl">
+    <div flex="100">
+      <alert class="alert" ng-repeat="alert in alerts" type="{{alert.type}}" layout="row" layout-align="space-between center">
+        {{ alert.msg }}
+        <md-button class="md-icon-button" ng-click="closeAlert($index)" aria-label="close alert message">
+          <md-icon>close</md-icon>
+        </md-button>
+      </alert>
+    </div>
   </div>
 
   <!-- loading state -->
@@ -53,7 +22,7 @@
   </div>
 
   <!-- profile information -->
-  <div layout="column" layout-gt-sm="row" layout-align-gt-sm="center start" ng-hide="profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo">
+  <div class="container__emergency-info" layout="column" layout-gt-sm="row" layout-align-gt-sm="center start" ng-hide="profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo">
 
     <!-- emergency phone -->
     <div layout-gt-sm="column" flex-gt-sm="33">
@@ -62,82 +31,48 @@
 
     <!-- local address -->
     <div layout-gt-sm="column" flex-gt-sm="33" ng-controller="LocalContactInformationController as localContactInfoCtrl">
-      <!-- if no addresses entered -->
-      <md-card ng-if="contactInfo.addresses.length === 0" class="contact-info-card">
-        <md-card-title>
-          <md-card-title-text>
-            <h2 class="md-headline">Local address</h2>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
+      <div class="contact-info-card">
+        <h2 class="md-headline" layout="row" layout-align="space-between center">
+          <div class="subhead-border"></div>
+            <span>Local address</span>
+            <md-button class="md-icon-button md-accent md-raised" ng-click="addEdit()" aria-label="Add address">
+                <md-icon>add</md-icon>
+              <md-tooltip md-direction="top">Add address</md-tooltip>
+            </md-button>
+        </h2>
           <div class="description-box">
             <p>A physical address where you live or frequently stay during the school year.</p>
           </div>
-          <p><md-icon class="md-warn">warning</md-icon> No address entered yet.</p>
-          <md-button class="md-accent md-raised" ng-click="addEdit()">Add local address</md-button>
-        </md-card-content>
-      </md-card>
-      <!-- addresses exist -->
-      <md-card ng-if="contactInfo.addresses.length != 0" class="contact-info-card">
-        <md-card-title>
-          <md-card-title-text>
-            <h2 class="md-headline">Local address</h2>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-          <div class="description-box">
-            <p>A physical address where you live or frequently stay during the school year.</p>
-          </div>
-          <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
-          <md-list class="list-info">
+          <p ng-if="noAddresses"><md-icon class="md-warn">warning</md-icon> No address entered yet.</p>
+          <div ng-if="error && error.length > 0" class="alert" role="alert">{{ error }}</div>
+          <md-list ng-if="contactInfo.addresses.length !== 0" class="list-info">
             <!-- repeat for each address -->
             <lec-address ng-repeat="address in contactInfo.addresses"></lec-address>
           </md-list>
-          <div layout="row">
-            <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()" aria-label="add another address">Add another</md-button>
-          </div>
-        </md-card-content>
-      </md-card>
+      </div>
     </div>
 
     <!-- emergency contact -->
     <div layout-gt-sm="column" flex-gt-xs="33" ng-controller="EmergencyInformationController as emergencyInfoCtrl">
-      <!-- if no emergency contact -->
-      <md-card ng-if="emergencyInfo.length === 0" class="contact-info-card" flex>
-        <md-card-title>
-          <md-card-title-text>
-            <h2 class="md-headline">Emergency contact</h2>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
+      <div class="contact-info-card" flex>
+        <h2 class="md-headline" layout="row" layout-align="space-between center">
+          <div class="subhead-border"></div>
+            <span>Emergency contact</span>
+            <md-button class="md-icon-button md-accent md-raised" ng-click="addEdit()" aria-label="Add contact info">
+                <md-icon>add</md-icon>
+              <md-tooltip md-direction="top">Add contact</md-tooltip>
+            </md-button>
+        </h2>
           <div class="description-box">
             <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
           </div>
-          <p><md-icon class="md-warn">warning</md-icon> No contact entered yet.</p>
-          <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()">Add emergency contact</md-button>
-        </md-card-content>
-      </md-card>
-      <!-- entries exist -->
-      <md-card ng-if="emergencyInfo.length != 0" class="contact-info-card" flex>
-        <md-card-title>
-          <md-card-title-text>
-            <h2 class="md-headline">Emergency contact</h2>
-          </md-card-title-text>
-        </md-card-title>
-        <md-card-content>
-          <div class="description-box">
-            <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
-          </div>
+          <p ng-if="emergencyInfo.length === 0"><md-icon class="md-warn">warning</md-icon> No contact entered yet.</p>
           <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
-          <md-list class="list-info">
+          <md-list ng-if="emergencyInfo.length !== 0" class="list-info">
             <!-- repeat for each emergency contact -->
             <emergency ng-repeat="contact in emergencyInfo"></emergency>
           </md-list>
-          <div ng-hide="emergencyInfo.length > 2" layout="row">
-            <md-button class="md-accent md-raised no-margin-left" ng-click="addEdit()" aria-label="add another emergency contact">Add another</md-button>
-          </div>
-        </md-card-content>
-      </md-card>
+      </div>
     </div>
   </div>
 

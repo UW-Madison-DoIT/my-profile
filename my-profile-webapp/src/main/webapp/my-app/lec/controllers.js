@@ -39,18 +39,18 @@ define(['angular'], function(angular) {
           $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
       };
 
-      //scope functions
-      $scope.search = function() {
-        $scope.empty=false;
-        $scope.searching=true;
-        $scope.result = [];
-        $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
-        lecService.searchUsers($scope.firstName, $scope.lastName).then(function(result){
-          $scope.result = result.data;
-          angular.forEach($scope.result.addresses, function(value, key, obj){
-            value.edit = false;
-            value.readOnly=true;
-          });
+        //scope functions
+        $scope.search = function() {
+          $scope.empty=false;
+          $scope.searching=true;
+          $scope.result = [];
+          $scope.searchResultLimit = $scope.searchResultLimitIncrementor;
+          lecService.searchUsers($scope.firstName, $scope.lastName).then(function(result){
+            $scope.result = result.data;
+            angular.forEach($scope.result.addresses, function(value, key, obj){
+              value.edit = false;
+              value.readOnly=true;
+            });
           if($scope.result && $scope.result.people && $scope.result.people.length === 0){
               $scope.empty = true;
           }
@@ -129,8 +129,12 @@ define(['angular'], function(angular) {
   app.controller('LocalContactInformationController', ['$localStorage','$rootScope','$scope', 'lecService','COUNTRIES','STATES', 'errorService', function($localStorage, $rootScope, $scope, lecService, COUNTRIES, STATES, errorService) {
       //scope functions
       $scope.addEdit = function() {
+          // Make sure there's an array to add to
+          if (!$scope.contactInfo.addresses) {
+              $scope.contactInfo.addresses = [];
+          }
         $scope.contactInfo.addresses.push({ addressLines : [""], country : 'USA', state : 'WI', edit : true});
-      }
+      };
 
       $scope.save = function() {
           $scope.notSaving = false;
@@ -146,7 +150,7 @@ define(['angular'], function(angular) {
                   $scope.notSaving = true;
                   errorService.sendError(status, 'local address', true);
               });
-      }
+      };
 
       $scope.deleteAddress = function(index) {
           $scope.contactInfo.addresses.splice(index,1);
@@ -155,13 +159,13 @@ define(['angular'], function(angular) {
 
       $scope.cancel = function() {
           init();
-      }
+      };
 
       //local functions
       var init = function() {
           $rootScope.profileLoadingState = $rootScope.profileLoadingState || {};
           $rootScope.profileLoadingState.lcontact = true;
-          $scope.contactInfo = [];
+          $scope.contactInfo = {};
           $scope.countries = COUNTRIES;
           $scope.states = STATES;
           $scope.error = "";
@@ -170,8 +174,11 @@ define(['angular'], function(angular) {
               .then(
                 function(result){//success
                   $rootScope.profileLoadingState.lcontact = false;
-                  $scope.contactInfo = result.data;
-                  //clear out any editing that may have been saved
+                  // Make sure we get the expected type of data
+                  if (typeof result.data === 'object') {
+                      $scope.contactInfo = result.data;
+                  }
+                  // Clear out any editing that may have been saved
                   angular.forEach($scope.contactInfo.addresses, function(value, key, obj){
                       value.edit = false;
                       if(value.type === "HOUSING") {
@@ -184,12 +191,12 @@ define(['angular'], function(angular) {
                 $rootScope.profileLoadingState.lcontact = false;
                 errorService.sendError(status, 'local address', false);
             });
-          if ( $scope.contactInfo.length === 0 ) {
+          if ($scope.contactInfo.addresses
+              && $scope.contactInfo.addresses.length === 0) {
             $scope.noAddresses = true;
           }
-      }
+      };
 
-      //run init
       init();
     } ]);
 

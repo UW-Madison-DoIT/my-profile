@@ -10,7 +10,7 @@ define(['angular'], function(angular) {
             'defaultTheme' : 1
           },
           'APP_OPTIONS' : {
-            'optionsTemplateURL' : null
+            'appMenuTemplateURL': 'my-app/menu/side-navigation.html',
           },
           'SERVICE_LOC' : {
             'sessionInfo' : '/portal/web/session.json',

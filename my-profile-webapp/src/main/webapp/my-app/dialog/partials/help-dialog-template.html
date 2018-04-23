@@ -1,0 +1,24 @@
+<md-dialog aria-label="Help menu" flex-gt-sm="40" class="template__help-dialog">
+    <form ng-cloak>
+        <md-toolbar class="md-accent">
+            <div class="md-toolbar-tools">
+                <h2>Help</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()" aria-label="close help dialog">
+                    <md-icon>close</md-icon>
+                </md-button>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <!-- GENERAL OPTIONS -->
+                <md-list flex>
+                    <md-list-item ng-repeat="item in helpOptions" ng-click="goToUrl(item.href)" layout="row" layout-align="start center">
+                        <md-icon>{{ item.icon }}</md-icon>
+                        <p>{{ item.label }}</p>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </md-dialog-content>
+    </form>
+</md-dialog>
