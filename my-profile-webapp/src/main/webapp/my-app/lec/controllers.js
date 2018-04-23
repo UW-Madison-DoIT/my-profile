@@ -55,7 +55,6 @@ define(['angular'], function(angular) {
                 $scope.empty = true;
             }
           }, function(data){
-            console.warn("Error looking up search term");
             if(data.status === 403) {
               $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
             } else if(data.status === 503) {
@@ -79,7 +78,6 @@ define(['angular'], function(angular) {
           });
           $scope.empty = result.data && result.data.local.addresses.length === 0;
         }, function(data){
-          console.warn("Error looking up person");
           if(data.status === 403) {
             $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
           } else if(data.status === 503) {
@@ -132,6 +130,7 @@ define(['angular'], function(angular) {
         }, function(result, status){//error
           $rootScope.profileLoadingState.ephone = false;
           $scope.emergencyPhoneNumbers = {};
+          h$scope.empty = true;
           $rootScope.alerts.push({ msg: "There was an issue getting your phone number information. Please try again later.", type: 'danger'});
         });
     };
@@ -140,11 +139,17 @@ define(['angular'], function(angular) {
     init();
   } ]);
 
-  app.controller('LocalContactInformationController', ['$localStorage','$rootScope','$scope', 'lecService','COUNTRIES','STATES', function($localStorage, $rootScope, $scope, lecService,COUNTRIES,STATES) {
-      //scope functions
+  app.controller('LocalContactInformationController', ['$localStorage',
+      '$rootScope','$scope', '$mdDialog', 'lecService','COUNTRIES','STATES',
+      function($localStorage, $rootScope, $scope, $mdDialog, lecService,
+               COUNTRIES, STATES) {
       $scope.addEdit = function() {
+          // Make sure there's an array to add to
+          if (!$scope.contactInfo.addresses) {
+              $scope.contactInfo.addresses = [];
+          }
         $scope.contactInfo.addresses.push({ addressLines : [""], country : 'USA', state : 'WI', edit : true});
-      }
+      };
 
       $scope.save = function() {
           $scope.notSaving = false;
@@ -160,7 +165,7 @@ define(['angular'], function(angular) {
                   $scope.notSaving = true;
                   $rootScope.alerts.push({ msg: "There was an issue saving your address, please try again later.", type: 'danger'});
               });
-      }
+      };
 
       $scope.deleteAddress = function(index) {
           $scope.contactInfo.addresses.splice(index,1);
@@ -169,13 +174,13 @@ define(['angular'], function(angular) {
 
       $scope.cancel = function() {
           init();
-      }
+      };
 
       //local functions
       var init = function() {
           $rootScope.profileLoadingState = $rootScope.profileLoadingState || {};
           $rootScope.profileLoadingState.lcontact = true;
-          $scope.contactInfo = [];
+          $scope.contactInfo = {};
           $scope.countries = COUNTRIES;
           $scope.states = STATES;
           $scope.error = "";
@@ -184,8 +189,11 @@ define(['angular'], function(angular) {
               .then(
                 function(result){//success
                   $rootScope.profileLoadingState.lcontact = false;
-                  $scope.contactInfo = result.data;
-                  //clear out any editing that may have been saved
+                  // Make sure we get the expected type of data
+                  if (typeof result.data === 'object') {
+                      $scope.contactInfo = result.data;
+                  }
+                  // Clear out any editing that may have been saved
                   angular.forEach($scope.contactInfo.addresses, function(value, key, obj){
                       value.edit = false;
                       if(value.type === "HOUSING") {
@@ -198,12 +206,12 @@ define(['angular'], function(angular) {
                 $rootScope.profileLoadingState.lcontact = false;
                 $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
             });
-          if ( $scope.contactInfo.length === 0 ) {
+          if ($scope.contactInfo.addresses
+              && $scope.contactInfo.addresses.length === 0) {
             $scope.noAddresses = true;
           }
-      }
+      };
 
-      //run init
       init();
     } ]);
 
@@ -270,7 +278,6 @@ define(['angular'], function(angular) {
                 $rootScope.profileLoadingState.einfo = false;
                 $scope.emergencyInfo = {};
                 $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
-                  console.log('inside getEmergencyContactInfo error state: ' + typeof $scope.emergencyInfo);
             });
           if ( $scope.emergencyInfo.length === 0 ) {
             $scope.noContacts = true;
