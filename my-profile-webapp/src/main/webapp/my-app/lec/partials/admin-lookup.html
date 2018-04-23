@@ -1,7 +1,10 @@
-<div class="portlet-frame">
-  <app-header app-title="Find Local Information" app-icon='fa-lock' app-add-to-home='true' app-fname='local-contact-info-admin'></app-header>
-  <div class="white-page portlet-body">
-    <div ng-controller="LocalContactAdminController as localContactAdminCtrl">
+<frame-page  app-title="Find Local Information"
+             app-icon="fa-lock"
+             app-add-to-home="true"
+             app-action-link-text="Add to home"
+             app-fname="local-contact-info-admin">
+  <div class="row">
+    <div class="white-page portlet-body" ng-controller="LocalContactAdminController as localContactAdminCtrl">
 
       <!-- ALERT -->
       <div class="alert" role="alert" ng-if='error && error.length > 0'>{{error}}</div>
@@ -60,4 +63,4 @@
         </md-content>
     </div>
   </div>
-</div>
+</frame-page>

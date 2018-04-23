@@ -1,5 +1,6 @@
 package edu.wisc.my.profile.web;
 
+import edu.wisc.my.profile.log.MaskedLoggables;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,36 +37,26 @@ public class EmergencyContactInformationController {
   }
   
   @RequestMapping(method = RequestMethod.POST, value="/set")
-  public @ResponseBody ContactInformation[] setContactInformation(HttpServletRequest request, 
-                                                                  @RequestBody ContactInformation[] ci,
-                                                                  HttpServletResponse response) {
+  public @ResponseBody ContactInformation[] setContactInformation(
+          HttpServletRequest request, 
+          @RequestBody ContactInformation[] ci,
+          HttpServletResponse response) {
     final String uid = request.getHeader("uid");
-    //TODO validate
-    if(StringUtils.isNotBlank(uid)) {
-      try {
-        ci = service.setContactInfo(uid, ci);
-      } catch (Exception e) {
-          StringBuilder builder = new StringBuilder()
-          .append("[");
-          int ciCounter = 0;
-          for(ContactInformation contactInformation: ci){
-              if(ciCounter>0){
-                  builder.append(", ");
-              }
-              builder.append(contactInformation.toStringForLogging());
-              ciCounter++;
-          }
-          builder.append("]");
-          String maskedData = builder.toString();
-          logger.error("Issue while user {} attempted to save {}", uid, maskedData, e);
-          response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
-          return ci;
-      }
-      logger.info("User {} saved Emergency Contact Information successfully", uid);
-    }else{
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    
+    if (StringUtils.isBlank(uid)) {
+      response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+      return null;
     }
-    return ci;
+    
+    try {
+      service.setContactInfo(uid, ci);
+      logger.info("User {} saved Emergency Contact Information successfully", uid);
+    } catch (Exception e) {
+        String maskedData = MaskedLoggables.toStringForLogging(ci);
+        logger.error("Issue while user {} attempted to save {}", uid, maskedData, e);
+        response.setStatus(HttpServletResponse.SC_SERVICE_UNAVAILABLE);
+    }
+    return service.getContactInfo(uid);
   }
 
 }

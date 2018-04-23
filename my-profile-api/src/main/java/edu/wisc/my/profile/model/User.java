@@ -30,7 +30,7 @@ public class User implements Comparable{
         return firstName;
     }
     /**
-     * @param givenName the givenName to set
+     * @param firstName the givenName to set
      */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -54,7 +54,7 @@ public class User implements Comparable{
         return this.lastName;
     }
     /**
-     * @param sn the sn (surname) to set
+     * @param lastName the lastName to set
      */
     public void setLastName(String lastName) {
         this.lastName = lastName;

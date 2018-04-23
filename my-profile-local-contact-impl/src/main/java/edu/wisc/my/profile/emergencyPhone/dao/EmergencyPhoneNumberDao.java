@@ -6,7 +6,7 @@ public interface EmergencyPhoneNumberDao {
     
     /**
      * Gets emergency phone numbers for user
-     * @param netid
+     * @param netId
      * @return a TypeValue representing phone numbers
      */
     public TypeValue[] getData(String netId);
@@ -14,7 +14,7 @@ public interface EmergencyPhoneNumberDao {
     
     /**
      * Sets emergency phone numbers returning the saved phone numbers
-     * @param netid
+     * @param netId
      * @param phoneNumbers
      * @return the saved phone numbers
      * @throws Exception

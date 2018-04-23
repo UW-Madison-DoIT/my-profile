@@ -12,9 +12,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fatboyindustrial.gsonjodatime.Converters;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.wisc.my.profile.log.MaskedLoggable;
 
 @JsonIgnoreProperties("$$hashKey")
-public class ContactAddress {
+public class ContactAddress implements MaskedLoggable {
   private String type;
   private List<String> addressLines = new ArrayList<String>();
   private String city;
@@ -99,6 +100,7 @@ public class ContactAddress {
    * type, the address information, and user inputed comments
    * @return a JSON representation with the value data masked, useful for logging
    */
+  @Override
   public String toStringForLogging(){
       StringBuilder builder = new StringBuilder();
       builder.append("{")

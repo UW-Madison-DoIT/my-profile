@@ -17,7 +17,7 @@
       <!-- Non-empty -->
       <div ng-if="!editMode && emergencyPhoneNumbers.emergencyPhoneNumbers.length !== 0" layout="row" layout-align="space-between center">
         <span class="md-subhead" flex="80">
-          {{ emergencyPhoneNumbers.emergencyPhoneNumbers[0].value}} ({{emergencyPhoneNumbers.emergencyPhoneNumbers[0].type }})
+          {{ emergencyPhoneNumbers[0].value}} ({{emergencyPhoneNumbers[0].type }})
         </span>
         <md-button class="md-icon-button" aria-label="edit phone number" ng-click="edit()">
           <md-icon>mode_edit</md-icon>
@@ -30,11 +30,11 @@
           <br>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Phone number*</label>
-            <input type="tel" required aria-required="true" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-maxlength="30" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].value">
+            <input type="tel" required aria-required="true" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-maxlength="30" ng-model="emergencyPhoneNumbers[0].value">
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Type*</label>
-            <md-select required aria-required="true" ng-model="emergencyPhoneNumbers.emergencyPhoneNumbers[0].type">
+            <md-select required aria-required="true" ng-model="emergencyPhoneNumbers[0].type">
               <md-option value="mobile">Mobile</md-option>
               <md-option value="home">Home</md-option>
               <md-option value="work">Work</md-option>

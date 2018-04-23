@@ -33,7 +33,7 @@ define(['angular'], function(angular) {
             {
               "id" : "enableProfileNavigation",
               "title" : "Enable Profile Navigation",
-              "description" : "In LEC, enable profile navigation to the other parts of My Profile that is hidden right now"
+              "description" : "In LEC, enable profile navigation to the other parts of My Profile that are hidden right now"
             }
           ]
         });

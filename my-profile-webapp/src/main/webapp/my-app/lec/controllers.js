@@ -26,7 +26,7 @@ define(['angular'], function(angular) {
     $scope.currentNavItem = $location.path();
   }]);
 
-  app.controller('LocalContactAdminController', ['$scope', '$q', 'lecService', function($scope, $q, lecService){
+  app.controller('LocalContactAdminController', ['$scope', '$q', 'lecService', 'errorService', function($scope, $q, lecService, errorService){
       //init function
       var init = function() {
           $scope.error = "";
@@ -51,19 +51,13 @@ define(['angular'], function(angular) {
               value.edit = false;
               value.readOnly=true;
             });
-            if($scope.result && $scope.result.people && $scope.result.people.length === 0){
-                $scope.empty = true;
-            }
-          }, function(data){
-            if(data.status === 403) {
-              $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
-            } else if(data.status === 503) {
-              $scope.error = "Service is temporarily unavailable, please try again later."  
-            } else {
-              $scope.error = "Issue looking up contact information, please try again later.";
-            }
-          });
-        };
+          if($scope.result && $scope.result.people && $scope.result.people.length === 0){
+              $scope.empty = true;
+          }
+        }, function(data){
+          errorService.sendError(data.status, 'search', false);
+        });
+      };
 
       $scope.lookupUser = function(netIdToLookup, index) {
         lecService.searchLocalContactInfo(netIdToLookup).then(function(result){
@@ -78,13 +72,7 @@ define(['angular'], function(angular) {
           });
           $scope.empty = result.data && result.data.local.addresses.length === 0;
         }, function(data){
-          if(data.status === 403) {
-            $scope.error = "You do not have access to this module, if you feel this is incorrect please contact your supervisor.";
-          } else if(data.status === 503) {
-              $scope.error = "Service is temporarily unavailable, please try again later."  
-          } else {
-            $scope.error = "Issue looking up contact information, please try again later.";
-          }
+          errorService.sendError(data.status, 'user', false);
         });
       };
 
@@ -92,8 +80,8 @@ define(['angular'], function(angular) {
       init();
 
   }]);
-  
-  app.controller('EmergencyPhoneController', ['$localStorage','$rootScope','$scope', 'lecService', function($localStorage, $rootScope, $scope, lecService) {
+
+  app.controller('EmergencyPhoneController', ['$localStorage','$rootScope','$scope', 'lecService', 'errorService', function($localStorage, $rootScope, $scope, lecService, errorService) {
     //scope functions
 
     $scope.cancel = function() {
@@ -103,13 +91,13 @@ define(['angular'], function(angular) {
     $scope.edit = function() {
       $scope.editMode = true;
     };
-    
+
     $scope.save = function() {
-      lecService.saveEmergencyPhoneNumber($scope.emergencyPhoneNumbers.emergencyPhoneNumbers)
+      lecService.saveEmergencyPhoneNumber($scope.emergencyPhoneNumbers)
         .then(function(result){//success
           $scope.editMode = false;
         },function(data, status){//error
-          $rootScope.alerts.push({ msg: "There was an issue saving your emergency phone, please try again later.", type: 'danger'});
+          errorService.sendError(status, 'phone number', true);
         });
     };
 
@@ -124,14 +112,13 @@ define(['angular'], function(angular) {
         .then(function(result){//success
           $rootScope.profileLoadingState.ephone = false;
           $scope.emergencyPhoneNumbers = result.data;
-          if ( $scope.emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 ) {
+          if ( $scope.emergencyPhoneNumbers.length === 0 ) {
               $scope.empty = true;
           }
         }, function(result, status){//error
           $rootScope.profileLoadingState.ephone = false;
-          $scope.emergencyPhoneNumbers = {};
-          h$scope.empty = true;
-          $rootScope.alerts.push({ msg: "There was an issue getting your phone number information. Please try again later.", type: 'danger'});
+          $scope.emergencyPhoneNumbers = [];
+          errorService.sendError(status, 'phone number', false);
         });
     };
 
@@ -139,10 +126,8 @@ define(['angular'], function(angular) {
     init();
   } ]);
 
-  app.controller('LocalContactInformationController', ['$localStorage',
-      '$rootScope','$scope', '$mdDialog', 'lecService','COUNTRIES','STATES',
-      function($localStorage, $rootScope, $scope, $mdDialog, lecService,
-               COUNTRIES, STATES) {
+  app.controller('LocalContactInformationController', ['$localStorage','$rootScope','$scope', 'lecService','COUNTRIES','STATES', 'errorService', function($localStorage, $rootScope, $scope, lecService, COUNTRIES, STATES, errorService) {
+      //scope functions
       $scope.addEdit = function() {
           // Make sure there's an array to add to
           if (!$scope.contactInfo.addresses) {
@@ -163,7 +148,7 @@ define(['angular'], function(angular) {
                   $scope.notSaving = true;
               },function(data, status){//error
                   $scope.notSaving = true;
-                  $rootScope.alerts.push({ msg: "There was an issue saving your address, please try again later.", type: 'danger'});
+                  errorService.sendError(status, 'local address', true);
               });
       };
 
@@ -204,7 +189,7 @@ define(['angular'], function(angular) {
               }, function(result, status){//error
                 $scope.contactInfo = {};
                 $rootScope.profileLoadingState.lcontact = false;
-                $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
+                errorService.sendError(status, 'local address', false);
             });
           if ($scope.contactInfo.addresses
               && $scope.contactInfo.addresses.length === 0) {
@@ -215,7 +200,7 @@ define(['angular'], function(angular) {
       init();
     } ]);
 
-    app.controller('EmergencyInformationController', ['$localStorage','$rootScope','$scope', 'lecService', 'RELATIONSHIPS', function($localStorage, $rootScope, $scope, lecService, RELATIONSHIPS) {
+    app.controller('EmergencyInformationController', ['$localStorage','$rootScope','$scope', 'lecService', 'RELATIONSHIPS', 'errorService', function($localStorage, $rootScope, $scope, lecService, RELATIONSHIPS, errorService) {
       $scope.addEdit = function() {
           $scope.emergencyInfo.push({
             preferredName : "",
@@ -240,7 +225,7 @@ define(['angular'], function(angular) {
                   $scope.notSaving = true;
               },function(data, status){//error
                   $scope.notSaving = true;
-                  $rootScope.alerts.push({ msg: "There was an issue saving your emergency contact, please try again later.", type: 'danger'});
+                  errorService.sendError(status, 'emergency contact', true);
               });
       }
 
@@ -277,7 +262,8 @@ define(['angular'], function(angular) {
               }, function(result, status){//error
                 $rootScope.profileLoadingState.einfo = false;
                 $scope.emergencyInfo = {};
-                $rootScope.alerts.push({ msg: "There was an issue getting your local address information. Please try again later.", type: 'danger'});
+                errorService.sendError(status, 'emergency contact', false);
+                console.log('inside getEmergencyContactInfo error state: ' + typeof $scope.emergencyInfo);
             });
           if ( $scope.emergencyInfo.length === 0 ) {
             $scope.noContacts = true;
@@ -288,12 +274,28 @@ define(['angular'], function(angular) {
       init();
 
     }]);
-    
-    app.controller('ErrorController', ['$scope','$rootScope', function($scope, $rootScope) {
-      $rootScope.alerts = [];
-      
-      $scope.closeAlert = function(index) {
-        $rootScope.alerts.splice(index, 1);
+
+    app.controller('ErrorController', ['$scope','$rootScope','$mdDialog', function($scope, $rootScope, $mdDialog) {
+      $scope.alert = {
+        title: '',
+        msg: '',
+        note: ''
+      };
+
+      $rootScope.$on('alert', function(event, data) {
+        $scope.alert.title = data.title || '';
+        $scope.alert.msg = data.msg || '';
+        $scope.alert.note = data.note || '';
+        $mdDialog.show({
+          templateUrl: 'alert.html',
+          parent: angular.element(document).find('div.my-uw')[0],
+          clickOutsideToClose: true,
+          preserveScope: true,
+          scope: $scope
+        })
+      });
+      $scope.close = function() {
+        $mdDialog.hide();
       };
     }]);
 });
