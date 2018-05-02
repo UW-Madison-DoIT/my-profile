@@ -5,15 +5,38 @@
              white-background="true">
 
   <!-- error state -->
-  <div layout="row" ng-controller="ErrorController as errorCtrl">
-    <div flex="100">
-      <alert class="alert" ng-repeat="alert in alerts" type="{{alert.type}}" layout="row" layout-align="space-between center">
-        {{ alert.msg }}
-        <md-button class="md-icon-button" ng-click="closeAlert($index)" aria-label="close alert message">
-          <md-icon>close</md-icon>
-        </md-button>
-      </alert>
-    </div>
+  <div layout="row" ng-controller='ErrorController as errorCtrl'>
+    <script type="text/ng-template" id="alert.html">
+      <md-dialog aria-label="error notification">
+        <md-toolbar class="md-accent">
+          <div class="md-toolbar-tools">
+            <h1>{{ alert.title }}</h1>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="close()" aria-label="close features dialog">
+              <md-icon>close</md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+        <md-dialog-content>
+          <div class="md-dialog-content" layout="column" layout-align="center center">
+            <div>
+              <p ng-bind-html="alert.msg"></p>
+            </div>
+            <div ng-if="alert.note" class="notice-container" layout="row" layout-align="start center">
+              <div class="notice-icon" flex-gt-xs="20" hide-xs>
+                <md-icon>info</md-icon>
+              </div>
+              <div class="notice-description" flex-gt-xs="80">
+                <p>{{ alert.note }}</p>
+              </div>
+            </div>
+          </div>
+        </md-dialog-content>
+        <md-dialog-actions>
+          <md-button class="md-accent md-raised" ng-click="close()">Close</md-button>
+        </md-dialog-actions>
+      </md-dialog>
+    </script>
   </div>
 
   <!-- loading state -->
