@@ -1,21 +1,29 @@
 <div ng-controller="EmergencyPhoneController as EmergencyPhoneCtrl">
-  <loading-gif data-object="emergencyPhoneNumbers" data-reuse="true"></loading-gif>
-  <div ng-show="empty || emergencyPhoneNumbers.emergencyPhoneNumbers.length > 0" class="contact-info-card" flex>
+  <!-- loading state -->
+  <div ng-show="profileLoadingState.ephone">
+    <loading-gif data-object="emergencyPhoneNumbers" data-reuse="true"></loading-gif>
+  </div>
+
+
+  <div class="contact-info-card" flex>
     <h2 class="md-headline" layout="row" layout-align="space-between center">
       <div class="subhead-border"></div>
       <span>Phone number</span>
-      <md-button class="md-icon-button md-accent md-raised" ng-click="edit()" aria-label="Add phone number">
+      <md-button class="md-icon-button md-accent md-raised" ng-click="edit()" ng-disabled="serviceError" aria-label="Add phone number">
         <md-icon>add</md-icon>
         <md-tooltip md-direction="top">Add phone number</md-tooltip>
       </md-button>
     </h2>
-    <md-card-content>
-      <div class="description-box">
+    <div>
+      <div class="description-box" ng-hide="serviceError">
         <p>A number where you can be reached in an emergency.</p>
       </div>
-      <p ng-if="emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0 && !editMode"><md-icon>warning</md-icon> No phone number entered yet.</p>
+      <!-- Error state -->
+      <p ng-if="serviceError"><md-icon class="md-warn">warning</md-icon> There was a problem looking up phone number information.</p>
+      <!-- Empty state -->
+      <p ng-if="!serviceError && !editMode && emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0"><md-icon class="md-warn">warning</md-icon> No phone number entered yet.</p>
       <!-- Non-empty -->
-      <div ng-if="!editMode && emergencyPhoneNumbers.emergencyPhoneNumbers.length !== 0" layout="row" layout-align="space-between center">
+      <div ng-if="!serviceError && !editMode && emergencyPhoneNumbers.emergencyPhoneNumbers.length !== 0" layout="row" layout-align="space-between center">
         <span class="md-subhead" flex="80">
           {{ emergencyPhoneNumbers[0].value}} ({{emergencyPhoneNumbers[0].type }})
         </span>
@@ -45,6 +53,7 @@
           <md-button class="md-default md-raised" aria-label="Cancel" ng-click='cancel()'>Cancel</md-button>
         </form>
       </div>
+
       <!-- WiscAlert notice -->
       <div class="notice-container" layout="row" layout-align="start center">
         <div class="notice-icon" flex-gt-xs="20" hide-xs>
@@ -59,6 +68,6 @@
           </p>
         </div>
       </div>
-    </md-card-content>
+    </div>
   </div>
 </div>
