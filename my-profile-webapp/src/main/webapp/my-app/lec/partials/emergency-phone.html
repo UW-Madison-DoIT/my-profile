@@ -9,7 +9,7 @@
     <h2 class="md-headline" layout="row" layout-align="space-between center">
       <div class="subhead-border"></div>
       <span>Phone number</span>
-      <md-button class="md-icon-button md-accent md-raised" ng-click="edit()" ng-disabled="serviceError" aria-label="Add phone number">
+      <md-button class="md-icon-button md-accent md-raised" ng-click="edit()" ng-disabled="serviceError || emergencyPhoneNumbers.emergencyPhoneNumbers.length > 0" aria-label="Add phone number">
         <md-icon>add</md-icon>
         <md-tooltip md-direction="top">Add phone number</md-tooltip>
       </md-button>

@@ -8,8 +8,8 @@
       </div>
     </div>
     <span>{{ contact.emails[0].value }}</span>
-    <span ng-if="contact.relationship">Relationship: {{ contact.relationship }}</span>
-    <span ng-if="contact.comments">Comments: {{ contact.comments }}</span>
+    <span ng-if="contact.relationship"><br>Relationship: {{ contact.relationship }}</span>
+    <span ng-if="contact.comments"><br>Comments: {{ contact.comments }}</span>
   </div>
   <md-button class="md-icon-button edit md-secondary" ng-click="contact.edit = true" aria-label="edit emergency contact" ng-hide="contact.readOnly">
     <md-icon>mode_edit</md-icon>
