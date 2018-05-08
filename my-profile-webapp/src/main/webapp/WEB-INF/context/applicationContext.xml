@@ -50,7 +50,7 @@
         <property name="timeBetweenEvictionRunsMillis" value="60000" />
         <property name="numTestsPerEvictionRun" value="10" />
         <property name="minEvictableIdleTimeMillis" value="150000" />
-        <property name="connectionProperties" value="oracle.net.CONNECT_TIMEOUT=4000;oracle.net.READ_TIMEOUT=60000;oracle.jdbc.ReadTimeout=60000" />
+        <property name="connectionProperties" value="oracle.net.CONNECT_TIMEOUT=4000;oracle.net.READ_TIMEOUT=60000;oracle.jdbc.ReadTimeout=60000;oracle.net.encryption_client=REQUIRED;" />
     </bean>
     
     <!-- middleware datasource -->
