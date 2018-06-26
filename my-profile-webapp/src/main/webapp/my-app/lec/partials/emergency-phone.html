@@ -21,9 +21,9 @@
       <!-- Error state -->
       <p ng-if="serviceError"><md-icon class="md-warn">warning</md-icon> There was a problem looking up phone number information.</p>
       <!-- Empty state -->
-      <p ng-if="!serviceError && !editMode && emergencyPhoneNumbers.emergencyPhoneNumbers.length === 0"><md-icon class="md-warn">warning</md-icon> No phone number entered yet.</p>
+      <p ng-if="!serviceError && !editMode && emergencyPhoneNumbers.length === 0"><md-icon class="md-warn">warning</md-icon> No phone number entered yet.</p>
       <!-- Non-empty -->
-      <div ng-if="!serviceError && !editMode && emergencyPhoneNumbers.emergencyPhoneNumbers.length !== 0" layout="row" layout-align="space-between center">
+      <div ng-if="!serviceError && !editMode && emergencyPhoneNumbers.length !== 0" layout="row" layout-align="space-between center">
         <span class="md-subhead" flex="80">
           {{ emergencyPhoneNumbers[0].value}} ({{emergencyPhoneNumbers[0].type }})
         </span>
