@@ -95,7 +95,7 @@ define(['angular'], function (angular) {
     };
 
     $scope.deletePhone = function (index) {
-      $scope.contactInfo.emergencyPhoneNumbers.splice(index, 1);
+      $scope.emergencyPhoneNumbers.splice(index, 1);
       $scope.save();
     }
 
