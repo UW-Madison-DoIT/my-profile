@@ -94,6 +94,11 @@ define(['angular'], function (angular) {
       $scope.editMode = true;
     };
 
+    $scope.deletePhone = function (index) {
+      $scope.emergencyPhoneNumbers.splice(index, 1);
+      $scope.save();
+    }
+
     $scope.save = function () {
       lecService.saveEmergencyPhoneNumber($scope.emergencyPhoneNumbers)
         .then(function (result) {//success
