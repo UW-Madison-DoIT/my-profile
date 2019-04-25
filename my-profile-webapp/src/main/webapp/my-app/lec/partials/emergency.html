@@ -27,15 +27,27 @@
     <br>
     <md-input-container class="md-block">
       <label>Name</label>
-      <input ng-model="contact.preferredName" required aria-required="true" name="name">
+      <input name="contactName" ng-model="contact.preferredName" required aria-required="true" name="name" maxlength="100">
+      <div ng-messages="emergencyForm.contactName.$error">
+        <div ng-message="required">Contact's name is required</div>
+      </div>
     </md-input-container>
     <div ng-repeat="phone in contact.phoneNumbers | limitTo:3 track by $index" layout-gt-xs="row">
       <div flex="90">
         <md-input-container class="md-block" flex-gt-sm>
           <label ng-if="$index === 0">Primary phone</label>
-          <input ng-if="$index === 0" type="tel" name="phone{{$index}}" ng-required="$index === 0" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-model="contact.phoneNumbers[$index].value">
+          <input name="firstPhone" ng-if="$index === 0" type="tel" ng-required="$index === 0" ng-pattern=/^\+?([0-9]){9,}$/ ng-model="contact.phoneNumbers[$index].value" maxlength="15">
+          <div ng-messages="emergencyForm.firstPhone.$error">
+            <div ng-message="required">At least one phone number is required</div>
+            <div ng-message="pattern">Phone number must only contain numbers (with optional "+" for international numbers)</div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-xs>
           <label ng-if="$index !== 0">Other phone</label>
-          <input ng-if="$index !== 0" type="tel" name="phone{{$index}}" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-model="contact.phoneNumbers[$index].value">
+          <input ng-if="$index !== 0" type="tel" name="otherPhone" ng-pattern=/^\+?([0-9]){9,}$/ ng-model="contact.phoneNumbers[$index].value" maxlength="15">
+          <div ng-messages="emergencyForm.otherPhone.$error">
+            <div ng-message="pattern">Phone number must only contain numbers (with optional "+" for international numbers)</div>
+          </div>
         </md-input-container>
         <md-input-container class="md-block no-spacer" flex-gt-sm>
           <label>Type</label>
@@ -56,7 +68,11 @@
     <md-button class="md-accent button-compact no-margin-left"  ng-click="contact.phoneNumbers.push({ 'type' : '', value : ''})" ng-if="contact.phoneNumbers.length < 3" aria-label="add another phone number"><md-icon>add</md-icon> Add another number</md-button>
     <md-input-container class="md-block">
       <label>Email</label>
-      <input name="email" required ng-model="contact.emails[0].value">
+      <input name="email" type="email" required ng-model="contact.emails[0].value" ng-pattern="/^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/">
+      <div ng-messages="emergencyForm.email.$error">
+        <div ng-message="required">At least one email address is required</div>
+        <div ng-message="pattern">Please enter a valid email address</div>
+      </div>
     </md-input-container>
     <md-input-container class="md-block">
       <label>Relationship</label>
@@ -67,7 +83,10 @@
     <br>
     <md-input-container class="md-block">
       <label>Comments</label>
-      <textarea ng-model="contact.comments" md-maxlength="50" placeholder="Ex. First language is Spanish"></textarea>
+      <textarea name="comments" ng-model="contact.comments" md-maxlength="50" placeholder="Ex. First language is Spanish"></textarea>
+      <div ng-messages="emergencyForm.comments.$error">
+        <div ng-message="md-maxlength">Please limit your comments to 50 characters</div>
+      </div>
     </md-input-container>
     <md-button class="md-accent md-raised no-margin-left" ng-click="save()" ng-disabled="emergencyForm.$invalid">Save</md-button>
     <md-button class="md-default md-raised" ng-click="cancel()">Cancel</md-button>

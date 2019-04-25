@@ -38,11 +38,15 @@
       </div>
       <!-- Phone number form -->
       <div ng-hide="!editMode">
-        <form novalidate name="emergencyPhoneNumberForm">
+        <form name="emergencyPhoneNumberForm">
           <br>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Phone number*</label>
-            <input type="tel" required aria-required="true" ng-pattern=/^([a-zA-Z0-9\s!-.]{1,30})$/ ng-maxlength="30" ng-model="emergencyPhoneNumbers[0].value">
+            <input name="phone" type="tel" required aria-required="true" ng-pattern=/^\+?([0-9]){9,}$/ ng-maxlength="30" ng-model="emergencyPhoneNumbers[0].value">
+            <div ng-messages="emergencyPhoneNumberForm.phone.$error">
+              <div ng-message="required">Please enter a phone number</div>
+              <div ng-message="pattern">Phone number must only contain numbers (with optional "+" for international numbers)</div>
+            </div>
           </md-input-container>
           <md-input-container class="md-block" flex-gt-sm>
             <label>Type*</label>
