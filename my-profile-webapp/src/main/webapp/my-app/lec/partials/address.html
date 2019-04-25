@@ -19,19 +19,30 @@
 <md-divider ng-if="contactInfo.addresses.length > 1 && (!address.edit || address.edit == false)"></md-divider>
 <!-- edit/update address form -->
 <div ng-if="address.edit">
-  <form novalidate name="addressForm">
+  <form name="addressForm">
     <br>
     <!-- input address -->
     <md-input-container class="md-block no-spacer" ng-repeat="line in address.addressLines track by $index">
       <label>Address Line {{$index + 1}}</label>
-      <input ng-if="$index == 0" required ng-model="address.addressLines[$index]" maxlength="100">
-      <input ng-if="$index != 0" ng-model="address.addressLines[$index]" maxlength="100">
+      <input name="addressFirstLine" ng-if="$index == 0" required ng-model="address.addressLines[$index]" md-maxlength="100">
+      <div ng-messages="addressForm.addressFirstLine.$error">
+        <div ng-message="required">At least one address is required</div>
+        <div ng-message="md-maxlength">The address cannot exceed 100 characters</div>
+      </div>
+      <input name="addressExtra" ng-if="$index != 0" ng-model="address.addressLines[$index]" maxlength="100">
+      <div ng-messages="addressForm.addressExtra.$error">
+        <div ng-message="maxlength">The address cannot exceed 100 characters</div>
+      </div>
     </md-input-container>
     <md-button class="md-accent button-compact no-margin-left" ng-click="address.addressLines.push('')" ng-if="address.addressLines.length <= 4" aria-label="add another line"><md-icon>add</md-icon> Add line</md-button>
     <!-- input city -->
     <md-input-container class="md-block">
       <label>City</label>
-      <input ng-model="address.city" required maxlength="100">
+      <input name="city" ng-model="address.city" required md-maxlength="30">
+      <div ng-messages="addressForm.city.$error">
+        <div ng-message="required">City is required</div>
+        <div ng-message="md-maxlength">The city name cannot exceed 30 characters</div>
+      </div>
     </md-input-container>
     <!-- select country -->
     <md-input-container class="md-block">
@@ -52,12 +63,19 @@
     <!-- input zip -->
     <md-input-container class="md-block">
       <label>Zip</label>
-      <input ng-model="address.postalCode" required maxlength="10">
+      <input name="zip" ng-model="address.postalCode" required md-maxlength="12">
+      <div ng-messages="addressForm.zip.$error">
+        <div ng-message="required">Zip code is required</div>
+        <div ng-message="md-maxlength">The zip code cannot contain more than 12 characters</div>
+      </div>
     </md-input-container>
     <!-- input comments -->
     <md-input-container class="md-block">
       <label>Mode information</label>
-      <textarea ng-model="address.comment" md-maxlength="50" rows="3" md-select-on-focus placeholder="Ex. I am only here Monday and Wednesday"></textarea>
+      <textarea name="comments" ng-model="address.comment" md-maxlength="50" rows="3" md-select-on-focus placeholder="Ex. I am only here Monday and Wednesday"></textarea>
+      <div ng-messages="addressForm.comments.$error">
+        <div ng-message="md-maxlength">Please limit your comments to 50 characters</div>
+      </div>
     </md-input-container>
     <md-button class="md-raised md-accent no-margin-left" ng-click="save()" ng-disabled="addressForm.$invalid">Save</md-button>
     <md-button class="md-default md-raised" ng-click="cancel()">Cancel</md-button>

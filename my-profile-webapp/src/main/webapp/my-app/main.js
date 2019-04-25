@@ -28,6 +28,7 @@ define([
     'ngRoute',
     'ngSanitize',
     'ngStorage',
+    'ngMessages',
     './dialog/controllers',
     './menu/controllers',
     './lec/controllers',
@@ -53,6 +54,7 @@ define([
         'ngRoute',
         'ngSanitize',
         'ngStorage',
+        'ngMessages',
         'portal'
     ]);
 
