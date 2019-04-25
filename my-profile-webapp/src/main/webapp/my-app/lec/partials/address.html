@@ -29,10 +29,7 @@
         <div ng-message="required">At least one address is required</div>
         <div ng-message="md-maxlength">The address cannot exceed 100 characters</div>
       </div>
-      <input name="addressExtra" ng-if="$index != 0" ng-model="address.addressLines[$index]" maxlength="100">
-      <div ng-messages="addressForm.addressExtra.$error">
-        <div ng-message="maxlength">The address cannot exceed 100 characters</div>
-      </div>
+      <input name="address{{$index}}" ng-if="$index != 0" ng-model="address.addressLines[$index]" maxlength="100">
     </md-input-container>
     <md-button class="md-accent button-compact no-margin-left" ng-click="address.addressLines.push('')" ng-if="address.addressLines.length <= 4" aria-label="add another line"><md-icon>add</md-icon> Add line</md-button>
     <!-- input city -->

@@ -36,13 +36,18 @@
       <div flex="90">
         <md-input-container class="md-block" flex-gt-sm>
           <label ng-if="$index === 0">Primary phone</label>
-          <input name="firstPhone" ng-if="$index === 0" type="tel" ng-required="$index === 0" ng-pattern=/^\+?([0-9]){0,}$/ ng-model="contact.phoneNumbers[$index].value" maxlength="15">
+          <input name="firstPhone" ng-if="$index === 0" type="tel" ng-required="$index === 0" ng-pattern=/^\+?([0-9]){9,}$/ ng-model="contact.phoneNumbers[$index].value" maxlength="15">
           <div ng-messages="emergencyForm.firstPhone.$error">
             <div ng-message="required">At least one phone number is required</div>
-            <div ng-message="pattern">Please enter a phone number using numbers only.</div>
+            <div ng-message="pattern">Phone number must only contain numbers (with optional "+" for international numbers)</div>
           </div>
+        </md-input-container>
+        <md-input-container class="md-block" flex-gt-xs>
           <label ng-if="$index !== 0">Other phone</label>
-          <input ng-if="$index !== 0" type="tel" name="phone{{$index}}" ng-pattern=/^\+?([0-9]){9,}$/ ng-model="contact.phoneNumbers[$index].value">
+          <input ng-if="$index !== 0" type="tel" name="otherPhone" ng-pattern=/^\+?([0-9]){9,}$/ ng-model="contact.phoneNumbers[$index].value" maxlength="15">
+          <div ng-messages="emergencyForm.otherPhone.$error">
+            <div ng-message="pattern">Phone number must only contain numbers (with optional "+" for international numbers)</div>
+          </div>
         </md-input-container>
         <md-input-container class="md-block no-spacer" flex-gt-sm>
           <label>Type</label>
