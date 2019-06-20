@@ -43,60 +43,10 @@
   <div layout="row" layout-align="center center" ng-show="profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo">
     <loading-gif data-object="{{[]}}"></loading-gif>
   </div>
-
-  <!-- profile information -->
-  <div class="container__emergency-info" layout="column" layout-gt-sm="row" layout-align-gt-sm="center start" ng-hide="profileLoadingState.ephone || profileLoadingState.lcontact || profileLoadingState.einfo">
-
-    <!-- emergency phone -->
-    <div layout-gt-sm="column" flex-gt-sm="33">
-      <emergency-phone></emergency-phone>
-    </div>
-
-    <!-- local address -->
-    <div layout-gt-sm="column" flex-gt-sm="33" ng-controller="LocalContactInformationController as localContactInfoCtrl">
-      <div class="contact-info-card">
-        <h2 class="md-headline" layout="row" layout-align="space-between center">
-          <div class="subhead-border"></div>
-            <span>Local address</span>
-            <md-button class="md-icon-button md-accent md-raised" ng-click="addEdit()" aria-label="Add address">
-                <md-icon>add</md-icon>
-              <md-tooltip md-direction="top">Add address</md-tooltip>
-            </md-button>
-        </h2>
-          <div class="description-box">
-            <p>A physical address where you live or frequently stay during the school year.</p>
-          </div>
-          <p ng-if="noAddresses"><md-icon class="md-warn">warning</md-icon> No address entered yet.</p>
-          <div ng-if="error && error.length > 0" class="alert" role="alert">{{ error }}</div>
-          <md-list ng-if="contactInfo.addresses.length !== 0" class="list-info">
-            <!-- repeat for each address -->
-            <lec-address ng-repeat="address in contactInfo.addresses"></lec-address>
-          </md-list>
-      </div>
-    </div>
-
-    <!-- emergency contact -->
-    <div layout-gt-sm="column" flex-gt-xs="33" ng-controller="EmergencyInformationController as emergencyInfoCtrl">
-      <div class="contact-info-card" flex>
-        <h2 class="md-headline" layout="row" layout-align="space-between center">
-          <div class="subhead-border"></div>
-            <span>Emergency contact</span>
-            <md-button class="md-icon-button md-accent md-raised" ng-click="addEdit()" aria-label="Add contact info">
-                <md-icon>add</md-icon>
-              <md-tooltip md-direction="top">Add contact</md-tooltip>
-            </md-button>
-        </h2>
-          <div class="description-box">
-            <p>A parent, relative, or trusted friend to contact in case of an emergency.</p>
-          </div>
-          <p ng-if="emergencyInfo.length === 0"><md-icon class="md-warn">warning</md-icon> No contact entered yet.</p>
-          <div class="alert" role="alert" ng-if="error && error.length > 0">{{ error }}</div>
-          <md-list ng-if="emergencyInfo.length !== 0" class="list-info">
-            <!-- repeat for each emergency contact -->
-            <emergency ng-repeat="contact in emergencyInfo"></emergency>
-          </md-list>
-      </div>
-    </div>
+  <div>
+   <p>Students now update their local and emergency contact information in the <a href="/apps/details/student-center">Student Center</a>&nbsp;</p>
+   <p/>
+   <a href="https://kb.wisc.edu/92478">Learn more</a>
   </div>
 
   <!-- disclaimer text -->
