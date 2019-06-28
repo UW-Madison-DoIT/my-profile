@@ -22,8 +22,8 @@
     </modules>
 
     <scm>
-        <connection>scm:git:git@github.com:UW-Madison-DoIT/my-profile.git</connection>
-        <developerConnection>scm:git:git@github.com:UW-Madison-DoIT/my-profile.git</developerConnection>
+        <connection>scm:git:https://github.com/UW-Madison-DoIT/my-profile.git</connection>
+        <developerConnection>scm:git:https://github.com/UW-Madison-DoIT/my-profile.git</developerConnection>
         <url>https://github.com/UW-Madison-DoIT/my-profile</url>
         <tag>HEAD</tag>
     </scm>
