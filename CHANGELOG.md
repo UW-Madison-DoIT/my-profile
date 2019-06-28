@@ -2,7 +2,7 @@
 
 ## 2.0.0
 
-2019-06-27
+2019-06-28
 
 BREAKING CHANGE: removes student-facing UI for self-service on their contact
 information.
