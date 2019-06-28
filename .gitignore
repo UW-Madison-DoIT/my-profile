@@ -5,3 +5,4 @@ target
 .classpath
 my-profile-webapp/logs/
 .idea
+.java-version
