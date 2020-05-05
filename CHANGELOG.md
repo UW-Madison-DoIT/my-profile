@@ -1,5 +1,10 @@
 # my-profile change log
 
+## Next (putatively 2.0.2)
+
++ Upgrade from ojdbc6 to ojdbc8 19.6.0.0, using the jar as provided in the
+  Tomcat environment.
+
 ## 2.0.1
 
 2019-06-28
