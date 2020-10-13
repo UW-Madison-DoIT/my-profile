@@ -40,7 +40,7 @@
         <gson.version>1.7.1</gson.version>
         <gson-jodaTime-serializer.version>1.0.0</gson-jodaTime-serializer.version>
         <mockito.version>1.9.5</mockito.version>
-        <junit.version>4.11</junit.version>
+        <junit.version>4.13.1</junit.version>
     </properties>
 
     <repositories>
