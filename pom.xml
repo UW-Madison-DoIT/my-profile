@@ -37,7 +37,7 @@
         <jackson.version>2.2.2</jackson.version>
         <person-directory.version>1.5.2-M1</person-directory.version>
         <spring.security.version>3.2.6.RELEASE</spring.security.version>
-        <gson.version>1.7.1</gson.version>
+        <gson.version>2.8.9</gson.version>
         <gson-jodaTime-serializer.version>1.0.0</gson-jodaTime-serializer.version>
         <mockito.version>1.9.5</mockito.version>
         <junit.version>4.11</junit.version>
