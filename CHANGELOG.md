@@ -1,5 +1,11 @@
 # my-profile change log
 
+## Next
+
+Now building 2.0.3-SNAPSHOT.
+
++ Use myuw-parent 10, which sources from and publishes to artifactorydoit.jfrog.io .
+
 ## 2.0.2
 
 2020-05-04
