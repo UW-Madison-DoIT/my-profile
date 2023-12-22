@@ -1,4 +1,8 @@
-Master branch build status: [![Build Status](https://travis-ci.org/UW-Madison-DoIT/my-profile.svg?branch=master)](https://travis-ci.org/UW-Madison-DoIT/my-profile)
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
+Moved into [UW-Madison internal git repository](https://git.doit.wisc.edu/wps/myuw-service/myuw-legacy/student-emergency-contact-lookup).
+
+-----
 
 #### First-time setup
 
